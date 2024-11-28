@@ -1,0 +1,112 @@
+[
+    {
+        "product_id": 1,
+        "name": "Laptop",
+        "price": 999.99,
+        "ratings": [
+            {"user_id": 1, "stars": 5},
+            {"user_id": 2, "stars": 4},
+            {"user_id": 3, "stars": 4},
+            {"user_id": 4, "stars": 3},
+            {"user_id": 5, "stars": 5},
+            {"user_id": 6, "stars": 5},
+            {"user_id": 7, "stars": 2}
+        ]
+    },
+    {
+        "product_id": 2,
+        "name": "Smartphone",
+        "price": 699.99,
+        "ratings": [
+            {"user_id": 8, "stars": 4},
+            {"user_id": 9, "stars": 3},
+            {"user_id": 10, "stars": 4},
+            {"user_id": 11, "stars": 5},
+            {"user_id": 12, "stars": 5},
+            {"user_id": 13, "stars": 3},
+            {"user_id": 14, "stars": 2},
+            {"user_id": 15, "stars": 1}
+        ]
+    },
+    {
+        "product_id": 3,
+        "name": "Wireless Earbuds",
+        "price": 129.99,
+        "ratings": [
+            {"user_id": 16, "stars": 5},
+            {"user_id": 17, "stars": 4},
+            {"user_id": 18, "stars": 3},
+            {"user_id": 19, "stars": 2},
+            {"user_id": 20, "stars": 1},
+            {"user_id": 21, "stars": 4},
+            {"user_id": 22, "stars": 4},
+            {"user_id": 23, "stars": 5},
+            {"user_id": 24, "stars": 3},
+            {"user_id": 25, "stars": 2}
+        ]
+    },
+    {
+        "product_id": 4,
+        "name": "Gaming Console",
+        "price": 499.99,
+        "ratings": [
+            {"user_id": 26, "stars": 5},
+            {"user_id": 27, "stars": 4},
+            {"user_id": 28, "stars": 4},
+            {"user_id": 29, "stars": 3},
+            {"user_id": 30, "stars": 3},
+            {"user_id": 31, "stars": 2},
+            {"user_id": 32, "stars": 5},
+            {"user_id": 33, "stars": 4},
+            {"user_id": 34, "stars": 4},
+            {"user_id": 35, "stars": 5}
+        ]
+    },
+    {
+        "product_id": 5,
+        "name": "Smart Watch",
+        "price": 249.99,
+        "ratings": [
+            {"user_id": 36, "stars": 5},
+            {"user_id": 37, "stars": 3},
+            {"user_id": 38, "stars": 4},
+            {"user_id": 39, "stars": 2},
+            {"user_id": 40, "stars": 1},
+            {"user_id": 41, "stars": 3},
+            {"user_id": 42, "stars": 4},
+            {"user_id": 43, "stars": 4},
+            {"user_id": 44, "stars": 3},
+            {"user_id": 45, "stars": 2},
+            {"user_id": 46, "stars": 5},
+            {"user_id": 47, "stars": 4},
+            {"user_id": 48, "stars": 5},
+            {"user_id": 49, "stars": 3},
+            {"user_id": 50, "stars": 2}
+        ]
+    },
+    {
+        "product_id": 6,
+        "name": "4K TV",
+        "price": 1199.99,
+        "ratings": [
+            {"user_id": 51, "stars": 5},
+            {"user_id": 52, "stars": 5},
+            {"user_id": 53, "stars": 4},
+            {"user_id": 54, "stars": 3},
+            {"user_id": 55, "stars": 4},
+            {"user_id": 56, "stars": 3},
+            {"user_id": 57, "stars": 2},
+            {"user_id": 58, "stars": 1},
+            {"user_id": 59, "stars": 5},
+            {"user_id": 60, "stars": 5},
+            {"user_id": 61, "stars": 4},
+            {"user_id": 62, "stars": 3},
+            {"user_id": 63, "stars": 3},
+            {"user_id": 64, "stars": 2},
+            {"user_id": 65, "stars": 5},
+            {"user_id": 66, "stars": 4},
+            {"user_id": 67, "stars": 4},
+            {"user_id": 68, "stars": 5}
+        ]
+    }
+]
