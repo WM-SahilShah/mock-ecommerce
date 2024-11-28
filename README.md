@@ -1,5 +1,4 @@
 # Mock E-Commerce Server
-
 This is a mock e-commerce API built with FastAPI. It supports fetching product information with authorization using an API key.
 
 ## Features
