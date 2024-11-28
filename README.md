@@ -9,25 +9,25 @@ This is a mock e-commerce API built with FastAPI. It supports fetching product i
 
 ## Setup
 1. Clone the repository:
-   ```bash
-   git clone <your-repository-url>
-   cd mock_ecommerce
-   ```
+```bash
+git clone https://github.com/WM-SahilShah/mock-ecommerce
+cd mock_ecommerce
+```
 
 2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 3. Run the application locally:
-   ```bash
-   python app.py
-   ```
-   The application will be available at `http://127.0.0.1:8000`.
+```bash
+python main.py
+```
+The application will be available at `http://127.0.0.1:8000`.
 
 4. Access the API documentation:
-   - Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-   - ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+- Swagger UI: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- ReDoc: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
 ## Authentication
 All API endpoints require an **API Key**. Use the following credentials:
