@@ -1,7 +1,9 @@
 services:
-  - type: web
-    name: mock-ecommerce
-    env: python
+  - name: mock-ecommerce
+    type: web
+    plan: free
+    branch: main
+    runtime: python
+    region: singapore
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn main:router --host 0.0.0.0 --port 8000"
-    plan: free
