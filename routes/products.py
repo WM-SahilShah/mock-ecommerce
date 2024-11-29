@@ -33,11 +33,11 @@ def api_key_auth(request: Request):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-@router.get("/", response_model=List[Product])
+@router.get("/products/", response_model=List[Product])
 async def get_all_products(api_key: str = Depends(api_key_auth)):
     return products
 
-@router.get("/{product_id}", response_model=Product)
+@router.get("/products/{product_id}", response_model=Product)
 async def get_product(product_id: int, api_key: str = Depends(api_key_auth)):
     product = next((prod for prod in products if prod.product_id == product_id), None)
     if not product:
