@@ -33,7 +33,7 @@ def api_key_auth(request: Request):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-@router.get("/products/", response_model=List[Product])
+@router.get("/products", response_model=List[Product])
 async def get_all_products(api_key: str = Depends(api_key_auth)):
     return products
 
