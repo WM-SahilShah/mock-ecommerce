@@ -1,7 +1,7 @@
-from app.db.database import get_db
-from app.models.models import User
+from app.database import get_db
+from app.models import User
 from app.schemas.auth import TokenResponse
-from app.utils.responses import ResponseHandler
+from app.responses import ResponseHandler
 from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer
@@ -9,7 +9,7 @@ from fastapi.security.http import HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from app.settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
 # Password Hashing Context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

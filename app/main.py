@@ -1,12 +1,10 @@
 from app.routers import products, categories, carts, users, auth, accounts
 from fastapi import FastAPI
 
-
 description = """
-Welcome to the E-commerce API! 🚀
+Welcome to the Mock E-Commerce API! 🚀
 
 This API provides a comprehensive set of functionalities for managing your e-commerce platform.
-
 Key features include:
 
 - **Crud**
@@ -14,7 +12,7 @@ Key features include:
 - **Search**
 	- Find specific information with parameters and pagination.
 - **Auth**
-	- Verify user/system identity.
+	- Verify user/admin identity.
 	- Secure with Access and Refresh tokens.
 - **Permission**
 	- Assign roles with specific permissions.
@@ -22,20 +20,16 @@ Key features include:
 - **Validation**
 	- Ensure accurate and secure input data.
 
-
-For any inquiries, please contact:
-
-* Github: https://github.com/aliseyedi01
+For any inquiries, please contact sshah@watermelon.us
 """
-
 
 app = FastAPI(
     description=description,
-    title="E-commerce API",
-    version="1.0.0",
+    title="E-Commerce API",
+    version="2.0",
     contact={
-        "name": "Ali Seyedi",
-        "url": "https://github.com/aliseyedi01",
+        "name": "Sahil Shah",
+        "url": "github.com/WM-SahilShah",
     },
     swagger_ui_parameters={
         "syntaxHighlight.theme": "monokai",

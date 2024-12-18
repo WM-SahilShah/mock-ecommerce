@@ -1,10 +1,10 @@
-from pydantic import BaseModel, EmailStr
+from app.schemas.carts import CartBase
 from datetime import datetime
 from typing import List
-from app.schemas.carts import CartBase
-
+from pydantic import BaseModel, EmailStr
 
 class AccountBase(BaseModel):
+    "Schema for basic account details."
     id: int
     username: str
     email: EmailStr
@@ -17,14 +17,14 @@ class AccountBase(BaseModel):
     class Config:
         from_attributes = True
 
-
 class AccountUpdate(BaseModel):
+    "Schema for updating account details."
     username: str
     email: EmailStr
     full_name: str
 
-
 class AccountOut(BaseModel):
+    "Schema for account output with a message and account data."
     message: str
     data: AccountBase
 

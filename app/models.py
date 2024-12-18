@@ -1,8 +1,8 @@
+from app.database import Base
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, Float, ARRAY, Enum
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.orm import relationship
-from app.db.database import Base
 
 
 class User(Base):
