@@ -1,36 +1,28 @@
-
-# Ecommerce API with Fast API Framework
+# Mock E-Commerce API
 
 A simple Ecommerce API built with Fast API Framework
 
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Resources](#resources)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [API Endpoints](#api-endpoints)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
-- [Ecommerce API with Fast API Framework](#ecommerce-api-with-fast-api-framework)
-  - [Table of Contents](#table-of-contents)
-  - [Demo](#demo)
-  - [Features](#features)
-  - [Technologies Used](#technologies-used)
-  - [API Endpoints](#api-endpoints)
-  - [Screenshots](#screenshots)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [License](#license)
-
-
-## Demo
+## Resources
 
 > [!IMPORTANT]
 > The Render.com free plan may experience a short delay (approximately 1 minute) when starting up. Please be patient for the initial access.
 
-- **Render.com**
-	- [Swagger](https://ecommerce-jgao.onrender.com/docs)
-	- [ReDoc](https://ecommerce-jgao.onrender.com/redoc)
+- **Documentation**
+	- [Swagger](https://mock-ecommerce-zeb2.onrender.com/docs)
+	- [ReDoc](https://mock-ecommerce-zeb2.onrender.com/redoc)
 
-- **Online Code**
-	- [Github1s](https://github1s.com/aliseyedi01/Ecommerce-Api)
-
-- **Database**
+- **Database Diagram**
 	- [dbdiagram](https://dbdiagram.io/d/6574832756d8064ca0b3b776)
 
 
@@ -100,51 +92,30 @@ A simple Ecommerce API built with Fast API Framework
 | Swagger JSON (without UI)         | -           | `/openapi.json`                           | OpenAPI JSON for API documentation without UI           | User            |
 | ReDoc UI                          | -           | `/redoc/`                                | ReDoc UI for API documentation                           | User            |
 
-
-
-## Screenshots 
-
-![image](https://github.com/aliseyedi01/Ecommerce-Api/assets/118107025/d7262b0d-161c-4324-b343-27eeb0ec302a)
-
-
-![image](https://github.com/aliseyedi01/Ecommerce-Api/assets/118107025/0d8bc0bf-0eac-4e96-812d-f3e09783efb0)
-
 ## Installation
 
 1. **Clone the repository:**
-
    ```bash
-   git clone https://github.com/aliseyedi01/Ecommerce-Api.git
+   git clone https://github.com/WM-SahilShah/mock-ecommerce
    ```
 
 2. **Navigate to the project directory:**
-
    ```bash
-   Ecommerce-Api
+   cd mock-ecommerce/
    ```
 
 3. **Create a virtual environment:**
-
    ```bash
-   python3 -m venv venv
+   python3 -m venv env
    ```
 
 4. **Activate the virtual environment:**
-
-   On Windows:
-
    ```bash
-   venv\Scripts\activate
-   ```
-
-   On macOS and Linux:
-
-   ```bash
-   source venv/bin/activate
+   env\Scripts\activate #on Windows
+   source env/bin/activate #on macOS and Linux
    ```
 
 5. **Install dependencies:**
-
    ```bash
    pip install -r requirements.txt
    ```
@@ -152,39 +123,13 @@ A simple Ecommerce API built with Fast API Framework
 ## Usage
 
 1. **Run Alembic migrations:**
-
    ```bash
    python migrate.py
    ```
-
    This will apply any pending database migrations.
 
 2. **Run the FastAPI development server:**
-
    ```bash
    python run.py
    ```
-
    The API will be accessible at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-
-3. **Access the Swagger UI and ReDoc:**
-
-   - Swagger UI: [http://127.0.0.1:8000/docs/](http://127.0.0.1:8000/docs/)
-   - ReDoc: [http://127.0.0.1:8000/redoc/](http://127.0.0.1:8000/redoc/)
-
-
-
-
-
-
-
-## Contributing
-
-Feel free to contribute to the project. Fork the repository, make changes, and submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-
-
