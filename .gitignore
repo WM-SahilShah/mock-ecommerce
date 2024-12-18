@@ -1,33 +1,35 @@
-env/
-.idea
-.ipynb_checkpoints
-.mypy_cache
-.vscode
-__pycache__
-.pytest_cache
-htmlcov
-dist
-site
-.coverage
-coverage.xml
-.netlify
-test.db
-log.txt
-Pipfile.lock
-env3.*
-env
-docs_build
-site_build
-venv
-docs.zip
-archive.zip
-# alembic
-alembic/versions/
-.env
-# vim temporary files
-*~
-.*.sw?
-.cache
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
 
-# macOS
-.DS_Store
+# Virtual environment
+env/
+*.env
+
+# Alembic versioning files
+alembic/versions/
+
+# Database files (PostgreSQL, SQLite, etc.)
+*.sqlite
+*.db
+
+# VSCode and IDE files
+.vscode/
+
+# Test or coverage reports
+*.cover
+.coverage
+.tox/
+.nox/
+.dist/
+*.egg-info/
+.eggs/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Log files
+*.logw

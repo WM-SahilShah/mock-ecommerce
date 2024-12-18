@@ -1,39 +1,35 @@
-from fastapi.security.http import HTTPAuthorizationCredentials
-from passlib.context import CryptContext
-from datetime import datetime, timedelta
-from app.core.config import settings
-from jose import JWTError, jwt
-from app.schemas.auth import TokenResponse
-from fastapi.encoders import jsonable_encoder
-from fastapi import HTTPException, Depends, status
-from app.models.models import User
-from sqlalchemy.orm import Session
-from fastapi.security import HTTPBearer
 from app.db.database import get_db
+from app.models.models import User
+from app.schemas.auth import TokenResponse
 from app.utils.responses import ResponseHandler
+from datetime import datetime, timedelta
+from fastapi import HTTPException, Depends
+from fastapi.security import HTTPBearer
+from fastapi.security.http import HTTPAuthorizationCredentials
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from sqlalchemy.orm import Session
+from settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
-
+# Password Hashing Context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 auth_scheme = HTTPBearer()
 
 # Create Hash Password
-
-
-def get_password_hash(password):
+def get_password_hash(password: str) -> str:
+    "Hash a plain text password using bcrypt."
     return pwd_context.hash(password)
 
-
 # Verify Hash Password
-def verify_password(plain_password, hashed_password):
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    "Verify if the plain password matches the hashed password."
     return pwd_context.verify(plain_password, hashed_password)
 
-
 # Create Access & Refresh Token
-async def get_user_token(id: int, refresh_token=None):
+async def get_user_token(id: int, refresh_token: str = None) -> TokenResponse:
+    "Generate access and refresh tokens for a user."
     payload = {"id": id}
-
-    access_token_expiry = timedelta(minutes=settings.access_token_expire_minutes)
-
+    access_token_expiry = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = await create_access_token(payload, access_token_expiry)
 
     if not refresh_token:
@@ -45,38 +41,39 @@ async def get_user_token(id: int, refresh_token=None):
         expires_in=access_token_expiry.seconds
     )
 
-
 # Create Access Token
-async def create_access_token(data: dict, access_token_expiry=None):
+async def create_access_token(data: dict, access_token_expiry: timedelta = None) -> str:
+    "Create a JWT access token for a given payload."
     payload = data.copy()
-
-    expire = datetime.utcnow() + timedelta(minutes=settings.access_token_expire_minutes)
+    expire = datetime.utcnow() + access_token_expiry if access_token_expiry else datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     payload.update({"exp": expire})
 
-    return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
-
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 # Create Refresh Token
-async def create_refresh_token(data):
-    return jwt.encode(data, settings.secret_key, settings.algorithm)
-
+async def create_refresh_token(data: dict) -> str:
+    "Create a JWT refresh token for a given payload."
+    return jwt.encode(data, SECRET_KEY, ALGORITHM)
 
 # Get Payload Of Token
-def get_token_payload(token):
+def get_token_payload(token: str) -> dict:
+    "Decode and return the payload of a JWT token if valid else, raises `JWTError`"
     try:
-        return jwt.decode(token, settings.secret_key, [settings.algorithm])
+        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
         raise ResponseHandler.invalid_token('access')
 
-
-def get_current_user(token):
+# Get Current User from Token
+def get_current_user(token: HTTPAuthorizationCredentials) -> int:
+    "Extract the current user's ID from the token."
     user = get_token_payload(token.credentials)
     return user.get('id')
 
-
+# Check if User has Admin Role
 def check_admin_role(
         token: HTTPAuthorizationCredentials = Depends(auth_scheme),
-        db: Session = Depends(get_db)):
+        db: Session = Depends(get_db)) -> None:
+    "Verify if the user associated with the token has an admin role else, raises `HTTPException`"
     user = get_token_payload(token.credentials)
     user_id = user.get('id')
     role_user = db.query(User).filter(User.id == user_id).first()
