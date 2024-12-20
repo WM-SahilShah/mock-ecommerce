@@ -5,13 +5,7 @@ import os
 load_dotenv()
 
 # Database variables
-DB_USERNAME = os.getenv("DB_USERNAME")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOSTNAME = os.getenv("DB_HOSTNAME")
-DB_PORT = int(os.getenv("DB_PORT", 0))  #Default: 0 
-DB_NAME = os.getenv("DB_NAME")
-
-DB_URL = f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOSTNAME}:{DB_PORT}/{DB_NAME}"
+DB_URL = os.getenv("DB_URL")
 
 # JWT variables
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 1))  #Default to 0 if not set

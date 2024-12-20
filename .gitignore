@@ -6,11 +6,8 @@ __pycache__/
 *.pdb
 
 # Virtual environment
-env/
+venv/
 *.env
-
-# Alembic versioning files
-alembic/versions/
 
 # Database files (PostgreSQL, SQLite, etc.)
 *.sqlite
@@ -29,7 +26,6 @@ alembic/versions/
 .eggs/
 nosetests.xml
 coverage.xml
-*.cover
 
 # Log files
-*.logw
+*.log
