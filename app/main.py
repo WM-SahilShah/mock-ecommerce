@@ -29,7 +29,7 @@ app = FastAPI(
     version="2.0",
     contact={
         "name": "Sahil Shah",
-        "url": "github.com/WM-SahilShah",
+        "url": "https://github.com/WM-SahilShah",
     },
     swagger_ui_parameters={
         "syntaxHighlight.theme": "monokai",

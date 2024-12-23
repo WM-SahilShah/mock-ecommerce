@@ -42,8 +42,6 @@ def update_product(
     "Update an existing product by its ID."
     return ProductService.update_product(db, product_id, updated_product)
 
-
-# Delete Product By ID
 @router.delete("/{product_id}", status_code=status.HTTP_200_OK, response_model=ProductOutDelete, dependencies=[Depends(check_admin_role)])
 def delete_product(
         product_id: int,

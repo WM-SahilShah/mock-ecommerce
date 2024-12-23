@@ -2,7 +2,7 @@ from app.database import get_db
 from app.models import User
 from app.schemas.auth import TokenResponse
 from app.responses import ResponseHandler
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
@@ -41,11 +41,10 @@ async def get_user_token(id: int, refresh_token: str = None) -> TokenResponse:
         expires_in=access_token_expiry.seconds
     )
 
-# Create Access Token
-async def create_access_token(data: dict, access_token_expiry: timedelta = None) -> str:
+async def create_access_token(data: dict, access_token_expiry: timedelta) -> str:
     "Create a JWT access token for a given payload."
     payload = data.copy()
-    expire = datetime.utcnow() + access_token_expiry if access_token_expiry else datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + access_token_expiry
     payload.update({"exp": expire})
 
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)

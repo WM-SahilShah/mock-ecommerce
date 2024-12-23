@@ -26,8 +26,6 @@ def get_user(
     "Retrieve a specific user by their ID."
     return UserService.get_user(db, user_id)
 
-
-# Create New User
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserOut, dependencies=[Depends(check_admin_role)])
 def create_user(
         user: UserCreate,
