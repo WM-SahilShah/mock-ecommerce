@@ -9,7 +9,6 @@ engine = create_engine(DB_URL)
 
 # Create database tables based on the defined SQLAlchemy models (subclasses of the Base class)
 Base = declarative_base()
-Base.metadata.create_all(engine)
 
 # Connect to the database and provide a session for interacting with it
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

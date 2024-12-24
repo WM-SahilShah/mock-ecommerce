@@ -1,7 +1,7 @@
 from app.database import get_db
 from app.models import User
-from app.schemas.auth import TokenResponse
 from app.responses import ResponseHandler
+from app.schemas.auth import TokenResponse
 from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer

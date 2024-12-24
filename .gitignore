@@ -13,6 +13,9 @@ venv/
 *.sqlite
 *.db
 
+# Alembic migration scripts
+alembic/versions/
+
 # VSCode and IDE files
 .vscode/
 
