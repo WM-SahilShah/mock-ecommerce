@@ -1,6 +1,6 @@
-from app.database import get_db
+from app.database.database import get_db
 from app.services.auth import AuthService
-from app.schemas.auth import UserOut, Signup
+from app.schemas.auth import TokenResponse, UserOut, Signup
 from fastapi import APIRouter, Depends, status, Header
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -16,18 +16,18 @@ async def user_signup(
     return await AuthService.signup(db, user)
 
 
-@router.post("/login", status_code=status.HTTP_200_OK)
+@router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)
 async def user_login(
         user_credentials: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)
-    ) -> dict:
+    ) -> TokenResponse:
     "Login an existing user."
     return await AuthService.login(user_credentials, db)
 
-@router.post("/refresh", status_code=status.HTTP_200_OK)
+@router.post("/refresh", status_code=status.HTTP_200_OK, response_model=TokenResponse)
 async def refresh_access_token(
         refresh_token: str = Header(),
         db: Session = Depends(get_db)
-    ) -> dict:
+    ) -> TokenResponse:
     "Refresh the user's access token."
     return await AuthService.get_refresh_token(token=refresh_token, db=db)

@@ -1,5 +1,5 @@
-from app.database import get_db
-from app.security import auth_scheme
+from app.database.database import get_db
+from app.core.security import auth_scheme
 from app.services.accounts import AccountService
 from app.schemas.accounts import AccountOut, AccountUpdate
 from fastapi import APIRouter, Depends

@@ -1,7 +1,7 @@
-from app.models import User
-from app.responses import ResponseHandler
+from app.database.models import User
+from app.core.responses import ResponseHandler
 from app.schemas.users import UserCreate, UserUpdate
-from app.security import get_password_hash
+from app.core.security import get_password_hash
 from sqlalchemy.orm import Session
 
 class UserService:

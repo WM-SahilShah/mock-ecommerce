@@ -1,7 +1,7 @@
 from alembic import context
-from app.database import Base
-from app.settings import DB_URL
-from app.models import User, Cart, CartItem, Product
+from app.database.database import Base
+from app.core.settings import DB_URL
+from app.database.models import User, Cart, CartItem, Product
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 

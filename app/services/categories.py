@@ -1,5 +1,5 @@
-from app.models import Category
-from app.responses import ResponseHandler
+from app.database.models import Category
+from app.core.responses import ResponseHandler
 from app.schemas.categories import CategoryCreate, CategoryUpdate
 from sqlalchemy.orm import Session
 

@@ -1,15 +1,15 @@
-from app.database import get_db
-from app.models import User
-from app.responses import ResponseHandler
+from app.database.database import get_db
+from app.database.models import User
+from app.core.responses import ResponseHandler
 from app.schemas.auth import TokenResponse
 from datetime import datetime, timedelta, timezone
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from app.settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from app.core.settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
 # Password Hashing Context
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -77,4 +77,4 @@ def check_admin_role(
     user_id = user.get('id')
     role_user = db.query(User).filter(User.id == user_id).first()
     if role_user.role != "admin":
-        raise HTTPException(status_code=403, detail="Admin role required")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin role required")

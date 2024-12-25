@@ -1,5 +1,5 @@
-from app.database import get_db
-from app.security import check_admin_role
+from app.database.database import get_db
+from app.core.security import check_admin_role
 from app.services.products import ProductService
 from app.schemas.products import ProductCreate, ProductOut, ProductsOut, ProductOutDelete, ProductUpdate
 from fastapi import APIRouter, Depends, Query, status

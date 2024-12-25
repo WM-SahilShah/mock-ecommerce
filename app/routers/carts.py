@@ -1,4 +1,4 @@
-from app.database import get_db
+from app.database.database import get_db
 from app.services.carts import CartService
 from app.schemas.carts import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOutList
 from fastapi import APIRouter, Depends, Query, status

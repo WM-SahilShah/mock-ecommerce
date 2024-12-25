@@ -1,5 +1,5 @@
-from app.database import get_db
-from app.security import check_admin_role
+from app.database.database import get_db
+from app.core.security import check_admin_role
 from app.services.categories import CategoryService
 from app.schemas.categories import CategoryCreate, CategoryOut, CategoriesOut, CategoryOutDelete, CategoryUpdate
 from fastapi import APIRouter, Depends, Query, status

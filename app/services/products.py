@@ -1,5 +1,5 @@
-from app.models import Category, Product
-from app.responses import ResponseHandler
+from app.database.models import Category, Product
+from app.core.responses import ResponseHandler
 from app.schemas.products import ProductCreate, ProductUpdate
 from sqlalchemy.orm import Session
 
