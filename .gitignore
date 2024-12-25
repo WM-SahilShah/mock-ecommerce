@@ -9,10 +9,6 @@ __pycache__/
 venv/
 *.env
 
-# Database files (PostgreSQL, SQLite, etc.)
-*.sqlite
-*.db
-
 # VSCode and IDE files
 .vscode/
 
