@@ -13,22 +13,8 @@ venv/
 *.sqlite
 *.db
 
-# Alembic migration scripts
-alembic/versions/
-
 # VSCode and IDE files
 .vscode/
-
-# Test or coverage reports
-*.cover
-.coverage
-.tox/
-.nox/
-.dist/
-*.egg-info/
-.eggs/
-nosetests.xml
-coverage.xml
 
 # Log files
 *.log

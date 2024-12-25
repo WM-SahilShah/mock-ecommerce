@@ -1,7 +1,7 @@
+from app.config.security import check_admin_role
 from app.database.database import get_db
-from app.core.security import check_admin_role
-from app.services.products import ProductService
 from app.schemas.products import ProductCreate, ProductOut, ProductsOut, ProductOutDelete, ProductUpdate
+from app.services.products import ProductService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 

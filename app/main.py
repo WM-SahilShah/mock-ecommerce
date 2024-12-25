@@ -7,7 +7,7 @@ Welcome to the Mock E-Commerce API! 🚀
 This API provides a comprehensive set of functionalities for managing your e-commerce platform.
 Key features include:
 
-- **Crud**
+- **CRUD**
 	- Create, Read, Update, and Delete endpoints.
 - **Search**
 	- Find specific information with parameters and pagination.

@@ -14,6 +14,12 @@ class ResponseHandler:
         return ResponseHandler.success(message, data)
 
     @staticmethod
+    def get_all_success(page: int, limit: int, name: str, data: Any) -> dict:
+        "Returns a success response for a single resource with a message and data."
+        message = f"Page {page} with limit {limit} {name}"
+        return ResponseHandler.success(message, data)
+
+    @staticmethod
     def create_success(name: str, id: int, data: Any) -> dict:
         "Returns a success response when a resource is created."
         message = f"{name} with id {id} created successfully"
