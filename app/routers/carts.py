@@ -34,7 +34,7 @@ def create_cart(
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)
     ) -> CartOut:
     "Create a new cart."
-    return CartService.create_cart(token, db, cart)
+    return CartService.create_cart(token, db, cart) # id 300s
 
 @router.put("/{cart_id}", status_code=status.HTTP_200_OK, response_model=CartOut)
 def update_cart(

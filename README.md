@@ -8,10 +8,10 @@ A simple Ecommerce API built with Fast API Framework
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [API Endpoints](#api-endpoints)
-- [Screenshots](#screenshots)
+- [Screenshots](#screenshots) # Remove
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Contributing](#contributing) # Remove
 
 ## Resources
 
@@ -94,6 +94,7 @@ A simple Ecommerce API built with Fast API Framework
 | Get User By ID* | GET | `/users/{user_id}/` | Get details of a specific user by ID | Admin |
 | Update User By ID* | PUT | `/users/{user_id}/` | Update details of a specific user by ID | Admin |
 | Delete User By ID* | DELETE | `/users/{user_id}/` | Delete a specific user by ID | Admin |
+// Add cart endpoints
 
 ## Installation
 

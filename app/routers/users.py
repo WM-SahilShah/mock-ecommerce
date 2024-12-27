@@ -32,7 +32,7 @@ def create_user(
         db: Session = Depends(get_db)
     ) -> UserOut:
     "Create a new user."
-    return UserService.create_user(db, user)
+    return UserService.create_user(db, user) # 500 -> 400, id 500s
 
 @router.put("/{user_id}", status_code=status.HTTP_200_OK, response_model=UserOut, dependencies=[Depends(check_admin_role)])
 def update_user(
