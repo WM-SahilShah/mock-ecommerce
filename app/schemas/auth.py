@@ -1,36 +1,13 @@
-from app.schemas.carts import CartBase
-from datetime import datetime
-from pydantic import BaseModel, EmailStr
-from typing import List
+from app.schemas.users import UserBase, BaseConfig
+from pydantic import BaseModel
 
-class BaseConfig:
-    "Base configuration for Pydantic models."
-    from_attributes = True
-
-class UserBase(BaseModel):
-    "Schema for basic user details."
-    id: int
-    username: str
-    email: EmailStr
-    full_name: str
-    password: str
-    role: str
-    is_active: bool
-    created_at: datetime
-    carts: List[CartBase]
-
-    class Config(BaseConfig):
-        pass
-
-class Signup(BaseModel):
+class Signup(UserBase):
     "Schema for user signup details."
-    full_name: str
-    username: str
-    email: str
-    password: str
-
-    class Config(BaseConfig):
-        pass
+    id: None
+    role: None
+    is_active: None
+    created_at: None
+    carts: None
 
 class UserOut(BaseModel):
     "Schema for user output with a message and user data."

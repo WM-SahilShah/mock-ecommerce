@@ -1,18 +1,11 @@
-from app.schemas.products import CategoryBase, ProductBase
+from app.schemas.products import CategoryBase, ProductBase, BaseConfig
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List
 
-class BaseConfig:
-    "Base configuration for Pydantic models."
-    from_attributes = True
-
 class ProductBaseCart(ProductBase):
     "Schema for product details within a cart."
     category: CategoryBase = Field(exclude=True)
-
-    class Config(BaseConfig):
-        pass
 
 class CartItemBase(BaseModel):
     "Schema for a cart item."
@@ -33,16 +26,9 @@ class CartBase(BaseModel):
     class Config(BaseConfig):
         pass
 
-class CartOutBase(BaseModel):
+class CartOutBase(CartBase):
     "Schema for cart details output."
-    id: int
-    user_id: int
-    created_at: datetime
-    total_amount: float
-    cart_items: List[CartItemBase]
-
-    class Config(BaseConfig):
-        pass
+    pass
 
 class CartOut(BaseModel):
     "Schema for a single cart response."

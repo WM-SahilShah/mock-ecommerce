@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from app.config.logging import logger
 from app.config.responses import ResponseHandler
 from app.database.models import Category, Product
@@ -33,19 +34,29 @@ class ProductService:
         logger.info(f"Successfully retrieved product: {product.title} (ID: {product.id}).")
         return ResponseHandler.get_single_success(product.title, product_id, product)
 
-    @staticmethod
     def create_product(db: Session, product: ProductCreate) -> dict:
-        "Create a new product."
+        "Create a new product"
         logger.info(f"Creating product with title '{product.title}' and category ID {product.category_id}.")
+        # Check for empty values
+        for field, value in product.model_dump().items():
+            if not value and value!=0:
+                logger.error(f"Field '{field}' cannot be empty.")
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                    detail=f"Field '{field}' cannot be empty.")
+        # Check if category exists
         category_exists = (db.query(Category)
-                           .filter(Category.id == product.category_id)
-                           .first())
+                            .filter(Category.id == product.category_id)
+                            .first())
         if not category_exists:
             logger.error(f"Category with ID {product.category_id} not found.")
             ResponseHandler.not_found_error("Category", product.category_id)
-        
-        product_dict = product.model_dump()
-        db_product = Product(**product_dict)
+        max_id = (db.query(Product.id)
+                  .filter(Product.id >= 200)
+                  .order_by(Product.id.desc())
+                  .first())
+        new_product_id = max_id.id+1 if max_id else 200
+        # Insert into db
+        db_product = Product(id=new_product_id, **product.model_dump())
         db.add(db_product)
         db.commit()
         db.refresh(db_product)

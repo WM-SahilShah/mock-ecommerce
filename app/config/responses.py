@@ -1,6 +1,14 @@
 from fastapi import HTTPException, status
 from typing import Optional, Any
 
+class NEstr(str):
+    "Non-Empty string type"
+    def __new__(cls, value: str) -> "NEstr":
+        if not value:
+            raise ValueError("String cannot be empty")
+        return super().__new__(cls, value)
+
+
 class ResponseHandler:
     @staticmethod
     def success(message: str, data: Optional[Any] = None) -> dict:

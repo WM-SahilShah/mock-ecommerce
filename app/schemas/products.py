@@ -1,31 +1,28 @@
-from app.schemas.categories import CategoryBase
+from app.config.responses import NEstr
+from app.schemas.categories import CategoryBase, BaseConfig
 from datetime import datetime
 from pydantic import BaseModel, field_validator
-from typing import ClassVar, List, Optional
-
-class BaseConfig:
-    "Base configuration for Pydantic models."
-    from_attributes = True
+from typing import ClassVar, List
 
 class ProductBase(BaseModel):
     "Schema for basic product details."
     id: int
-    title: str
-    description: Optional[str]
+    title: NEstr
+    description: NEstr
     price: int
     discount_percentage: float
     rating: float
     stock: int
-    brand: str
-    thumbnail: str
-    images: List[str]
+    brand: NEstr
+    thumbnail: NEstr
+    images: List[NEstr]
     is_published: bool
     created_at: datetime
     category_id: int
     category: CategoryBase
 
     @field_validator("discount_percentage", pre=True)
-    def validate_discount_percentage(cls, v):
+    def validate_discount_percentage(cls, v: float) -> float:
         "Ensure discount percentage is between 0 and 100."
         if v<0 or v>100:
             raise ValueError("discount_percentage must be between 0 and 100")

@@ -1,20 +1,16 @@
-from app.schemas.carts import CartBase
+from app.config.responses import NEstr
+from app.schemas.carts import CartBase, BaseConfig
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
 from typing import List
 
-class BaseConfig:
-    "Base configuration for Pydantic models."
-    from_attributes = True
-
 class UserBase(BaseModel):
-    "Schema for basic user details."
     id: int
-    username: str
+    username: NEstr
     email: EmailStr
-    full_name: str
-    password: str
-    role: str
+    full_name: NEstr
+    password: NEstr
+    role: NEstr
     is_active: bool
     created_at: datetime
     carts: List[CartBase]
@@ -22,22 +18,17 @@ class UserBase(BaseModel):
     class Config(BaseConfig):
         pass
 
-class UserCreate(BaseModel):
-    "Schema for creating a user."
-    full_name: str
-    username: str
-    email: str
-    password: str
-
-    class Config(BaseConfig):
-        pass
+class UserCreate(UserBase):
+    id: None
+    role: None
+    is_active: None
+    created_at: None
+    carts: None
 
 class UserUpdate(UserCreate):
-    "Schema for updating a user."
-    pass
+    email: None
 
 class UserOut(BaseModel):
-    "Schema for single user output."
     message: str
     data: UserBase
 
@@ -45,17 +36,11 @@ class UserOut(BaseModel):
         pass
 
 class UsersOut(BaseModel):
-    "Schema for multiple users output."
     message: str
     data: List[UserBase]
 
     class Config(BaseConfig):
         pass
 
-class UserOutDelete(BaseModel):
-    "Schema for user deletion output."
-    message: str
-    data: UserBase
-
-    class Config(BaseConfig):
-        pass
+class UserOutDelete(UserOut):
+    pass
