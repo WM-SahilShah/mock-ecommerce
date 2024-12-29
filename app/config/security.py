@@ -46,6 +46,7 @@ async def get_user_token(id: int, refresh_token: str = None) -> TokenResponse:
         expires_in=access_token_expiry.seconds
     )
 
+# Create Access Token
 async def create_access_token(data: dict, access_token_expiry: timedelta) -> str:
     "Create a JWT access token for a given payload."
     logger.info("Creating access token.")

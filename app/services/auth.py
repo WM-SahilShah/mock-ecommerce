@@ -33,6 +33,12 @@ class AuthService:
     async def signup(db: Session, user: Signup) -> dict:
         "Sign up a new user."
         logger.info(f"Attempting to sign up user: {user.username}")
+        if not user.username or not user.password or not user.email:
+            logger.error("Signup failed: Missing required fields.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Missing required fields: username, password, and email are mandatory."
+            )
         existing_user = (db.query(User)
                          .filter(User.username == user.username)
                          .first())

@@ -8,10 +8,9 @@ A simple Ecommerce API built with Fast API Framework
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [API Endpoints](#api-endpoints)
-- [Screenshots](#screenshots) # Remove
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing) # Remove
+
 
 ## Resources
 
@@ -63,10 +62,7 @@ A simple Ecommerce API built with Fast API Framework
 	- An SQL toolkit and Object-Relational Mapping (ORM) library for Python, useful for database interactions.
 
 
-
 ## API Endpoints
-
-
 
 | Endpoint | HTTP Method | Path | Description | User Type |
 |----------|-------------|------|-------------|-----------|
@@ -79,22 +75,27 @@ A simple Ecommerce API built with Fast API Framework
 | Get My Account Info | GET | `/me/` | Get information about the authenticated user | User |
 | Edit My Account Info | PUT | `/me/` | Edit the information of the authenticated user | User |
 | Remove My Account | DELETE | `/me/` | Remove the account of the authenticated user | User |
-| Product List | GET | `/products/` | Get a list of all products | User |
-| Create Product* | POST | `/products/` | Create a new product | Admin |
-| Retrieve Product by ID | GET | `/products/{id}/` | Get details of a specific product by ID | User |
-| Update Product by ID* | PUT | `/products/{id}/` | Update details of a specific product by ID | Admin |
-| Delete Product by ID* | DELETE | `/products/{id}/` | Delete a specific product by ID | Admin |
 | Category List | GET | `/categories/` | Get a list of all categories | User |
 | Create Category* | POST | `/categories/` | Create a new category | Admin |
 | Retrieve Category by ID | GET | `/categories/{id}/` | Get details of a specific category by ID | User |
 | Update Category by ID* | PUT | `/categories/{id}/` | Update details of a specific category by ID | Admin |
 | Delete Category by ID* | DELETE | `/categories/{id}/` | Delete a specific category by ID | Admin |
+| Product List | GET | `/products/` | Get a list of all products | User |
+| Create Product* | POST | `/products/` | Create a new product | Admin |
+| Retrieve Product by ID | GET | `/products/{id}/` | Get details of a specific product by ID | User |
+| Update Product by ID* | PUT | `/products/{id}/` | Update details of a specific product by ID | Admin |
+| Delete Product by ID* | DELETE | `/products/{id}/` | Delete a specific product by ID | Admin |
+| Cart List | GET | `/carts/` | Get a list of all carts made by the user | User |
+| Create Cart | POST | `/carts/` | Create a new cart for the user | User |
+| Retrieve Cart by ID | GET | `/carts/{id}/` | Get details of a specific cart by ID | User |
+| Update Cart by ID | PUT | `/carts/{id}/` | Update details of a specific cart by ID | User |
+| Delete Cart by ID | DELETE | `/carts/{id}/` | Delete a specific cart by ID | User |
 | User List* | GET | `/users/` | Get a list of all users | Admin |
 | Create User* | POST | `/users/` | Create a new user | Admin |
 | Get User By ID* | GET | `/users/{user_id}/` | Get details of a specific user by ID | Admin |
 | Update User By ID* | PUT | `/users/{user_id}/` | Update details of a specific user by ID | Admin |
 | Delete User By ID* | DELETE | `/users/{user_id}/` | Delete a specific user by ID | Admin |
-// Add cart endpoints
+
 
 ## Installation
 
@@ -119,6 +120,7 @@ A simple Ecommerce API built with Fast API Framework
    ```
 
 The API will be accessible at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
 
 ## Usage
 

@@ -3,6 +3,7 @@ from app.config.responses import ResponseHandler
 from app.config.security import get_current_user
 from app.database.models import Cart, CartItem, Product
 from app.schemas.carts import CartCreate, CartUpdate
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 
 
@@ -39,14 +40,27 @@ class CartService:
 
     @staticmethod
     def create_cart(token: str, db: Session, cart: CartCreate) -> dict:
-        "Create a new cart."
+        """Create a new cart with IDs always in the 300s."""
         logger.info("Creating a new cart.")
+        if not cart.cart_items:
+            logger.error("Cart creation failed: Empty or incomplete request.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Cart cannot be empty. Please provide cart items."
+            )
+        # Extract cart data
         user_id = get_current_user(token)
         cart_dict = cart.model_dump()
         cart_items_data = cart_dict.pop("cart_items", [])
         cart_items = []
         total_amount = 0
-        # Add each product to cart
+        # Assign a unique cart ID in the 300s
+        max_id = (db.query(Cart.id)
+                  .filter(Cart.id >= 300)
+                  .order_by(Cart.id.desc())
+                  .first())
+        new_cart_id = max_id.id+1 if max_id else 300
+        # Add each product to the cart
         for item_data in cart_items_data:
             product_id = item_data["product_id"]
             quantity = item_data["quantity"]
@@ -60,8 +74,8 @@ class CartService:
             cart_item = CartItem(product_id=product_id, quantity=quantity, subtotal=subtotal)
             total_amount += subtotal
             cart_items.append(cart_item)
-        # Add cart to db
-        cart_db = Cart(cart_items=cart_items, user_id=user_id, total_amount=total_amount, **cart_dict)
+        # Create a new Cart instance
+        cart_db = Cart(id=new_cart_id, cart_items=cart_items, user_id=user_id, total_amount=total_amount, **cart_dict)
         db.add(cart_db)
         db.commit()
         db.refresh(cart_db)

@@ -13,7 +13,7 @@ async def user_signup(
         db: Session = Depends(get_db)
     ) -> UserOut:
     "Sign up a new user."
-    return await AuthService.signup(db, user) # 500 -> 400
+    return await AuthService.signup(db, user)
 
 
 @router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)

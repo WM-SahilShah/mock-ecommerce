@@ -31,7 +31,7 @@ def create_category(
         db: Session = Depends(get_db)
     ) -> CategoryOut:
     "Create a new category."
-    return CategoryService.create_category(db, category) # id 100s
+    return CategoryService.create_category(db, category)
 
 @router.put("/{category_id}", status_code=status.HTTP_200_OK, response_model=CategoryOut, dependencies=[Depends(check_admin_role)])
 def update_category(

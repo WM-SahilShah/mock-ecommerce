@@ -6,6 +6,7 @@ from app.database.database import Base
 from app.database.models import User, Cart, CartItem, Product # Unused imports imp for db
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
+
 # Access Alembic configuration
 config = context.config
 config.set_main_option("sqlalchemy.url", DB_URL)

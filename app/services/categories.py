@@ -2,6 +2,7 @@ from app.config.logging import logger
 from app.config.responses import ResponseHandler
 from app.database.models import Category
 from app.schemas.categories import CategoryCreate, CategoryUpdate
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 class CategoryService:
@@ -35,10 +36,22 @@ class CategoryService:
 
     @staticmethod
     def create_category(db: Session, category: CategoryCreate) -> dict:
-        "Create a new category."
+        "Create a new category with ID in the 100s."
         logger.info(f"Creating new category with name {category.name}.")
-        category_dict = category.model_dump()
-        db_category = Category(**category_dict)
+        if not category or not category.name:
+            logger.error("Category creation failed: Name is required.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Category name is required."
+            )
+        # Find the next unique ID in the 100s        
+        max_id = (db.query(Category.id)
+                  .filter(Category.id >= 100)
+                  .order_by(Category.id.desc())
+                  .first())
+        new_category_id = max_id.id+1 if max_id else 100
+        # Create a new category
+        db_category = Category(id=new_category_id, **category.model_dump())
         db.add(db_category)
         db.commit()
         db.refresh(db_category)
@@ -55,10 +68,9 @@ class CategoryService:
         if not db_category:
             logger.error(f"Category with ID {category_id} not found.")
             ResponseHandler.not_found_error("Category", category_id)
-        
+        # Update category values
         for key, value in updated_category.model_dump().items():
             setattr(db_category, key, value)
-        
         db.commit()
         db.refresh(db_category)
         logger.info(f"Successfully updated category {db_category.name} (ID: {db_category.id}).")
@@ -74,7 +86,7 @@ class CategoryService:
         if not db_category:
             logger.error(f"Category with ID {category_id} not found.")
             ResponseHandler.not_found_error("Category", category_id)
-        
+        # Delete in db
         db.delete(db_category)
         db.commit()
         logger.info(f"Successfully deleted category {db_category.name} (ID: {db_category.id}).")
