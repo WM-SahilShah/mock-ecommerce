@@ -1,21 +1,21 @@
-from app.config.responses import NEstr, BaseConfig
+from app.config.responses import BaseConfig
 from app.schemas.categories import CategoryBase
 from datetime import datetime
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 from typing import ClassVar, List
 
 class ProductBase(BaseModel):
     "Schema for basic product details."
     id: int
-    title: NEstr
-    description: NEstr
+    title: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=1)
     price: int
     discount_percentage: float
     rating: float
     stock: int
-    brand: NEstr
-    thumbnail: NEstr
-    images: List[NEstr]
+    brand: str = Field(..., min_length=1)
+    thumbnail: str = Field(..., min_length=1)
+    images: List[str] = Field(..., min_length=1)
     is_published: bool
     created_at: datetime
     category_id: int

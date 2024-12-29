@@ -1,11 +1,11 @@
-from app.config.responses import BaseConfig, NEstr
-from pydantic import BaseModel
+from app.config.responses import BaseConfig
+from pydantic import BaseModel, Field
 from typing import List
 
 class CategoryBase(BaseModel):
     "Schema for basic category details."
     id: int
-    name: NEstr
+    name: str = Field(..., min_length=1)
     
     class Config(BaseConfig):
         pass

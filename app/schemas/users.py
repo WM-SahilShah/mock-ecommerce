@@ -1,16 +1,16 @@
-from app.config.responses import NEstr, BaseConfig
+from app.config.responses import BaseConfig
 from app.schemas.carts import CartBase
 from datetime import datetime
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import List
 
 class UserBase(BaseModel):
     id: int
-    username: NEstr
+    username: str = Field(..., min_length=1)
     email: EmailStr
-    full_name: NEstr
-    password: NEstr
-    role: NEstr
+    full_name: str = Field(..., min_length=1)
+    password: str = Field(..., min_length=1)
+    role: str = Field(..., min_length=1)
     is_active: bool
     created_at: datetime
     carts: List[CartBase]
