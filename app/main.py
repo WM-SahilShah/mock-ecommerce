@@ -1,4 +1,4 @@
-from app.routers import products, categories, carts, users, auth, accounts
+from app.routers import products, categories, carts, users, auth, accounts, home
 from fastapi import FastAPI
 
 description = """
@@ -40,7 +40,7 @@ app = FastAPI(
     },
 )
 
-
+app.include_router(home.router)
 app.include_router(auth.router)
 app.include_router(accounts.router)
 app.include_router(categories.router)

@@ -1,5 +1,5 @@
-from app.config.responses import NEstr
-from app.schemas.categories import CategoryBase, BaseConfig
+from app.config.responses import NEstr, BaseConfig
+from app.schemas.categories import CategoryBase
 from datetime import datetime
 from pydantic import BaseModel, field_validator
 from typing import ClassVar, List
@@ -21,7 +21,7 @@ class ProductBase(BaseModel):
     category_id: int
     category: CategoryBase
 
-    @field_validator("discount_percentage", pre=True)
+    @field_validator("discount_percentage", mode="before")
     def validate_discount_percentage(cls, v: float) -> float:
         "Ensure discount percentage is between 0 and 100."
         if v<0 or v>100:

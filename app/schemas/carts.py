@@ -1,4 +1,5 @@
-from app.schemas.products import CategoryBase, ProductBase, BaseConfig
+from app.config.responses import BaseConfig
+from app.schemas.products import CategoryBase, ProductBase
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List

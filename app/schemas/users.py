@@ -1,5 +1,5 @@
-from app.config.responses import NEstr
-from app.schemas.carts import CartBase, BaseConfig
+from app.config.responses import NEstr, BaseConfig
+from app.schemas.carts import CartBase
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
 from typing import List

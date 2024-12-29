@@ -1,12 +1,8 @@
-from app.config.responses import NEstr
+from app.config.responses import BaseConfig, NEstr
 from app.schemas.carts import CartBase
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
 from typing import List
-
-class BaseConfig:
-    "Base configuration for Pydantic models."
-    from_attributes = True
 
 class AccountBase(BaseModel):
     "Schema for basic account details."

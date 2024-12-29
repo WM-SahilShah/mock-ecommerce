@@ -1,4 +1,5 @@
-from app.schemas.users import UserBase, BaseConfig
+from app.config.responses import BaseConfig
+from app.schemas.users import UserBase
 from pydantic import BaseModel
 
 class Signup(UserBase):

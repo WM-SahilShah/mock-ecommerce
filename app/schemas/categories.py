@@ -1,8 +1,6 @@
-from app.config.responses import NEstr
+from app.config.responses import BaseConfig, NEstr
 from pydantic import BaseModel
 from typing import List
-
-from app.schemas.accounts import BaseConfig
 
 class CategoryBase(BaseModel):
     "Schema for basic category details."
