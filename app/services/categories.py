@@ -36,7 +36,7 @@ class CategoryService:
 
     @staticmethod
     def create_category(db: Session, category: CategoryCreate) -> dict:
-        "Create a new category with ID in the 100s."
+        "Create a new category"
         logger.info(f"Creating new category with name {category.name}.")
         if not category or not category.name:
             logger.error("Category creation failed: Name is required.")

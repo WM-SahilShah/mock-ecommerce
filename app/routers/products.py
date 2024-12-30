@@ -31,7 +31,7 @@ def create_product(
         db: Session = Depends(get_db)
     ) -> ProductOut:
     "Create a new product."
-    return ProductService.create_product(db, product) # id 200s
+    return ProductService.create_product(db, product)
 
 @router.put("/{product_id}", status_code=status.HTTP_200_OK, response_model=ProductOut, dependencies=[Depends(check_admin_role)])
 def update_product(

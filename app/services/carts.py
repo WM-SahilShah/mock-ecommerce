@@ -6,7 +6,6 @@ from app.schemas.carts import CartCreate, CartUpdate
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 
-
 class CartService:
     "Service for cart-related actions."
 
@@ -40,7 +39,7 @@ class CartService:
 
     @staticmethod
     def create_cart(token: str, db: Session, cart: CartCreate) -> dict:
-        """Create a new cart with IDs always in the 300s."""
+        "Create a new cart"
         logger.info("Creating a new cart.")
         if not cart.cart_items:
             logger.error("Cart creation failed: Empty or incomplete request.")

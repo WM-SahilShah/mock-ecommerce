@@ -3,12 +3,11 @@ from app.config.responses import ResponseHandler
 from app.config.security import get_password_hash, get_token_payload, get_user_token, verify_password
 from app.database.database import get_db
 from app.database.models import User
-from app.schemas.auth import Signup, TokenResponse
+from app.schemas.auth import TokenResponse
+from app.schemas.users import UserCreate
 from fastapi import Depends, HTTPException, status
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-
-from app.schemas.users import UserCreate
 
 class AuthService:
     "Service for authentication-related actions."
