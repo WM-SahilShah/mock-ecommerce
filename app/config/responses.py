@@ -3,7 +3,6 @@ from typing import Optional, Any
 
 class BaseConfig:
     "Base configuration for Pydantic models"
-    arbitrary_types_allowed = True
     from_attributes = True
 
 
