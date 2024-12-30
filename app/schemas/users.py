@@ -1,32 +1,19 @@
 from app.config.responses import BaseConfig
-from app.schemas.carts import CartBase
-from datetime import datetime
+from app.schemas.accounts import BaseAttributes, UpdateAttributes
 from pydantic import BaseModel, EmailStr, Field
 from typing import List
 
-class UserBase(BaseModel):
-    id: int
-    username: str = Field(..., min_length=1)
-    email: EmailStr
-    full_name: str = Field(..., min_length=1)
-    password: str = Field(..., min_length=1)
-    role: str = Field(..., min_length=1)
-    is_active: bool
-    created_at: datetime
-    carts: List[CartBase]
-
+class UserUpdate(UpdateAttributes):
+    password: str = Field(...,min_length=1)
+    
     class Config(BaseConfig):
         pass
 
-class UserCreate(UserBase):
-    id: None
-    role: None
-    is_active: None
-    created_at: None
-    carts: None
+class UserCreate(UserUpdate):
+    email: EmailStr
 
-class UserUpdate(UserCreate):
-    email: None
+class UserBase(UserCreate, BaseAttributes):
+    pass
 
 class UserOut(BaseModel):
     message: str

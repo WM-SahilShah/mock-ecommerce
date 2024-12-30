@@ -40,10 +40,8 @@ class CategoryService:
         logger.info(f"Creating new category with name {category.name}.")
         if not category or not category.name:
             logger.error("Category creation failed: Name is required.")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Category name is required."
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Category name is required.")
         # Find the next unique ID in the 100s        
         max_id = (db.query(Category.id)
                   .filter(Category.id >= 100)

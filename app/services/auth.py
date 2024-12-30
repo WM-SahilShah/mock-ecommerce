@@ -5,10 +5,10 @@ from app.database.database import get_db
 from app.database.models import User
 from app.schemas.auth import Signup, TokenResponse
 from fastapi import Depends, HTTPException, status
-from fastapi.security.oauth2 import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+from app.schemas.users import UserCreate
 
 class AuthService:
     "Service for authentication-related actions."
@@ -22,29 +22,30 @@ class AuthService:
                 .first())
         if not user:
             logger.error(f"Login failed: No such username exists for {user_credentials.username}.")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No such username exists.")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail="No such username exists.")
         if not verify_password(user_credentials.password, user.password):
             logger.error(f"Login failed: Incorrect password for {user_credentials.username}.")
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password.")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="Incorrect username or password.")
         logger.info(f"User {user_credentials.username} logged in successfully.")
         return await get_user_token(id=user.id)
 
     @staticmethod
-    async def signup(db: Session, user: Signup) -> dict:
+    async def signup(db: Session, user: UserCreate) -> dict:
         "Sign up a new user."
         logger.info(f"Attempting to sign up user: {user.username}")
         if not user.username or not user.password or not user.email:
             logger.error("Signup failed: Missing required fields.")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Missing required fields: username, password, and email are mandatory."
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Missing required fields: username, password, and email are mandatory.")
         existing_user = (db.query(User)
                          .filter(User.username == user.username)
                          .first())
         if existing_user:
             logger.error(f"Signup failed: Username {user.username} already exists.")
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists.")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="User already exists.")
         hashed_password = get_password_hash(user.password)
         user.password = hashed_password
         db_user = User(id=None, **user.model_dump())

@@ -1,13 +1,12 @@
+from app.config.security import auth_scheme
 from app.database.database import get_db
 from app.schemas.carts import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOutList
 from app.services.carts import CartService
 from fastapi import APIRouter, Depends, Query, status
-from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["Carts"], prefix="/carts")
-auth_scheme = HTTPBearer()
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=CartsOutList)
 def get_all_carts(

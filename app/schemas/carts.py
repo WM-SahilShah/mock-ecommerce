@@ -44,18 +44,16 @@ class CartsOutList(BaseModel):
     message: str
     data: List[CartBase]
 
-class CartsUserOutList(BaseModel):
+class CartsUserOutList(CartsOutList):
     "Schema for a list of user carts response."
-    message: str
-    data: List[CartBase]
+    pass
 
     class Config(BaseConfig):
         pass
 
-class CartOutDelete(BaseModel):
+class CartOutDelete(CartOut):
     "Schema for cart deletion response."
-    message: str
-    data: CartOutBase
+    pass
 
 class CartItemCreate(BaseModel):
     "Schema for creating a cart item."

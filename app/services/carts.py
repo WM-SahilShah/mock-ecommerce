@@ -44,10 +44,8 @@ class CartService:
         logger.info("Creating a new cart.")
         if not cart.cart_items:
             logger.error("Cart creation failed: Empty or incomplete request.")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Cart cannot be empty. Please provide cart items."
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Cart cannot be empty. Please provide cart items.")
         # Extract cart data
         user_id = get_current_user(token)
         cart_dict = cart.model_dump()

@@ -1,5 +1,6 @@
 from app.database.database import get_db
-from app.schemas.auth import TokenResponse, UserOut, Signup
+from app.schemas.auth import TokenResponse
+from app.schemas.users import UserCreate, UserOut
 from app.services.auth import AuthService
 from fastapi import APIRouter, Depends, status, Header
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
@@ -7,9 +8,9 @@ from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["Auth"], prefix="/auth")
 
-@router.post("/signup", status_code=status.HTTP_200_OK, response_model=UserOut)
+@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserOut)
 async def user_signup(
-        user: Signup,
+        user: UserCreate,
         db: Session = Depends(get_db)
     ) -> UserOut:
     "Sign up a new user."

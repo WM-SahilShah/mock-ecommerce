@@ -8,6 +8,6 @@ load_dotenv()
 DB_URL = os.getenv("DB_URL")
 
 # JWT variables
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 1))  #Default to 0 if not set
-ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 1))  # Default: 1
+ALGORITHM = os.getenv("ALGORITHM", "HS256")  # Default: HS256
 SECRET_KEY = os.getenv("SECRET_KEY")
