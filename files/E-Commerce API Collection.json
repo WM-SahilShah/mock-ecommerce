@@ -1,0 +1,3288 @@
+{
+	"info": {
+		"_postman_id": "ab6f1e04-4d8a-42ae-a9f1-5a675c07ba7f",
+		"name": "E-Commerce API",
+		"description": "\nWelcome to the Mock E-Commerce API! 🚀\n\nThis API provides a comprehensive set of functionalities for managing your e-commerce platform.\nKey features include:\n\n- **CRUD**\n\t- Create, Read, Update, and Delete endpoints.\n- **Search**\n\t- Find specific information with parameters and pagination.\n- **Auth**\n\t- Verify user/admin identity.\n\t- Secure with Access and Refresh tokens.\n- **Permission**\n\t- Assign roles with specific permissions.\n\t- Different access levels for User/Admin.\n- **Validation**\n\t- Ensure accurate and secure input data.\n\nFor any inquiries, please contact sshah@watermelon.us\n\n\nContact Support:\n Name: Sahil Shah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39640588"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/auth/signup",
+						"description": "Sign up a new user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/auth/signup"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/auth/signup"
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json()\r",
+									"\r",
+									"pm.variables.set(\"accessToken\", response.accessToken)\r",
+									"pm.variables.set(\"refreshToken\", response.refreshToken)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "<string>",
+									"description": "(Required)"
+								},
+								{
+									"key": "password",
+									"value": "<string>",
+									"description": "(Required)"
+								}
+							]
+						},
+						"url": "{{baseUrl}}/auth/login",
+						"description": "Login an existing user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "password",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "grant_type",
+											"value": "<string>"
+										},
+										{
+											"key": "scope",
+											"value": ""
+										},
+										{
+											"key": "client_id",
+											"value": "<string>"
+										},
+										{
+											"key": "client_secret",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": "{{baseUrl}}/auth/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"access_token\": \"<string>\",\n\t\"refresh_token\": \"<string>\",\n\t\"expires_in\": \"<integer>\",\n\t\"token_type\": \"Bearer\"\n}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "password",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "grant_type",
+											"value": "<string>"
+										},
+										{
+											"key": "scope",
+											"value": ""
+										},
+										{
+											"key": "client_id",
+											"value": "<string>"
+										},
+										{
+											"key": "client_secret",
+											"value": "<string>"
+										}
+									]
+								},
+								"url": "{{baseUrl}}/auth/login"
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json()\r",
+									"\r",
+									"pm.variables.set(\"accessToken\", response.accessToken)\r",
+									"pm.variables.set(\"refreshToken\", response.refreshToken)\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "refresh-token",
+								"value": "{{refreshToken}}",
+								"description": "(Required) "
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{baseUrl}}/auth/refresh",
+						"description": "Refresh the user's access token."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "refresh-token",
+										"value": "<string>",
+										"description": "(Required) "
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/auth/refresh"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"access_token\": \"<string>\",\n\t\"refresh_token\": \"<string>\",\n\t\"expires_in\": \"<integer>\",\n\t\"token_type\": \"Bearer\"\n}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "refresh-token",
+										"value": "<string>",
+										"description": "(Required) "
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/auth/refresh"
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+						}
+					]
+				}
+			],
+			"description": "Group of API calls related to authorizing the requests made to the server.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Me",
+			"item": [
+				{
+					"name": "Get My Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{baseUrl}}/me/",
+						"description": "Fetch information about the current user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/me/"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit My Info",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"email\": \"<email>@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/me/",
+						"description": "Edit the current user's information."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/me/"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/me/"
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove My Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{baseUrl}}/me/",
+						"description": "Remove the current user's account."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer <token>",
+										"description": "Added as a part of security scheme: bearer"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": "{{baseUrl}}/me/"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+						}
+					]
+				}
+			],
+			"description": "Group of API calls related to the CRUD of the current user's details."
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "List",
+					"item": [
+						{
+							"name": "Get All Categories",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/categories/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>",
+											"description": "Page number (Default: 1)",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "<integer>",
+											"description": "Items per page (Default: 10)",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "<string>",
+											"description": "Search based name of categories",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Retrieve all categories with pagination and optional search by name."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/?page=1&limit=10&search=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": [\n\t\t{\n\t\t\t\"name\": \"<string>\",\n\t\t\t\"id\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"<string>\",\n\t\t\t\"id\": \"<integer>\"\n\t\t}\n\t]\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/?page=1&limit=10&search=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Category*",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/categories/",
+								"description": "Create a new category."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/categories/"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"name\": \"<string>\",\n\t\t\"id\": \"<integer>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/categories/"
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of the list of all categories."
+				},
+				{
+					"name": "Unit",
+					"item": [
+						{
+							"name": "Get Category",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/categories/:category_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories",
+										":category_id"
+									],
+									"variable": [
+										{
+											"key": "category_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieve a specific category by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"name\": \"<string>\",\n\t\t\"id\": \"<integer>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Category*",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/categories/:category_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories",
+										":category_id"
+									],
+									"variable": [
+										{
+											"key": "category_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Update an existing category by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"name\": \"<string>\",\n\t\t\"id\": \"<integer>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Category*",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/categories/:category_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"categories",
+										":category_id"
+									],
+									"variable": [
+										{
+											"key": "category_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a category by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"name\": \"<string>\",\n\t\t\"id\": \"<integer>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/categories/:category_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"categories",
+												":category_id"
+											],
+											"variable": [
+												{
+													"key": "category_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of individual categories."
+				}
+			],
+			"description": "Group of API calls related to the CRUD of categories of products"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "List",
+					"item": [
+						{
+							"name": "Get All Products",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/?page=1&limit=10&search=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Page number"
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "Items per page"
+										},
+										{
+											"key": "search",
+											"value": "<string>",
+											"description": "Search based title of products"
+										}
+									]
+								},
+								"description": "Retrieve all products with pagination and optional search by title."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/?page=1&limit=10&search=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": [\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"title\": \"<string>\",\n\t\t\t\"description\": \"<string>\",\n\t\t\t\"price\": \"<integer>\",\n\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\"rating\": \"<number>\",\n\t\t\t\"stock\": \"<integer>\",\n\t\t\t\"brand\": \"<string>\",\n\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\"images\": [\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"category_id\": \"<integer>\",\n\t\t\t\"category\": {\n\t\t\t\t\"name\": \"<string>\",\n\t\t\t\t\"id\": \"<integer>\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"title\": \"<string>\",\n\t\t\t\"description\": \"<string>\",\n\t\t\t\"price\": \"<integer>\",\n\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\"rating\": \"<number>\",\n\t\t\t\"stock\": \"<integer>\",\n\t\t\t\"brand\": \"<string>\",\n\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\"images\": [\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"category_id\": \"<integer>\",\n\t\t\t\"category\": {\n\t\t\t\t\"name\": \"<string>\",\n\t\t\t\t\"id\": \"<integer>\"\n\t\t\t}\n\t\t}\n\t]\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/?page=1&limit=10&search=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Product*",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/products/",
+								"description": "Create a new product."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/products/"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"title\": \"<string>\",\n\t\t\"description\": \"<string>\",\n\t\t\"price\": \"<integer>\",\n\t\t\"discount_percentage\": \"<number>\",\n\t\t\"rating\": \"<number>\",\n\t\t\"stock\": \"<integer>\",\n\t\t\"brand\": \"<string>\",\n\t\t\"thumbnail\": \"<string>\",\n\t\t\"images\": [\n\t\t\t\"<string>\"\n\t\t],\n\t\t\"is_published\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"category_id\": \"<integer>\",\n\t\t\"category\": {\n\t\t\t\"name\": \"<string>\",\n\t\t\t\"id\": \"<integer>\"\n\t\t}\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/products/"
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of the list of all products."
+				},
+				{
+					"name": "Unit",
+					"item": [
+						{
+							"name": "Get Product",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/:product_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":product_id"
+									],
+									"variable": [
+										{
+											"key": "product_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieve a specific product by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"title\": \"<string>\",\n\t\t\"description\": \"<string>\",\n\t\t\"price\": \"<integer>\",\n\t\t\"discount_percentage\": \"<number>\",\n\t\t\"rating\": \"<number>\",\n\t\t\"stock\": \"<integer>\",\n\t\t\"brand\": \"<string>\",\n\t\t\"thumbnail\": \"<string>\",\n\t\t\"images\": [\n\t\t\t\"<string>\"\n\t\t],\n\t\t\"is_published\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"category_id\": \"<integer>\",\n\t\t\"category\": {\n\t\t\t\"name\": \"<string>\",\n\t\t\t\"id\": \"<integer>\"\n\t\t}\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Product*",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/products/:product_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":product_id"
+									],
+									"variable": [
+										{
+											"key": "product_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Update an existing product by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"title\": \"<string>\",\n\t\t\"description\": \"<string>\",\n\t\t\"price\": \"<integer>\",\n\t\t\"discount_percentage\": \"<number>\",\n\t\t\"rating\": \"<number>\",\n\t\t\"stock\": \"<integer>\",\n\t\t\"brand\": \"<string>\",\n\t\t\"thumbnail\": \"<string>\",\n\t\t\"images\": [\n\t\t\t\"<string>\"\n\t\t],\n\t\t\"is_published\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"category_id\": \"<integer>\",\n\t\t\"category\": {\n\t\t\t\"name\": \"<string>\",\n\t\t\t\"id\": \"<integer>\"\n\t\t}\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"title\": \"<string>\",\n\t\"description\": \"<string>\",\n\t\"price\": \"<integer>\",\n\t\"discount_percentage\": \"<number>\",\n\t\"rating\": \"<number>\",\n\t\"stock\": \"<integer>\",\n\t\"brand\": \"<string>\",\n\t\"thumbnail\": \"<string>\",\n\t\"images\": [\n\t\t\"<string>\"\n\t],\n\t\"is_published\": \"<boolean>\",\n\t\"created_at\": \"<dateTime>\",\n\t\"category_id\": \"<integer>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Product*",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/:product_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":product_id"
+									],
+									"variable": [
+										{
+											"key": "product_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a product by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"title\": \"<string>\",\n\t\t\"description\": \"<string>\",\n\t\t\"price\": \"<integer>\",\n\t\t\"discount_percentage\": \"<number>\",\n\t\t\"rating\": \"<number>\",\n\t\t\"stock\": \"<integer>\",\n\t\t\"brand\": \"<string>\",\n\t\t\"thumbnail\": \"<string>\",\n\t\t\"images\": [\n\t\t\t\"<string>\"\n\t\t],\n\t\t\"is_published\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"category_id\": \"<integer>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:product_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":product_id"
+											],
+											"variable": [
+												{
+													"key": "product_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of individual products."
+				}
+			],
+			"description": "Group of API calls related to the CRUD of products."
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "List",
+					"item": [
+						{
+							"name": "Get All Carts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{bearerToken}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/carts/?page=1&limit=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"carts",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Page number"
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "Items per page"
+										}
+									]
+								},
+								"description": "Retrieve all carts with pagination."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/?page=1&limit=10",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": [\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\"cart_items\": [\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t],\n\t\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t],\n\t\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\"cart_items\": [\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t],\n\t\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t],\n\t\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/?page=1&limit=10",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Cart*",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{bearerToken}}"
+									}
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/carts/",
+								"description": "Create a new cart."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/carts/"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"user_id\": \"<integer>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"total_amount\": \"<number>\",\n\t\t\"cart_items\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/carts/"
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of the list of all the user's carts"
+				},
+				{
+					"name": "Unit",
+					"item": [
+						{
+							"name": "Get Cart",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/carts/:cart_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"carts",
+										":cart_id"
+									],
+									"variable": [
+										{
+											"key": "cart_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieve a specific cart by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"user_id\": \"<integer>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"total_amount\": \"<number>\",\n\t\t\"cart_items\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Cart*",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/carts/:cart_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"carts",
+										":cart_id"
+									],
+									"variable": [
+										{
+											"key": "cart_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Update an existing cart."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"user_id\": \"<integer>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"total_amount\": \"<number>\",\n\t\t\"cart_items\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t},\n\t\t{\n\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\"quantity\": \"<integer>\"\n\t\t}\n\t]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Cart*",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/carts/:cart_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"carts",
+										":cart_id"
+									],
+									"variable": [
+										{
+											"key": "cart_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a cart by its ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"user_id\": \"<integer>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"total_amount\": \"<number>\",\n\t\t\"cart_items\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\"product\": {\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"title\": \"<string>\",\n\t\t\t\t\t\"description\": \"<string>\",\n\t\t\t\t\t\"price\": \"<integer>\",\n\t\t\t\t\t\"discount_percentage\": \"<number>\",\n\t\t\t\t\t\"rating\": \"<number>\",\n\t\t\t\t\t\"stock\": \"<integer>\",\n\t\t\t\t\t\"brand\": \"<string>\",\n\t\t\t\t\t\"thumbnail\": \"<string>\",\n\t\t\t\t\t\"images\": [\n\t\t\t\t\t\t\"<string>\"\n\t\t\t\t\t],\n\t\t\t\t\t\"is_published\": \"<boolean>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"category_id\": \"<integer>\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/carts/:cart_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"carts",
+												":cart_id"
+											],
+											"variable": [
+												{
+													"key": "cart_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of individual carts of the user."
+				}
+			],
+			"description": "Group of API calls related to the CRUD of categories of carts."
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List",
+					"item": [
+						{
+							"name": "Get All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/?page=1&limit=10&search=<string>&role=user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										""
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Page number"
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "Items per page"
+										},
+										{
+											"key": "search",
+											"value": "<string>",
+											"description": "Search by username"
+										},
+										{
+											"key": "role",
+											"value": "user"
+										}
+									]
+								},
+								"description": "Retrieve all users with pagination, search, and role filtering."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/?page=1&limit=10&search=<string>&role=user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												},
+												{
+													"key": "role",
+													"value": "user"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": [\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"role\": \"<string>\",\n\t\t\t\"is_active\": \"<boolean>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"carts\": [\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\t\"cart_items\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\t\"cart_items\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"username\": \"<string>\",\n\t\t\t\"full_name\": \"<string>\",\n\t\t\t\"password\": \"<string>\",\n\t\t\t\"email\": \"<email>\"\n\t\t},\n\t\t{\n\t\t\t\"id\": \"<integer>\",\n\t\t\t\"role\": \"<string>\",\n\t\t\t\"is_active\": \"<boolean>\",\n\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\"carts\": [\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\t\"cart_items\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\t\"cart_items\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product_id\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"quantity\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"subtotal\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t],\n\t\t\t\"username\": \"<string>\",\n\t\t\t\"full_name\": \"<string>\",\n\t\t\t\"password\": \"<string>\",\n\t\t\t\"email\": \"<email>\"\n\t\t}\n\t]\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/?page=1&limit=10&search=<string>&role=user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												""
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "search",
+													"value": "<string>"
+												},
+												{
+													"key": "role",
+													"value": "user"
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create User*",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users/",
+								"description": "Create a new user."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/"
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\",\n\t\"email\": \"<email>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/users/"
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of the list of all users."
+				},
+				{
+					"name": "Unit",
+					"item": [
+						{
+							"name": "Get User",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieve a specific user by their ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update User*",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Update an existing user by their ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"username\": \"<string>\",\n\t\"full_name\": \"<string>\",\n\t\"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete User*",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Delete a user by their ID."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"message\": \"<string>\",\n\t\"data\": {\n\t\t\"id\": \"<integer>\",\n\t\t\"role\": \"<string>\",\n\t\t\"is_active\": \"<boolean>\",\n\t\t\"created_at\": \"<dateTime>\",\n\t\t\"carts\": [\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\"user_id\": \"<integer>\",\n\t\t\t\t\"created_at\": \"<dateTime>\",\n\t\t\t\t\"total_amount\": \"<number>\",\n\t\t\t\t\"cart_items\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"id\": \"<integer>\",\n\t\t\t\t\t\t\"product_id\": \"<integer>\",\n\t\t\t\t\t\t\"quantity\": \"<integer>\",\n\t\t\t\t\t\t\"subtotal\": \"<number>\",\n\t\t\t\t\t\t\"product\": {\n\t\t\t\t\t\t\t\"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"username\": \"<string>\",\n\t\t\"full_name\": \"<string>\",\n\t\t\"password\": \"<string>\",\n\t\t\"email\": \"<email>\"\n\t}\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n\t\"detail\": [\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t},\n\t\t{\n\t\t\t\"loc\": [\n\t\t\t\t\"<string>\",\n\t\t\t\t\"<string>\"\n\t\t\t],\n\t\t\t\"msg\": \"<string>\",\n\t\t\t\"type\": \"<string>\"\n\t\t}\n\t]\n}"
+								}
+							]
+						}
+					],
+					"description": "Sub-group of API calls related to the read/write of individual users."
+				}
+			],
+			"description": "Group of API calls related to the CRUD of users"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{accessToken}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": "<string>"
+		}
+	]
+}
