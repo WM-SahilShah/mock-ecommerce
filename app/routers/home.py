@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, status
 from fastapi.responses import HTMLResponse, FileResponse
 from markdown_it import MarkdownIt
@@ -28,7 +29,7 @@ def html_page(content: str) -> str:
         </head>
         <body>
             {content}
-            <a href=""/download"" class="download-btn" download>Download API Collection</a>
+            <a href="/download" class="download-btn" download>Download API Collection</a>
         </body>
     </html>
     """
@@ -42,17 +43,17 @@ async def read_homepage() -> HTMLResponse:
         markdown = MarkdownIt().enable("table")
         html_content = markdown.render(readme_content)
         return HTMLResponse(content=html_page(html_content),
-                            status_code=status.HTTP_200)
+                            status_code=status.HTTP_200_OK)
     except FileNotFoundError:
         return HTMLResponse(content="File 'README.md' not found",
-                            status_code=404)
+                            status_code=status.HTTP_404_NOT_FOUND)
 
-@router.get("/download", response_class=FileResponse, include_in_schema=False)
+@router.get("/download", include_in_schema=False)
 async def download_file():
-    file_path = f"./files/{DOCS_FILENAME}"
+    file_path = os.path.join("files", DOCS_FILENAME)
     try:
         return FileResponse(path=file_path,
                             filename=DOCS_FILENAME)
     except FileNotFoundError:
         return HTMLResponse(content=f"File '{DOCS_FILENAME}' not found",
-                            status_code=404)
+                            status_code=status.HTTP_404_NOT_FOUND)
