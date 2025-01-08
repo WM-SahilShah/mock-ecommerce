@@ -3,7 +3,6 @@ from app.config.responses import ResponseHandler
 from app.config.security import get_current_user
 from app.database.models import Cart, CartItem, Product
 from app.schemas.carts import CartCreate, CartUpdate
-from fastapi import HTTPException, status
 from sqlalchemy.orm import Session, joinedload
 
 class CartService:
@@ -43,8 +42,7 @@ class CartService:
         logger.info("Creating a new cart.")
         if not cart.cart_items:
             logger.error("Cart creation failed: Empty or incomplete request.")
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                detail="Cart cannot be empty. Please provide cart items.")
+            raise ResponseHandler.malformed_request("Cart cannot be empty. Please provide cart items.")
         # Extract cart data
         user_id = get_current_user(token)
         cart_dict = cart.model_dump()

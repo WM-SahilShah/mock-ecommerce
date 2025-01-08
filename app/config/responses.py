@@ -43,15 +43,26 @@ class ResponseHandler:
         return ResponseHandler.success(message, data)
 
     @staticmethod
-    def not_found_error(name: str = "", id: Optional[int] = None) -> None:
-        "Raises a 404 error when a resource is not found."
-        message = f"{name} With Id {id} Not Found!"
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=message)
+    def malformed_request(message: str) -> None:
+        "Raises a 400 error."
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=message)
 
     @staticmethod
-    def invalid_token(name: str = "") -> None:
+    def invalid_credentials(message: str) -> None:
         "Raises a 401 error when a token is invalid."
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid {name} token.",
-            headers={"WWW-Authenticate": "Bearer"})
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            headers={"WWW-Authenticate": "Bearer"},
+                            detail=message)
+
+    @staticmethod
+    def restricted_access() -> None:
+        "Raises a 403 error when the user is not an admin."
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            details="Admin role required")
+
+    @staticmethod
+    def not_found_error(item: str) -> None:
+        "Raises a 404 error when a resource is not found."
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"{item} Not Found!")

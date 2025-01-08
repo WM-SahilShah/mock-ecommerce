@@ -1,10 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ab6f1e04-4d8a-42ae-a9f1-5a675c07ba7f",
 		"name": "E-Commerce API",
-		"description": "\nWelcome to the Mock E-Commerce API! 🚀\n\nThis API provides a comprehensive set of functionalities for managing your e-commerce platform.\nKey features include:\n\n- **CRUD**\n\t- Create, Read, Update, and Delete endpoints.\n- **Search**\n\t- Find specific information with parameters and pagination.\n- **Auth**\n\t- Verify user/admin identity.\n\t- Secure with Access and Refresh tokens.\n- **Permission**\n\t- Assign roles with specific permissions.\n\t- Different access levels for User/Admin.\n- **Validation**\n\t- Ensure accurate and secure input data.\n\nFor any inquiries, please contact sshah@watermelon.us\n\n\nContact Support:\n Name: Sahil Shah",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "39640588"
+		"description": "\nWelcome to the Mock E-Commerce API! 🚀\n\nThis API provides a comprehensive set of functionalities for managing your e-commerce platform.\nKey features include:\n\n- **CRUD**\n\t- Create, Read, Update, and Delete endpoints.\n- **Search**\n\t- Find specific information with parameters and pagination.\n- **Auth**\n\t- Verify user/admin identity.\n\t- Secure with Access and Refresh tokens.\n- **Permission**\n\t- Assign roles with specific permissions.\n\t- Different access levels for User/Admin.\n- **Validation**\n\t- Ensure accurate and secure input data.\n\nFor any inquiries, please contact sshah@watermelon.us\n\n\nContact Support:\n Name: Sahil Shah"
 	},
 	"item": [
 		{

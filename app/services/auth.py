@@ -5,7 +5,7 @@ from app.database.database import get_db
 from app.database.models import User
 from app.schemas.auth import TokenResponse
 from app.schemas.users import UserCreate
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -21,12 +21,10 @@ class AuthService:
                 .first())
         if not user:
             logger.error(f"Login failed: No such username exists for {user_credentials.username}.")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail="No such username exists.")
+            raise ResponseHandler.not_found_error(f"User with username {user_credentials.username}")
         if not verify_password(user_credentials.password, user.password):
             logger.error(f"Login failed: Incorrect password for {user_credentials.username}.")
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="Incorrect username or password.")
+            raise ResponseHandler.invalid_credentials("Incorrect username or password.")
         logger.info(f"User {user_credentials.username} logged in successfully.")
         return await get_user_token(id=user.id)
 
@@ -36,15 +34,13 @@ class AuthService:
         logger.info(f"Attempting to sign up user: {user.username}")
         if not user.username or not user.password or not user.email:
             logger.error("Signup failed: Missing required fields.")
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                detail="Missing required fields: username, password, and email are mandatory.")
+            raise ResponseHandler.malformed_request("Missing required fields: username, password, and/or email")
         existing_user = (db.query(User)
                          .filter(User.username == user.username)
                          .first())
         if existing_user:
             logger.error(f"Signup failed: Username {user.username} already exists.")
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                detail="User already exists.")
+            raise ResponseHandler.malformed_request("User already exists.")
         hashed_password = get_password_hash(user.password)
         user.password = hashed_password
         db_user = User(id=None, **user.model_dump())
@@ -62,12 +58,12 @@ class AuthService:
         user_id = payload.get("id", None)
         if not user_id:
             logger.error("Refresh token is invalid: No user ID found in token.")
-            raise ResponseHandler.invalid_token("refresh")
+            raise ResponseHandler.invalid_credentials("Invalid refresh token")
         user = (db.query(User)
                 .filter(User.id == user_id)
                 .first())
         if not user:
             logger.error(f"Refresh token is invalid: No user found with ID {user_id}.")
-            raise ResponseHandler.invalid_token("refresh")
+            raise ResponseHandler.invalid_credentials("Invalid refresh token")
         logger.info(f"Refresh token issued successfully for user ID: {user.id}.")
         return await get_user_token(id=user.id, refresh_token=token)

@@ -5,7 +5,7 @@ from app.database.database import get_db
 from app.database.models import User
 from app.schemas.auth import TokenResponse
 from datetime import datetime, timedelta, timezone
-from fastapi import HTTPException, Depends, status
+from fastapi import Depends
 from fastapi.security import HTTPBearer
 from fastapi.security.http import HTTPAuthorizationCredentials
 from jose import JWTError, jwt
@@ -72,7 +72,7 @@ def get_token_payload(token: str) -> dict:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except JWTError:
         logger.error("Failed to decode token: Invalid token.")
-        raise ResponseHandler.invalid_token('access')
+        raise ResponseHandler.invalid_credentials("Invalid access token")
 
 # Get Current User from Token
 def get_current_user(token: HTTPAuthorizationCredentials) -> int:
@@ -85,7 +85,7 @@ def get_current_user(token: HTTPAuthorizationCredentials) -> int:
 def check_admin_role(
         token: HTTPAuthorizationCredentials = Depends(auth_scheme),
         db: Session = Depends(get_db)) -> None:
-    "Verify if the user associated with the token has an admin role else, raises `HTTPException`"
+    "Verify if the user associated with the token has an admin role."
     logger.info("Checking admin role for user.")
     user = get_token_payload(token.credentials)
     user_id = user.get('id')
@@ -95,12 +95,10 @@ def check_admin_role(
 
     if role_user is None:
         logger.error(f"User ID {user_id} not found.")
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="User not found")
+        raise ResponseHandler.not_found_error(f"User with id {user_id}")
 
     if role_user.role != "admin":
         logger.error(f"User ID {user_id} does not have admin role.")
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                            detail="Admin role required")
+        raise ResponseHandler.restricted_access()
     
     logger.info(f"User ID {user_id} has admin role.")

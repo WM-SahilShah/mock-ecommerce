@@ -1,4 +1,3 @@
-from fastapi import HTTPException, status
 from app.config.logging import logger
 from app.config.responses import ResponseHandler
 from app.database.models import Category, Product
@@ -41,8 +40,7 @@ class ProductService:
         for field, value in product.model_dump().items():
             if not value and value!=0:
                 logger.error(f"Field '{field}' cannot be empty.")
-                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                    detail=f"Field '{field}' cannot be empty.")
+                raise ResponseHandler.malformed_request(f"Field '{field}' cannot be empty.")
         # Check if category exists
         category_exists = (db.query(Category)
                             .filter(Category.id == product.category_id)
