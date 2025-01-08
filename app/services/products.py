@@ -43,8 +43,8 @@ class ProductService:
                 raise ResponseHandler.malformed_request(f"Field '{field}' cannot be empty.")
         # Check if category exists
         category_exists = (db.query(Category)
-                            .filter(Category.id == product.category_id)
-                            .first())
+                           .filter(Category.id == product.category_id)
+                           .first())
         if not category_exists:
             logger.error(f"Category with ID {product.category_id} not found.")
             ResponseHandler.not_found_error("Category", product.category_id)
