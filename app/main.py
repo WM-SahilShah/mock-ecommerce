@@ -26,7 +26,7 @@ For any inquiries, please contact sshah@watermelon.us
 app = FastAPI(
     description=description,
     title="E-Commerce API",
-    version="2.0.1",
+    version="2.0.3",
     contact={
         "name": "Sahil Shah",
         "url": "https://github.com/WM-SahilShah",

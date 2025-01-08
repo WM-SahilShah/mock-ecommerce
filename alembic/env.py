@@ -3,7 +3,7 @@ from alembic import context
 from app.config.logging import logger
 from app.config.settings import DB_URL
 from app.database.database import Base
-from app.database.models import User, Cart, CartItem, Product # Unused imports imp for db
+from app.database.models import User, Category, Cart, CartItem, Product # Unused imports imp for db
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 
