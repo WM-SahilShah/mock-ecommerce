@@ -1,5 +1,5 @@
 """
-config
+App > Config
 ==========
 This module contains the system-wide configuration components for the application, including logging, 
 response handling, security, and settings.
@@ -13,23 +13,12 @@ Modules:
 
 from .logging import logger
 from .responses import ResponseHandler, BaseConfig
-from .security import get_password_hash, verify_password, get_user_token, get_token_payload, get_current_user, check_admin_role
+from .security import auth_scheme, get_password_hash, verify_password, get_user_token, get_token_payload, get_current_user, check_admin_role
 from .settings import DB_URL, ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 
 __all__ = [
     "logger",    
-    "ResponseHandler",
-    "BaseConfig",
-    "get_password_hash",
-    "verify_password",
-    "get_user_token",
-    "create_access_token",
-    "create_refresh_token",
-    "get_token_payload",
-    "get_current_user",
-    "check_admin_role",
-    "DB_URL",
-    "ACCESS_TOKEN_EXPIRE_MINUTES",
-    "ALGORITHM",
-    "SECRET_KEY"
+    "ResponseHandler", "BaseConfig",
+    "auth_scheme","get_password_hash", "verify_password", "get_user_token", "get_token_payload", "get_current_user", "check_admin_role",
+    "DB_URL", "ACCESS_TOKEN_EXPIRE_MINUTES", "ALGORITHM", "SECRET_KEY"
 ]

@@ -9,8 +9,7 @@ Features:
 """
 
 from app.config import logger, ResponseHandler, ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
-from app.database.database import get_db
-from app.database.models import User
+from app.database import get_db, User
 from app.schemas.auth import TokenResponse
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends
