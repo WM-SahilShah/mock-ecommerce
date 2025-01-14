@@ -8,7 +8,7 @@ class ProductService:
     "Service for product-related actions."
 
     @staticmethod
-    def get_all_products(db: Session, page: int, limit: int, search: str = "") -> dict:
+    def get_all_products(db: Session, page: int, limit: int, search: str) -> dict:
         "Get all products."
         logger.info(f"Fetching all products with search term '{search}', page {page}, and limit {limit}.")
         products = (db.query(Product)
