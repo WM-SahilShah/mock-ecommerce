@@ -1,14 +1,13 @@
-from app.config.responses import BaseConfig
 from pydantic import BaseModel, Field
 from typing import List
 
 class CategoryCreate(BaseModel):
     "Schema for basic category details."
-    name: str = Field(..., min_length=1)
+    name: str = Field(..., min_length=1, description="Name of the category. Must have at least 1 character.")
 
 class CategoryBase(CategoryCreate):
     "Schema for creating a category."
-    id: int
+    id: int = Field(..., description="Unique identifier for the category.")
 
 class CategoryUpdate(CategoryCreate):
     "Schema for updating a category."
@@ -16,13 +15,13 @@ class CategoryUpdate(CategoryCreate):
 
 class CategoryOut(BaseModel):
     "Schema for single category output."
-    message: str
-    data: CategoryBase
+    message: str = Field(..., description="Response message.")
+    data: CategoryBase = Field(..., description="Details of the category.")
 
 class CategoriesOut(BaseModel):
     "Schema for multiple categories output."
-    message: str
-    data: List[CategoryBase]
+    message: str = Field(..., description="Response message.")
+    data: List[CategoryBase] = Field(..., description="List of category details.")
 
 class CategoryDelete(CategoryBase):
     "Schema for deleted category details."

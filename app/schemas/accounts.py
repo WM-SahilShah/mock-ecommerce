@@ -2,15 +2,15 @@ from app.config.responses import BaseConfig
 from app.schemas.carts import CartBase
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
-from typing import List
+from typing import List, Literal
 
 class BaseAttributes(BaseModel):
-    "Schema of attributes used in User/Account Base classes"
-    id: int
-    role: str = Field(..., min_length=1)
-    is_active: bool
-    created_at: datetime
-    carts: List[CartBase]
+    "Schema of attributes used in User/Account Base classes."
+    id: int = Field(..., description="Unique identifier for the user or account")
+    role: Literal["user", "admin"] = Field(..., description="Role of the user (e.g., user or admin)")
+    is_active: bool = Field(..., description="Indicates whether the account is active")
+    created_at: datetime = Field(..., description="Timestamp when the account was created")
+    carts: List[CartBase] = Field(..., description="List of carts associated with the account")
 
 class UpdateAttributes(BaseModel):
     "Schema of attributes used in User/Account Update classes"
@@ -19,7 +19,7 @@ class UpdateAttributes(BaseModel):
 
 class AccountUpdate(UpdateAttributes):
     "Schema for account update."
-    email: EmailStr
+    email: EmailStr = Field(..., description="Email address of the account holder")
 
     class Config(BaseConfig):
         pass
