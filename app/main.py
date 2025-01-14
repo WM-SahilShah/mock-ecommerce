@@ -1,4 +1,10 @@
-from app.routers import products, categories, carts, users, auth, accounts, home
+"""
+Main entry point for the E-Commerce API. It also provides the API documentation and contact information for support.
+Key functionality includes routers for authentication, accounts, products, and more.
+Customizes the Swagger UI with syntax highlighting and additional features.
+"""
+
+from app.routers import home_router, auth_router, accounts_router, categories_router, products_router, carts_router, users_router
 from fastapi import FastAPI
 
 description = """
@@ -26,7 +32,7 @@ For any inquiries, please contact sshah@watermelon.us
 app = FastAPI(
     description=description,
     title="E-Commerce API",
-    version="2.0.3",
+    version="2.0.4",
     contact={
         "name": "Sahil Shah",
         "url": "https://github.com/WM-SahilShah",
@@ -40,10 +46,10 @@ app = FastAPI(
     },
 )
 
-app.include_router(home.router)
-app.include_router(auth.router)
-app.include_router(accounts.router)
-app.include_router(categories.router)
-app.include_router(products.router)
-app.include_router(carts.router)
-app.include_router(users.router)
+app.include_router(home_router)
+app.include_router(auth_router)
+app.include_router(accounts_router)
+app.include_router(categories_router)
+app.include_router(products_router)
+app.include_router(carts_router)
+app.include_router(users_router)
