@@ -9,13 +9,13 @@ class UserService:
     "Service for user-related actions."
 
     @staticmethod
-    def get_all_users(db: Session, page: int, limit: int, search: str = "", role: str = "user") -> dict:
+    def get_all_users(db: Session, page: int, limit: int, search: str = "", role: str = "") -> dict:
         "Get all users."
         logger.info(f"Fetching all users with search term '{search}', role '{role}', page {page}, and limit {limit}.")
         users = (db.query(User)
                  .order_by(User.id.asc())
                  .filter(User.username.contains(search),
-                         User.role == role)
+                         User.role.contains(role))
                  .limit(limit)
                  .offset((page-1) * limit)
                  .all())

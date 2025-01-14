@@ -13,7 +13,7 @@ def get_all_users(
         page: int = Query(1, ge=1, description="Page number"),
         limit: int = Query(10, ge=1, le=100, description="Items per page"),
         search: str = Query("", description="Search by username"),
-        role: str = Query("user", enum=["user", "admin"])
+        role: str = Query("", enum=["user", "admin", ""])
     ) -> UsersOut:
     "Retrieve all users with pagination, search, and role filtering."
     return UserService.get_all_users(db, page, limit, search, role)
