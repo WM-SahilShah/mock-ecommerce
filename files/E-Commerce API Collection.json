@@ -533,13 +533,13 @@
 										{
 											"key": "page",
 											"value": "<int>*",
-											"description": "Page number",
+											"description": "Page number (Required)",
 											"disabled": true
 										},
 										{
 											"key": "limit",
 											"value": "<int>*",
-											"description": "Items per page",
+											"description": "Items per page (Required)",
 											"disabled": true
 										},
 										{

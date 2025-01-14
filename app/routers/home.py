@@ -53,7 +53,8 @@ async def download_file():
     file_path = os.path.join("files", DOCS_FILENAME)
     try:
         return FileResponse(path=file_path,
-                            filename=DOCS_FILENAME)
+                            filename=DOCS_FILENAME,
+                            status_code=status.HTTP_200_OK)
     except FileNotFoundError:
         return HTMLResponse(content=f"File '{DOCS_FILENAME}' not found",
                             status_code=status.HTTP_404_NOT_FOUND)

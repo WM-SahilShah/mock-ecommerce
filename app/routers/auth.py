@@ -1,4 +1,8 @@
-from app.database.database import get_db
+"""
+This module contains routes related to user authentication, including signing up a new user, logging in an existing user, and refreshing the access token using a refresh token.
+"""
+
+from app.database import get_db
 from app.schemas.auth import TokenResponse
 from app.schemas.users import UserCreate, UserOut
 from app.services.auth import AuthService
@@ -8,7 +12,12 @@ from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["Auth"], prefix="/auth")
 
-@router.post("/signup", status_code=status.HTTP_201_CREATED, response_model=UserOut)
+@router.post(
+    "/signup",
+    status_code=status.HTTP_201_CREATED,
+    response_model=UserOut,
+    summary="User Signup",
+    description="This endpoint allows a user to create a new account by providing the necessary details.")
 async def user_signup(
         user: UserCreate,
         db: Session = Depends(get_db)
@@ -17,7 +26,12 @@ async def user_signup(
     return await AuthService.signup(db, user)
 
 
-@router.post("/login", status_code=status.HTTP_200_OK, response_model=TokenResponse)
+@router.post(
+    "/login",
+    status_code=status.HTTP_200_OK,
+    response_model=TokenResponse,
+    summary="User Login",
+    description="This endpoint allows an existing user to log in using their credentials and receive an access token.")
 async def user_login(
         user_credentials: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)
@@ -25,7 +39,12 @@ async def user_login(
     "Login an existing user."
     return await AuthService.login(user_credentials, db)
 
-@router.post("/refresh", status_code=status.HTTP_200_OK, response_model=TokenResponse)
+@router.post(
+    "/refresh",
+    status_code=status.HTTP_200_OK,
+    response_model=TokenResponse,
+    summary="Refresh Access Token",
+    description="This endpoint allows the user to refresh their access token using a valid refresh token.")
 async def refresh_access_token(
         refresh_token: str = Header(),
         db: Session = Depends(get_db)

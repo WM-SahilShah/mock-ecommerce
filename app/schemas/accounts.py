@@ -27,3 +27,12 @@ class AccountUpdate(UpdateAttributes):
 class AccountBase(AccountUpdate, BaseAttributes):
     "Schema for account details."
     pass
+
+class AccountOut(BaseModel):
+    "Schema for account output"
+    "Schema for user details output."
+    message: str = Field(..., description="Response message.")
+    data: AccountBase = Field(..., description="Account details.")
+
+    class Config(BaseConfig):
+        pass
