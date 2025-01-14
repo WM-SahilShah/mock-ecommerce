@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from typing import Optional, Any
+from typing import Any
 
 class BaseConfig:
     "Base configuration for Pydantic models"
@@ -8,7 +8,7 @@ class BaseConfig:
 
 class ResponseHandler:
     @staticmethod
-    def success(message: str, data: Optional[Any] = None) -> dict:
+    def success(message: str, data: Any) -> dict:
         "Returns a success response with a message and optional data."
         return {"message": message, "data": data}
 

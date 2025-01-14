@@ -1,40 +1,32 @@
 from app.config.responses import BaseConfig
 from app.schemas.categories import CategoryBase
 from datetime import datetime
-from pydantic import BaseModel, Field, field_validator
-from typing import ClassVar, List
+from pydantic import BaseModel, Field
+from typing import List
 
 class ProductBase(BaseModel):
     "Schema for basic product details."
     id: int
-    title: str = Field(..., min_length=1)
-    description: str = Field(..., min_length=1)
-    price: int
-    discount_percentage: float
-    rating: float
-    stock: int
-    brand: str = Field(..., min_length=1)
-    thumbnail: str = Field(..., min_length=1)
-    images: List[str] = Field(..., min_length=1)
+    title: str = Field(..., min_length=1, description="Title of the product")
+    description: str = Field(..., min_length=1, description="Description of the product")
+    price: int = Field(..., ge=0, description="Price of the product (>=0)")
+    discount_percentage: float = Field(..., ge=0, le=100, description="Discount percentage (0-100)")
+    rating: float = Field(..., ge=0, le=5, description="Rating of the product (0-5)")
+    stock: int = Field(..., ge=0, description="Stock count (>=0)")
+    brand: str = Field(..., min_length=1, description="Brand of the product")
+    thumbnail: str = Field(..., min_length=1, description="URL of the product thumbnail")
+    images: List[str] = Field(..., min_items=1, description="List of image URLs")
     is_published: bool
     created_at: datetime
     category_id: int
     category: CategoryBase
-
-    @field_validator("discount_percentage", mode="before")
-    def validate_discount_percentage(cls, v: float) -> float:
-        "Ensure discount percentage is between 0 and 100."
-        if v<0 or v>100:
-            raise ValueError("discount_percentage must be between 0 and 100")
-        return v
 
     class Config(BaseConfig):
         pass
 
 class ProductCreate(ProductBase):
     "Schema for creating a product."
-    id: ClassVar[int]
-    category: ClassVar[CategoryBase]
+    pass
 
     class Config(BaseConfig):
         pass
@@ -48,9 +40,6 @@ class ProductOut(BaseModel):
     message: str
     data: ProductBase
 
-    class Config(BaseConfig):
-        pass
-
 class ProductsOut(BaseModel):
     "Schema for multiple products output."
     message: str
@@ -61,7 +50,7 @@ class ProductsOut(BaseModel):
 
 class ProductDelete(ProductBase):
     "Schema for deleted product details."
-    category: ClassVar[CategoryBase]
+    pass
 
 class ProductOutDelete(BaseModel):
     "Schema for product deletion output."

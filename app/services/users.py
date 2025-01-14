@@ -39,12 +39,21 @@ class UserService:
     def create_user(db: Session, user: UserCreate) -> dict:
         "Create a new user."
         logger.info(f"Creating new user with username '{user.username}'.")
+        if not user.username or not user.password or not user.email:
+            logger.error("User creation failed: Missing required fields.")
+            raise ResponseHandler.malformed_request("Missing required fields: username, password, and/or email")
+        existing_user = (db.query(User)
+                         .filter(User.username == user.username)
+                         .first())
+        if existing_user:
+            logger.error(f"User creation failed: Username {user.username} already exists.")
+            raise ResponseHandler.malformed_request("User already exists.")
         hashed_password = get_password_hash(user.password)
         user.password = hashed_password
         max_id = (db.query(User.id)
-            .filter(User.id >= 500)
-            .order_by(User.id.desc())
-            .first())
+                  .filter(User.id >= 500)
+                  .order_by(User.id.desc())
+                  .first())
         new_user_id = max_id.id+1 if max_id else 500
         db_user = User(id=new_user_id, **user.model_dump())
         db.add(db_user)
