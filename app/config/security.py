@@ -1,6 +1,14 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.config.settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+"""
+This module handles authentication and authorization for the application. 
+
+Features:
+- Password hashing and verification.
+- JWT token creation and validation.
+- User extraction from tokens.
+- Role-based access control.
+"""
+
+from app.config import logger, ResponseHandler, ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from app.database.database import get_db
 from app.database.models import User
 from app.schemas.auth import TokenResponse

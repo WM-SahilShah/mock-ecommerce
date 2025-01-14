@@ -1,3 +1,9 @@
+"""
+This module provides utilities for creating standardized API responses 
+and handling HTTP exceptions. It includes helper functions for success responses 
+and predefined exceptions for common HTTP errors.
+"""
+
 from fastapi import HTTPException, status
 from typing import Any
 
