@@ -4,7 +4,7 @@ This module contains routes related to user authentication, including signing up
 
 from app.database import get_db
 from app.schemas import TokenResponse, UserCreate, UserOut
-from app.services.auth import AuthService
+from app.services import AuthService
 from fastapi import APIRouter, Depends, status, Header
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -37,6 +37,7 @@ async def user_login(
     ) -> TokenResponse:
     "Login an existing user."
     return await AuthService.login(user_credentials, db)
+
 
 @router.post(
     "/refresh",

@@ -6,7 +6,7 @@ Secured with authentication.
 from app.config import auth_scheme
 from app.database import get_db
 from app.schemas import AccountUpdate, AccountOut
-from app.services.accounts import AccountService
+from app.services import AccountService
 from fastapi import APIRouter, Depends, status
 from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
@@ -26,6 +26,7 @@ def get_my_info(
     "Fetch information about the current user."
     return AccountService.get_my_info(db, token)
 
+
 @router.put(
     "/",
     status_code=status.HTTP_200_OK,
@@ -39,6 +40,7 @@ def edit_my_info(
     ) -> AccountOut:
     "Edit the current user's information."
     return AccountService.edit_my_info(db, token, updated_user)
+
 
 @router.delete(
     "/",

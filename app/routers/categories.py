@@ -5,11 +5,13 @@ This module contains routes for managing categories, including retrieving all ca
 from app.config import check_admin_role
 from app.database import get_db
 from app.schemas import CategoryCreate, CategoryOut, CategoriesOut, CategoryOutDelete, CategoryUpdate
-from app.services.categories import CategoryService
+from app.services import CategoryService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
+
 router = APIRouter(tags=["Categories"], prefix="/categories")
+
 
 @router.get(
     "/",
@@ -26,6 +28,7 @@ def get_all_categories(
     "Retrieve all categories with pagination and optional search by name."
     return CategoryService.get_all_categories(db, page, limit, search)
 
+
 @router.post(
     "/",
     status_code=status.HTTP_201_CREATED,
@@ -40,6 +43,7 @@ def create_category(
     "Create a new category."
     return CategoryService.create_category(db, category)
 
+
 @router.get(
     "/{category_id}",
     status_code=status.HTTP_200_OK,
@@ -52,6 +56,7 @@ def get_category(
     ) -> CategoryOut:
     "Retrieve a specific category by its ID."
     return CategoryService.get_category(db, category_id)
+
 
 @router.put(
     "/{category_id}",
@@ -67,6 +72,7 @@ def update_category(
     ) -> CategoryOut:
     "Update an existing category by its ID."
     return CategoryService.update_category(db, category_id, updated_category)
+
 
 @router.delete(
     "/{category_id}",

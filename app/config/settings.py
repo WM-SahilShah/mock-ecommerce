@@ -2,8 +2,8 @@
 This module loads and manages application configuration settings from environment variables.
 It supports database configurations, JWT settings, and other application-specific parameters.
 """
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()

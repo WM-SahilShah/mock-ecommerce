@@ -1,3 +1,8 @@
+"""
+This module serves the home page with the README.md content and provides a download link 
+for the API collection (`E-Commerce API Collection.json`).
+"""
+
 import os
 from fastapi import APIRouter, status
 from fastapi.responses import HTMLResponse, FileResponse

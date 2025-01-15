@@ -3,14 +3,16 @@ This module defines API routes for managing users, including retrieving, creatin
 It also supports pagination, search, and role-based filtering. All user-related actions require admin role authorization.
 """
 
-from app.config.security import check_admin_role
-from app.database.database import get_db
+from app.config import check_admin_role
+from app.database import get_db
 from app.schemas import UserCreate, UserOut, UsersOut, UserOutDelete, UserUpdate
-from app.services.users import UserService
+from app.services import UserService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
+
 router = APIRouter(tags=["Users"], prefix="/users")
+
 
 @router.get(
     "/",
@@ -29,6 +31,7 @@ def get_all_users(
     "Retrieve all users with pagination, search, and role filtering."
     return UserService.get_all_users(db, page, limit, search, role)
 
+
 @router.post(
     "/",
     status_code=status.HTTP_201_CREATED,
@@ -42,6 +45,7 @@ def create_user(
     ) -> UserOut:
     "Create a new user."
     return UserService.create_user(db, user)
+
 
 @router.get(
     "/{user_id}",
@@ -72,6 +76,7 @@ def update_user(
     ) -> UserOut:
     "Update an existing user by their ID."
     return UserService.update_user(db, user_id, updated_user)
+
 
 @router.delete(
     "/{user_id}",

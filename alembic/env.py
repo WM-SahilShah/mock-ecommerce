@@ -1,9 +1,10 @@
-from venv import logger
+"""
+Alembic environment script for running database migrations in offline or online mode.
+Configures the database URL, logging, and imports necessary models for migrations.
+"""
 from alembic import context
-from app.config.logging import logger
-from app.config.settings import DB_URL
-from app.database.database import Base
-from app.database.models import User, Category, Cart, CartItem, Product # Unused imports imp for db
+from app.config import logger, DB_URL
+from app.database import Base, User, Category, Cart, CartItem, Product # Unused imports are important for db migrations
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 

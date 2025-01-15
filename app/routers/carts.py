@@ -5,12 +5,14 @@ This module contains routes for managing carts, including retrieving all carts, 
 from app.config import auth_scheme
 from app.database import get_db
 from app.schemas import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOut
-from app.services.carts import CartService
+from app.services import CartService
 from fastapi import APIRouter, Depends, Query, status
 from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
+
 router = APIRouter(tags=["Carts"], prefix="/carts")
+
 
 @router.get(
     "/",
@@ -27,6 +29,7 @@ def get_all_carts(
     "Retrieve all carts with pagination."
     return CartService.get_all_carts(token, db, page, limit)
 
+
 @router.post(
     "/",
     status_code=status.HTTP_201_CREATED,
@@ -40,6 +43,7 @@ def create_cart(
     ) -> CartOut:
     "Create a new cart."
     return CartService.create_cart(token, db, cart)
+
 
 @router.get(
     "/{cart_id}",
@@ -55,6 +59,7 @@ def get_cart(
     "Retrieve a specific cart by its ID."
     return CartService.get_cart(token, db, cart_id)
 
+
 @router.put(
     "/{cart_id}",
     status_code=status.HTTP_200_OK,
@@ -69,6 +74,7 @@ def update_cart(
     ) -> CartOut:
     "Update an existing cart."
     return CartService.update_cart(token, db, cart_id, updated_cart)
+
 
 @router.delete(
     "/{cart_id}",

@@ -3,14 +3,16 @@ This module defines the API routes for managing products, including retrieving, 
 The routes support pagination, searching, and role-based access control.
 """
 
-from app.config.security import check_admin_role
-from app.database.database import get_db
+from app.config import check_admin_role
+from app.database import get_db
 from app.schemas import ProductCreate, ProductOut, ProductsOut, ProductOutDelete, ProductUpdate
-from app.services.products import ProductService
+from app.services import ProductService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
+
 router = APIRouter(tags=["Products"], prefix="/products")
+
 
 @router.get(
     "/",
@@ -27,6 +29,7 @@ def get_all_products(
     "Retrieve all products with pagination and optional search by title."
     return ProductService.get_all_products(db, page, limit, search)
 
+
 @router.post(
     "/", 
     status_code=status.HTTP_201_CREATED, 
@@ -41,6 +44,7 @@ def create_product(
     "Create a new product."
     return ProductService.create_product(db, product)
 
+
 @router.get(
     "/{product_id}", 
     status_code=status.HTTP_200_OK, 
@@ -53,6 +57,7 @@ def get_product(
     ) -> ProductOut:
     "Retrieve a specific product by its ID."
     return ProductService.get_product(db, product_id)
+
 
 @router.put(
     "/{product_id}",
@@ -68,6 +73,7 @@ def update_product(
     ) -> ProductOut:
     "Update an existing product by its ID."
     return ProductService.update_product(db, product_id, updated_product)
+
 
 @router.delete(
     "/{product_id}",

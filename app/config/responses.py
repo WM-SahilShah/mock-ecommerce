@@ -1,18 +1,34 @@
 """
-This module provides utilities for creating standardized API responses 
-and handling HTTP exceptions. It includes helper functions for success responses 
-and predefined exceptions for common HTTP errors.
+This module provides utilities for creating standardized API responses and handling HTTP exceptions.
+It includes helper functions for success responses and predefined exceptions for common HTTP errors.
 """
 
 from fastapi import HTTPException, status
 from typing import Any
 
+
 class BaseConfig:
-    "Base configuration for Pydantic models"
+    "For pydantic models: enables conversion from attributes to model fields."
     from_attributes = True
 
 
 class ResponseHandler:
+    """
+    Service class for handling standardized API responses and HTTP exceptions.
+
+    Methods:
+        `success(message, data)`: Returns a success response with a message and optional data.
+        `get_single_success(name, id, data)`: Returns a success response for a single resource with a message and data.
+        `get_all_success(page, limit, name, data)`: Returns a success response for multiple resources with pagination details.
+        `create_success(name, id, data)`: Returns a success response when a resource is created.
+        `update_success(name, id, data)`: Returns a success response when a resource is updated.
+        `delete_success(name, id, data)`: Returns a success response when a resource is deleted.
+        `malformed_request(message)`: Raises a 400 HTTP error for malformed requests.
+        `invalid_credentials(message)`: Raises a 401 HTTP error for invalid credentials.
+        `restricted_access()`: Raises a 403 HTTP error for unauthorized access.
+        `not_found_error(item)`: Raises a 404 HTTP error when a resource is not found.
+    """
+
     @staticmethod
     def success(message: str, data: Any) -> dict:
         "Returns a success response with a message and optional data."
