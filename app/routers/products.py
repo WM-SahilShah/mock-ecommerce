@@ -5,7 +5,7 @@ The routes support pagination, searching, and role-based access control.
 
 from app.config.security import check_admin_role
 from app.database.database import get_db
-from app.schemas.products import ProductCreate, ProductOut, ProductsOut, ProductOutDelete, ProductUpdate
+from app.schemas import ProductCreate, ProductOut, ProductsOut, ProductOutDelete, ProductUpdate
 from app.services.products import ProductService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session

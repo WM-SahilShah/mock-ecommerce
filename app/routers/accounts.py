@@ -5,7 +5,7 @@ Secured with authentication.
 
 from app.config import auth_scheme
 from app.database import get_db
-from app.schemas.accounts import AccountUpdate, AccountOut
+from app.schemas import AccountUpdate, AccountOut
 from app.services.accounts import AccountService
 from fastapi import APIRouter, Depends, status
 from fastapi.security.http import HTTPAuthorizationCredentials

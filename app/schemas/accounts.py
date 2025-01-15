@@ -1,36 +1,87 @@
-from app.config.responses import BaseConfig
+"""
+This module defines schemas for user and account attributes, updates, and outputs.
+"""
+
+from app.config import BaseConfig
 from app.schemas.carts import CartBase
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Literal
 
 class BaseAttributes(BaseModel):
-    "Schema of attributes used in User/Account Base classes."
-    id: int = Field(..., description="Unique identifier for the user or account")
-    role: Literal["user", "admin"] = Field(..., description="Role of the user (e.g., user or admin)")
-    is_active: bool = Field(..., description="Indicates whether the account is active")
-    created_at: datetime = Field(..., description="Timestamp when the account was created")
-    carts: List[CartBase] = Field(..., description="List of carts associated with the account")
+    """
+    Represents base attributes for a user or account.
+
+    Attributes:
+    - `id` (int): Unique identifier for the user or account.
+    - `role` (str): Role of the user, either 'user' or 'admin'.
+    - `is_active` (bool): Indicates whether the account is active.
+    - `created_at` (datetime): Timestamp of account creation  in ISO 8601 format.
+    - `carts` (List[CartBase]): List of carts associated with the account.
+    """
+    id: int = Field(..., description="Unique identifier for the user or account.")
+    role: Literal["user", "admin"] = Field(..., description="Role of the user (user or admin).")
+    is_active: bool = Field(..., description="Indicates whether the account is active.")
+    created_at: datetime = Field(..., description="Timestamp when the account was created.")
+    carts: List[CartBase] = Field(..., description="List of carts associated with the account.")
 
 class UpdateAttributes(BaseModel):
-    "Schema of attributes used in User/Account Update classes"
-    username: str = Field(..., min_length=1)
-    full_name: str = Field(..., min_length=1)
+    """
+    Represents updatable attributes for a user or account.
+
+    Attributes:
+    - `username` (str): Username of the account holder.
+    - `full_name` (str): Full name of the account holder.
+    """
+    username: str = Field(..., min_length=1, description="Username of the account holder.")
+    full_name: str = Field(..., min_length=1, description="Full name of the account holder.")
 
 class AccountUpdate(UpdateAttributes):
-    "Schema for account update."
-    email: EmailStr = Field(..., description="Email address of the account holder")
+    """
+    Represents schema for updating an account.
+
+    Attributes:
+    - `username` (str): Username of the account holder.
+    - `full_name` (str): Full name of the account holder.
+    - `email` (str): Email address of the account holder (validated).
+    """
+    email: EmailStr = Field(..., description="Email address of the account holder (validated).")
 
     class Config(BaseConfig):
         pass
 
 class AccountBase(AccountUpdate, BaseAttributes):
-    "Schema for account details."
+    """
+    Represents details of an account.
+
+    Attributes:
+    - `id` (int): Unique identifier for the user or account.
+    - `role` (str): Role of the user, either 'user' or 'admin'.
+    - `is_active` (bool): Indicates whether the account is active.
+    - `created_at` (datetime): Timestamp of account creation  in ISO 8601 format.
+    - `carts` (List[CartBase]): List of carts associated with the account.
+    - `username` (str): Username of the account holder.
+    - `full_name` (str): Full name of the account holder.
+    - `email` (str): Email address of the account holder (validated).
+    """
     pass
 
 class AccountOut(BaseModel):
-    "Schema for account output"
-    "Schema for user details output."
+    """
+    Represents the output schema for account responses.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (AccountBase): Account details, including:
+        - `id` (int): Unique identifier for the user or account.
+        - `role` (str): Role of the user, either 'user' or 'admin'.
+        - `is_active` (bool): Indicates whether the account is active.
+        - `created_at` (datetime): Timestamp of account creation in ISO 8601 format.
+        - `carts` (List[CartBase]): List of carts associated with the account.
+        - `username` (str): Username of the account holder.
+        - `full_name` (str): Full name of the account holder.
+        - `email` (str): Email address of the account holder (validated).
+    """
     message: str = Field(..., description="Response message.")
     data: AccountBase = Field(..., description="Account details.")
 

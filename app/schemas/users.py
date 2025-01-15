@@ -1,25 +1,72 @@
-from app.config.responses import BaseConfig
+"""
+This module defines schemas for user attributes, updates, creation, and outputs.
+"""
+
+from app.config import BaseConfig
 from app.schemas.accounts import BaseAttributes, UpdateAttributes
 from pydantic import BaseModel, EmailStr, Field
 from typing import List
 
 class UserUpdate(UpdateAttributes):
-    "Schema for updating a user."
+    """
+    Represents schema for updating a user.
+
+    Attributes:
+    - `username` (str): Username of the user.
+    - `full_name` (str): Full name of the user.
+    - `password` (str): Password of the user.
+    """
     password: str = Field(..., min_length=1, description="Password of the user.")
-    
+
     class Config(BaseConfig):
         pass
 
 class UserCreate(UserUpdate):
-    "Schema for creating a user."
-    email: EmailStr = Field(..., description="Email address of the user.")
+    """
+    Represents schema for creating a user.
+
+    Attributes:
+    - `username` (str): Username of the user.
+    - `full_name` (str): Full name of the user.
+    - `password` (str): Password of the user.
+    - `email` (str): Email address of the user (validated).
+    """
+    email: EmailStr = Field(..., description="Email address of the user (validated).")
 
 class UserBase(UserCreate, BaseAttributes):
-    "Schema for user details."
+    """
+    Represents detailed schema for a user.
+
+    Attributes:
+    - `id` (int): Unique identifier for the user.
+    - `role` (str): Role of the user, either 'user' or 'admin'.
+    - `is_active` (bool): Indicates whether the user account is active.
+    - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.
+    - `carts` (List[CartBase]): List of carts associated with the user.
+    - `username` (str): Username of the user.
+    - `full_name` (str): Full name of the user.
+    - `password` (str): Password of the user.
+    - `email` (str): Email address of the user (validated).
+    """
     pass
 
 class UserOut(BaseModel):
-    "Schema for user details output."
+    """
+    Represents the output schema for a single user's details.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (UserBase): User details, including:
+        - `id` (int): Unique identifier for the user.
+        - `role` (str): Role of the user, either 'user' or 'admin'.
+        - `is_active` (bool): Indicates whether the user account is active.
+        - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.
+        - `carts` (List[CartBase]): List of carts associated with the user.
+        - `username` (str): Username of the user.
+        - `full_name` (str): Full name of the user.
+        - `password` (str): Password of the user.
+        - `email` (EmailStr): Email address of the user (validated).
+    """
     message: str = Field(..., description="Response message.")
     data: UserBase = Field(..., description="User details.")
 
@@ -27,7 +74,22 @@ class UserOut(BaseModel):
         pass
 
 class UsersOut(BaseModel):
-    "Schema for multiple user details output."
+    """
+    Represents the output schema for multiple users' details.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (List[UserBase]): List of user details, each including:
+        - `id` (int): Unique identifier for the user.
+        - `role` (str): Role of the user, either 'user' or 'admin'.
+        - `is_active` (bool): Indicates whether the user account is active.
+        - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.
+        - `carts` (List[CartBase]): List of carts associated with the user.
+        - `username` (str): Username of the user.
+        - `full_name` (str): Full name of the user.
+        - `password` (str): Password of the user.
+        - `email` (EmailStr): Email address of the user (validated).
+    """
     message: str = Field(..., description="Response message.")
     data: List[UserBase] = Field(..., description="List of user details.")
 
@@ -35,5 +97,20 @@ class UsersOut(BaseModel):
         pass
 
 class UserOutDelete(UserOut):
-    "Schema for user delete output."
+    """
+    Represents the output schema for a user deletion.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (UserBase): User details, including:
+        - `id` (int): Unique identifier for the user.
+        - `role` (str): Role of the user, either 'user' or 'admin'.
+        - `is_active` (bool): Indicates whether the user account is active.
+        - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.
+        - `carts` (List[CartBase]): List of carts associated with the user.
+        - `username` (str): Username of the user.
+        - `full_name` (str): Full name of the user.
+        - `password` (str): Password of the user.
+        - `email` (EmailStr): Email address of the user (validated).
+    """
     pass

@@ -3,8 +3,7 @@ This module contains routes related to user authentication, including signing up
 """
 
 from app.database import get_db
-from app.schemas.auth import TokenResponse
-from app.schemas.users import UserCreate, UserOut
+from app.schemas import TokenResponse, UserCreate, UserOut
 from app.services.auth import AuthService
 from fastapi import APIRouter, Depends, status, Header
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm

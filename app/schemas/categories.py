@@ -1,32 +1,72 @@
+"""
+This module defines schemas for creating, updating, and outputting category details, as well as handling category deletion.
+"""
+
 from pydantic import BaseModel, Field
 from typing import List
 
 class CategoryCreate(BaseModel):
-    "Schema for basic category details."
+    """
+    Represents the basic details for creating a category.
+
+    Attributes:
+    - `name` (str): Name of the category.
+    """
     name: str = Field(..., min_length=1, description="Name of the category. Must have at least 1 character.")
 
 class CategoryBase(CategoryCreate):
-    "Schema for creating a category."
+    """
+    Represents the details of a category.
+
+    Attributes:
+    - `id` (int): Unique identifier for the category.
+    - `name` (str): Name of the category.
+    """
     id: int = Field(..., description="Unique identifier for the category.")
 
 class CategoryUpdate(CategoryCreate):
-    "Schema for updating a category."
+    """
+    Represents the schema for updating a category.
+
+    Attributes:
+    - `name` (str): Name of the category.
+    """
     pass
 
 class CategoryOut(BaseModel):
-    "Schema for single category output."
+    """
+    Represents the output schema for a single category.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (CategoryBase): Details of the category.
+        - `id` (int): Unique identifier for the category.
+        - `name` (str): Name of the category.
+    """
     message: str = Field(..., description="Response message.")
     data: CategoryBase = Field(..., description="Details of the category.")
 
 class CategoriesOut(BaseModel):
-    "Schema for multiple categories output."
+    """
+    Represents the output schema for multiple categories.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (List[CategoryBase]): List of category details.
+        - `id` (int): Unique identifier for the category.
+        - `name` (str): Name of the category.
+    """
     message: str = Field(..., description="Response message.")
     data: List[CategoryBase] = Field(..., description="List of category details.")
 
-class CategoryDelete(CategoryBase):
-    "Schema for deleted category details."
-    pass
-
 class CategoryOutDelete(CategoryOut):
-    "Schema for category deletion output."
+    """
+    Represents the output schema for category deletion.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (CategoryBase): Details of the deleted category.
+        - `id` (int): Unique identifier for the category.
+        - `name` (str): Name of the category.
+    """
     pass

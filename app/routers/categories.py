@@ -4,7 +4,7 @@ This module contains routes for managing categories, including retrieving all ca
 
 from app.config import check_admin_role
 from app.database import get_db
-from app.schemas.categories import CategoryCreate, CategoryOut, CategoriesOut, CategoryOutDelete, CategoryUpdate
+from app.schemas import CategoryCreate, CategoryOut, CategoriesOut, CategoryOutDelete, CategoryUpdate
 from app.services.categories import CategoryService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session

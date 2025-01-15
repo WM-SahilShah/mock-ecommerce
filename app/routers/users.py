@@ -5,7 +5,7 @@ It also supports pagination, search, and role-based filtering. All user-related 
 
 from app.config.security import check_admin_role
 from app.database.database import get_db
-from app.schemas.users import UserCreate, UserOut, UsersOut, UserOutDelete, UserUpdate
+from app.schemas import UserCreate, UserOut, UsersOut, UserOutDelete, UserUpdate
 from app.services.users import UserService
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session

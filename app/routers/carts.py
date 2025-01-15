@@ -4,7 +4,7 @@ This module contains routes for managing carts, including retrieving all carts, 
 
 from app.config import auth_scheme
 from app.database import get_db
-from app.schemas.carts import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOutList
+from app.schemas import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOutList
 from app.services.carts import CartService
 from fastapi import APIRouter, Depends, Query, status
 from fastapi.security.http import HTTPAuthorizationCredentials

@@ -1,23 +1,43 @@
-from app.config.responses import BaseConfig
-from app.schemas.products import CategoryBase, ProductBase
+"""
+This module defines schemas for carts, cart items, and related operations.
+"""
+
+from app.config import BaseConfig
+from app.schemas.products import ProductBase
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List
 
-class ProductBaseCart(ProductBase):
-    "Schema for product details within a cart."
-    category: CategoryBase = Field(exclude=True, description="Category details of the product (excluded from output).")
-
 class CartItemBase(BaseModel):
-    "Schema for a cart item."
+    """
+    Represents a cart item.
+
+    Attributes:
+    - `id` (int): Unique identifier for the cart item.
+    - `product_id` (int): Unique identifier for the product.
+    - `quantity` (int): Quantity of the product in the cart.
+    - `subtotal` (float): Subtotal amount for the cart item.
+    - `product` (ProductBase): Details of the product.
+    """
     id: int = Field(..., description="Unique identifier for the cart item.")
     product_id: int = Field(..., description="Unique identifier for the product.")
     quantity: int = Field(..., description="Quantity of the product in the cart.")
     subtotal: float = Field(..., description="Subtotal amount for the cart item.")
-    product: ProductBaseCart = Field(..., description="Details of the product.")
+    product: ProductBase = Field(..., description="Details of the product.")
 
 class CartBase(BaseModel):
-    "Schema for basic cart details."
+    """
+    Represents basic cart details.
+
+    Attributes:
+    - `id` (int): Unique identifier for the cart.
+    - `user_id` (int): Unique identifier for the user.
+    - `created_at` (datetime): Timestamp when the cart was created.
+    - `total_amount` (float): Total amount for the cart.
+    - `cart_items` (List[CartItemBase]): List of items in the cart.
+        - `product_id` (int): Unique identifier for the product.
+        - `quantity` (int): Quantity of the product to add to the cart.
+    """
     id: int = Field(..., description="Unique identifier for the cart.")
     user_id: int = Field(..., description="Unique identifier for the user.")
     created_at: datetime = Field(..., description="Timestamp when the cart was created.")
@@ -27,12 +47,19 @@ class CartBase(BaseModel):
     class Config(BaseConfig):
         pass
 
-class CartOutBase(CartBase):
-    "Schema for cart details output."
-    pass
-
 class CartOut(BaseModel):
-    "Schema for a single cart response."
+    """
+    Represents a single cart response.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (CartBase): Cart details, including:
+        - `id` (int): Unique identifier for the cart.
+        - `user_id` (int): Unique identifier for the user.
+        - `created_at` (datetime): Timestamp when the cart was created.
+        - `total_amount` (float): Total amount for the cart.
+        - `cart_items` (List[CartItemBase]): List of items in the cart.
+    """
     message: str = Field(..., description="Response message.")
     data: CartBase = Field(..., description="Cart details.")
 
@@ -40,33 +67,68 @@ class CartOut(BaseModel):
         pass
 
 class CartsOutList(BaseModel):
-    "Schema for a list of carts response."
+    """
+    Represents a list of carts response.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (List[CartBase]): List of cart details, each including:
+        - `id` (int): Unique identifier for the cart.
+        - `user_id` (int): Unique identifier for the user.
+        - `created_at` (datetime): Timestamp when the cart was created.
+        - `total_amount` (float): Total amount for the cart.
+        - `cart_items` (List[CartItemBase]): List of items in the cart.
+    """
     message: str = Field(..., description="Response message.")
     data: List[CartBase] = Field(..., description="List of cart details.")
 
-class CartsUserOutList(CartsOutList):
-    "Schema for a list of user carts response."
-    pass
-
-    class Config(BaseConfig):
-        pass
-
 class CartOutDelete(CartOut):
-    "Schema for cart deletion response."
+    """
+    Represents the response schema for cart deletion.
+
+    Attributes:
+    - `message` (str): Response message.
+    - `data` (CartBase): Deleted cart details, including:
+        - `id` (int): Unique identifier for the cart.
+        - `user_id` (int): Unique identifier for the user.
+        - `created_at` (datetime): Timestamp when the cart was created.
+        - `total_amount` (float): Total amount for the cart.
+        - `cart_items` (List[CartItemBase]): List of items in the cart.
+    """
     pass
 
 class CartItemCreate(BaseModel):
-    "Schema for creating a cart item."
+    """
+    Represents schema for creating a cart item.
+
+    Attributes:
+    - `product_id` (int): Unique identifier for the product.
+    - `quantity` (int): Quantity of the product to add to the cart.
+    """
     product_id: int = Field(..., description="Unique identifier for the product.")
     quantity: int = Field(..., description="Quantity of the product to add to the cart.")
 
 class CartCreate(BaseModel):
-    "Schema for creating a cart."
+    """
+    Represents schema for creating a cart.
+
+    Attributes:
+    - `cart_items` (List[CartItemCreate]): List of items to add to the cart.
+        - `product_id` (int): Unique identifier for the product.
+        - `quantity` (int): Quantity of the product to add to the cart.
+    """
     cart_items: List[CartItemCreate] = Field(..., description="List of items to add to the cart.")
 
     class Config(BaseConfig):
         pass
 
 class CartUpdate(CartCreate):
-    "Schema for updating a cart."
+    """
+    Represents schema for updating a cart.
+
+    Attributes:
+    - `cart_items` (List[CartItemCreate]): List of items to update in the cart.
+        - `product_id` (int): Unique identifier for the product.
+        - `quantity` (int): Quantity of the product to add to the cart.
+    """
     pass

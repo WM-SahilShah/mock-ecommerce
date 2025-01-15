@@ -10,7 +10,7 @@ Features:
 
 from app.config import logger, ResponseHandler, ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from app.database import get_db, User
-from app.schemas.auth import TokenResponse
+from app.schemas import TokenResponse
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends
 from fastapi.security import HTTPBearer
