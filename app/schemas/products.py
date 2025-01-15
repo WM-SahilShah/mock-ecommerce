@@ -2,7 +2,7 @@
 This module defines schemas for creating, updating, and outputting product details, as well as handling product deletion.
 """
 
-from app.config.responses import BaseConfig
+from app.config import BaseConfig
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List

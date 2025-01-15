@@ -2,8 +2,8 @@
 This module defines schemas for user and account attributes, updates, and outputs.
 """
 
+from .carts import CartBase
 from app.config import BaseConfig
-from app.schemas.carts import CartBase
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Literal

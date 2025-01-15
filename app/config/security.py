@@ -8,7 +8,9 @@ Features:
 - Role-based access control.
 """
 
-from app.config import logger, ResponseHandler, ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from .logging import logger
+from .responses import ResponseHandler
+from .settings import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from app.database import get_db, User
 from app.schemas import TokenResponse
 from datetime import datetime, timedelta, timezone

@@ -2,8 +2,8 @@
 This module defines schemas for carts, cart items, and related operations.
 """
 
+from .products import ProductBase
 from app.config import BaseConfig
-from app.schemas.products import ProductBase
 from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List

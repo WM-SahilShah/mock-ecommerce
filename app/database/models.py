@@ -5,7 +5,7 @@ This module defines the SQLAlchemy ORM models for the application's database tab
 Models: User, Cart, CartItem, Category, Product.
 """
 
-from app.database import Base
+from .database import Base
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, Float, ARRAY, Enum
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP

@@ -2,8 +2,8 @@
 This module defines schemas for user attributes, updates, creation, and outputs.
 """
 
+from .accounts import BaseAttributes, UpdateAttributes
 from app.config import BaseConfig
-from app.schemas.accounts import BaseAttributes, UpdateAttributes
 from pydantic import BaseModel, EmailStr, Field
 from typing import List
 
