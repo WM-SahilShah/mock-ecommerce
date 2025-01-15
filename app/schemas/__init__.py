@@ -7,16 +7,16 @@ Schemas include definitions for accounts, authentication, carts, categories, pro
 
 from .accounts import AccountUpdate, AccountOut
 from .auth import TokenResponse
-from .carts import CartCreate, CartOut, CartsOutList, CartOutDelete, CartCreate, CartUpdate
-from .categories import CategoryCreate, CategoryUpdate, CategoryOut, CategoriesOut, CategoryOutDelete
-from .products import ProductCreate, ProductUpdate, ProductOut, ProductsOut, ProductOutDelete
-from .users import UserUpdate, UserCreate, UserOut, UsersOut, UserOutDelete
+from .carts import CartCreate, CartUpdate, CartOutDelete, CartOut, CartsOut
+from .categories import CategoryCreate, CategoryUpdate, CategoryOutDelete, CategoryOut, CategoriesOut
+from .products import ProductCreate, ProductUpdate, ProductOutDelete, ProductOut, ProductsOut
+from .users import UserCreate, UserUpdate, UserOutDelete, UserOut, UsersOut
 
 __all__ = [
     "AccountUpdate", "AccountOut",
     "TokenResponse",
-    "CartCreate", "CartOut", "CartsOutList", "CartOutDelete", "CartCreate", "CartUpdate",
-    "CategoryCreate", "CategoryUpdate", "CategoryOut", "CategoriesOut", "CategoryOutDelete",
-    "ProductCreate", "ProductUpdate", "ProductOut", "ProductsOut", "ProductOutDelete",
-    "UserUpdate", "UserCreate", "UserOut", "UsersOut", "UserOutDelete"
+    "CartCreate", "CartUpdate", "CartOutDelete", "CartOut", "CartsOut",
+    "CategoryCreate", "CategoryUpdate", "CategoryOutDelete", "CategoryOut", "CategoriesOut",
+    "ProductCreate", "ProductUpdate", "ProductOutDelete", "ProductOut", "ProductsOut",
+    "UserCreate", "UserUpdate", "UserOutDelete", "UserOut", "UsersOut"
 ]

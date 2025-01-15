@@ -1,20 +1,28 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.config.security import get_password_hash, get_token_payload, get_user_token, verify_password
-from app.database.database import get_db
-from app.database.models import User
-from app.schemas.auth import TokenResponse
-from app.schemas.users import UserCreate
+"""
+This module provides the AuthService class for handling authentication-related actions, 
+such as user login, signup, and token refresh functionality.
+"""
+
+from app.config import logger, ResponseHandler, get_password_hash, get_token_payload, get_user_token, verify_password
+from app.database import get_db, User
+from app.schemas import TokenResponse, UserCreate
 from fastapi import Depends
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 class AuthService:
-    "Service for authentication-related actions."
+    """
+    Service class for authentication-related actions.
+
+    Methods:
+        `login(user_credentials, db)`: Log in a user and return an access token.
+        `signup(db, user)`: Sign up a new user and store their information in the database.
+        `get_refresh_token(token, db)`: Generate a new access token using a refresh token.
+    """
 
     @staticmethod
     async def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)) -> TokenResponse:
-        "Log in a user."
+        "Log a user in."
         logger.info(f"Attempting login for username: {user_credentials.username}")
         user = (db.query(User)
                 .filter(User.username == user_credentials.username)
@@ -30,7 +38,7 @@ class AuthService:
 
     @staticmethod
     async def signup(db: Session, user: UserCreate) -> dict:
-        "Sign up a new user."
+        "Sign a new user up."
         logger.info(f"Attempting to sign up user: {user.username}")
         if not user.username or not user.password or not user.email:
             logger.error("Signup failed: Missing required fields.")

@@ -1,11 +1,24 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.database.models import Category
-from app.schemas.categories import CategoryCreate, CategoryUpdate
+"""
+This module provides the CategoryService class for managing category-related actions, 
+including retrieving, creating, updating, and deleting categories.
+"""
+
+from app.config import logger, ResponseHandler
+from app.database import Category
+from app.schemas import CategoryCreate, CategoryUpdate
 from sqlalchemy.orm import Session
 
 class CategoryService:
-    "Service for category-related actions."
+    """
+    Service class for category-related actions.
+
+    Methods:
+        `get_all_categories(db, page, limit, search)`: Retrieve a paginated list of categories, optionally filtered by a search term.
+        `get_category(db, category_id)`: Retrieve a specific category by its ID.
+        `create_category(db, category)`: Create a new category with the provided details.
+        `update_category(db, category_id, updated_category)`: Update a specific category's details.
+        `delete_category(db, category_id)`: Delete a specific category from the database.
+    """
 
     @staticmethod
     def get_all_categories(db: Session, page: int, limit: int, search: str) -> dict:

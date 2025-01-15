@@ -1,12 +1,20 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.config.security import get_password_hash
-from app.database.models import User
-from app.schemas.users import UserCreate, UserUpdate
+from app.config import logger, ResponseHandler, get_password_hash
+from app.database import User
+from app.schemas import UserCreate, UserUpdate
 from sqlalchemy.orm import Session
 
 class UserService:
-    "Service for user-related actions."
+    """
+    Service class for user-related actions.
+
+    Methods:
+        `get_all_users(db, page, limit, search, role)`: Retrieve a paginated list of users, optionally filtered by a search term and role.
+        `get_user(db, user_id)`: Retrieve a specific user by their ID.
+        `create_user(db, user)`: Create a new user with the provided details.
+        `update_user(db, user_id, updated_user)`: Update a specific user's details.
+        `delete_user(db, user_id)`: Delete a specific user from the database.
+    """
+
 
     @staticmethod
     def get_all_users(db: Session, page: int, limit: int, search: str = "", role: str = "") -> dict:

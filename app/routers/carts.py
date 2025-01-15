@@ -4,7 +4,7 @@ This module contains routes for managing carts, including retrieving all carts, 
 
 from app.config import auth_scheme
 from app.database import get_db
-from app.schemas import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOutList
+from app.schemas import CartCreate, CartUpdate, CartOut, CartOutDelete, CartsOut
 from app.services.carts import CartService
 from fastapi import APIRouter, Depends, Query, status
 from fastapi.security.http import HTTPAuthorizationCredentials
@@ -15,7 +15,7 @@ router = APIRouter(tags=["Carts"], prefix="/carts")
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
-    response_model=CartsOutList,
+    response_model=CartsOut,
     summary="Get All Carts #",
     description="This endpoint retrieves a paginated list of all carts for the particular user.")
 def get_all_carts(
@@ -23,7 +23,7 @@ def get_all_carts(
         page: int = Query(1, ge=1, description="Page number (Required)"),
         limit: int = Query(10, ge=1, le=100, description="Items per page (Required)"),
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)
-    ) -> CartsOutList:
+    ) -> CartsOut:
     "Retrieve all carts with pagination."
     return CartService.get_all_carts(token, db, page, limit)
 

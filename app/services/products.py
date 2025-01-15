@@ -1,11 +1,24 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.database.models import Category, Product
-from app.schemas.products import ProductCreate, ProductUpdate
+"""
+This module provides the ProductService class for handling product-related actions, 
+including retrieving, creating, updating, and deleting products in the database.
+"""
+
+from app.config import logger, ResponseHandler
+from app.database import Category, Product
+from app.schemas import ProductCreate, ProductUpdate
 from sqlalchemy.orm import Session
 
 class ProductService:
-    "Service for product-related actions."
+    """
+    Service class for product-related actions.
+
+    Methods:
+        `get_all_products(db, page, limit, search)`: Retrieve a paginated list of products, optionally filtered by a search term.
+        `get_product(db, product_id)`: Retrieve a specific product by its ID.
+        `create_product(db, product)`: Create a new product with the provided details.
+        `update_product(db, product_id, updated_product)`: Update a specific product's details.
+        `delete_product(db, product_id)`: Delete a specific product from the database.
+    """
 
     @staticmethod
     def get_all_products(db: Session, page: int, limit: int, search: str) -> dict:

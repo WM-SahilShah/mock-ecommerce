@@ -66,7 +66,7 @@ class CartOut(BaseModel):
     class Config(BaseConfig):
         pass
 
-class CartsOutList(BaseModel):
+class CartsOut(BaseModel):
     """
     Represents a list of carts response.
 

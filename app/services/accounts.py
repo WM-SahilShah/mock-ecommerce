@@ -1,27 +1,37 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.config.security import get_token_payload
-from app.database.models import User
+"""
+This module provides the AccountService class for handling user account-related actions 
+such as retrieving user information, editing user details, and deleting user accounts.
+"""
+
+from app.config import logger, ResponseHandler, get_token_payload
+from app.database import User
 from sqlalchemy.orm import Session
 
 class AccountService:
-    "Service for account-related actions."
+    """
+    Service class for account-related actions.
+
+    Methods:
+        `get_my_info(db, token)`: Retrieve the authenticated user's information.
+        `edit_my_info(db, token, updated_user)`: Update the authenticated user's account information.
+        `remove_my_account(db, token)`: Delete the authenticated user's account from the database.
+    """
 
     @staticmethod
     def get_my_info(db: Session, token: str) -> dict:
         "Retrieve user's information."
         logger.info("Retrieving user info.")
         user_id = get_token_payload(token.credentials).get("id")
-        user = (db.query(User)
+        db_user = (db.query(User)
                 .filter(User.id == user_id)
                 .first())
 
-        if not user:
+        if not db_user:
             logger.error(f"User with id {user_id} not found.")
             ResponseHandler.not_found_error("User", user_id)
 
-        logger.info(f"Successfully retrieved info for user {user.username} (ID: {user.id}).")
-        return ResponseHandler.get_single_success(user.username, user.id, user)
+        logger.info(f"Successfully retrieved info for user {db_user.username} (ID: {db_user.id}).")
+        return ResponseHandler.get_single_success(db_user.username, db_user.id, db_user)
 
     @staticmethod
     def edit_my_info(db: Session, token: str, updated_user: User) -> dict:

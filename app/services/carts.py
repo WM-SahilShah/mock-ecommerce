@@ -1,12 +1,25 @@
-from app.config.logging import logger
-from app.config.responses import ResponseHandler
-from app.config.security import get_current_user
-from app.database.models import Cart, CartItem, Product
-from app.schemas.carts import CartCreate, CartUpdate
+"""
+This module provides the CartService class for handling cart-related actions, 
+such as retrieving, creating, updating, and deleting user carts and their items.
+"""
+
+from app.config import logger, ResponseHandler, get_current_user
+from app.database import Cart, CartItem, Product
+from app.schemas import CartCreate, CartUpdate
 from sqlalchemy.orm import Session, joinedload
 
 class CartService:
-    "Service for cart-related actions."
+    """
+    Service class for cart-related actions.
+
+    Methods:
+        `get_all_carts(token, db, page, limit)`: Retrieve all carts for the authenticated user.
+        `get_cart(token, db, cart_id)`: Retrieve a specific cart by its ID.
+        `create_cart(token, db, cart)`: Create a new cart with the provided items.
+        `update_cart(token, db, cart_id, updated_cart)`: Update a specific cart and its items.
+        `delete_cart(token, db, cart_id)`: Delete a specific cart and its items.
+    """
+
 
     @staticmethod
     def get_all_carts(token: str, db: Session, page: int, limit: int) -> dict:
