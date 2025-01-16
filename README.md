@@ -66,35 +66,35 @@ A simple Ecommerce API built with Fast API Framework
 
 | Endpoint | HTTP Method | Path | Description | User Type |
 |----------|-------------|------|-------------|-----------|
-| ReDoc UI | - | `/redoc/` | ReDoc UI for API documentation | User |
-| Swagger UI | - | `/docs/` | Swagger UI for API documentation | User |
-| Swagger JSON (no UI) | - | `/openapi.json` | OpenAPI JSON for API documentation without UI | User |
-| User Signup | POST | `/auth/signup/` | Register a new user | User |
-| User Login | POST | `/auth/login/` | Authenticate and generate access tokens for a user | User |
-| Refresh Access Token | POST | `/auth/refresh/` | Refresh an access token using a refresh token | User |
-| Get My Account Info | GET | `/me/` | Get information about the authenticated user | User |
-| Edit My Account Info | PUT | `/me/` | Edit the information of the authenticated user | User |
-| Remove My Account | DELETE | `/me/` | Remove the account of the authenticated user | User |
-| Category List | GET | `/categories/` | Get a list of all categories | User |
-| Create Category* | POST | `/categories/` | Create a new category | Admin |
-| Retrieve Category by ID | GET | `/categories/{id}/` | Get details of a specific category by ID | User |
-| Update Category by ID* | PUT | `/categories/{id}/` | Update details of a specific category by ID | Admin |
-| Delete Category by ID* | DELETE | `/categories/{id}/` | Delete a specific category by ID | Admin |
-| Product List | GET | `/products/` | Get a list of all products | User |
-| Create Product* | POST | `/products/` | Create a new product | Admin |
-| Retrieve Product by ID | GET | `/products/{id}/` | Get details of a specific product by ID | User |
-| Update Product by ID* | PUT | `/products/{id}/` | Update details of a specific product by ID | Admin |
-| Delete Product by ID* | DELETE | `/products/{id}/` | Delete a specific product by ID | Admin |
-| Cart List | GET | `/carts/` | Get a list of all carts made by the user | User |
-| Create Cart | POST | `/carts/` | Create a new cart for the user | User |
-| Retrieve Cart by ID | GET | `/carts/{id}/` | Get details of a specific cart by ID | User |
-| Update Cart by ID | PUT | `/carts/{id}/` | Update details of a specific cart by ID | User |
-| Delete Cart by ID | DELETE | `/carts/{id}/` | Delete a specific cart by ID | User |
-| User List* | GET | `/users/` | Get a list of all users | Admin |
-| Create User* | POST | `/users/` | Create a new user | Admin |
-| Get User By ID* | GET | `/users/{user_id}/` | Get details of a specific user by ID | Admin |
-| Update User By ID* | PUT | `/users/{user_id}/` | Update details of a specific user by ID | Admin |
-| Delete User By ID* | DELETE | `/users/{user_id}/` | Delete a specific user by ID | Admin |
+| ReDoc UI | - | `/redoc/` | ReDoc UI for API documentation | - |
+| Swagger UI | - | `/docs/` | Swagger UI for API documentation | - |
+| Swagger JSON (no UI) | - | `/openapi.json` | OpenAPI JSON for API documentation without UI | - |
+| User Signup | POST | `/auth/signup/` | Register a new user | - |
+| User Login | POST | `/auth/login/` | Authenticate and generate access tokens for a user | User/Admin |
+| Refresh Access Token # | POST | `/auth/refresh/` | Refresh an access token using a refresh token | User/Admin |
+| Get My Info # | GET | `/me/` | Get information about the authenticated user | User |
+| Edit My Info # | PUT | `/me/` | Edit the information of the authenticated user | User |
+| Delete My Info # | DELETE | `/me/` | Remove the account of the authenticated user | User |
+| Get All Categories | GET | `/categories/` | Get a list of all categories | - |
+| Create New Category ## | POST | `/categories/` | Create a new category | Admin |
+| Get Specific Category | GET | `/categories/{category_id}/` | Get details of a specific category by ID | - |
+| Update Existing Category ## | PUT | `/categories/{category_id}/` | Update details of a specific category by ID | Admin |
+| Delete Existing Category ## | DELETE | `/categories/{category_id}/` | Delete a specific category by ID | Admin |
+| Get All Products | GET | `/products/` | Get a list of all products | - |
+| Create New Product ## | POST | `/products/` | Create a new product | Admin |
+| Get Specific Product | GET | `/products/{product_id}/` | Get details of a specific product by ID | - |
+| Update Existing Product ## | PUT | `/products/{product_id}/` | Update details of a specific product by ID | Admin |
+| Delete Existing Product ## | DELETE | `/products/{product_id}/` | Delete a specific product by ID | Admin |
+| Get All Carts # | GET | `/carts/` | Get a list of all carts made by the user | User |
+| Create New Cart # | POST | `/carts/` | Create a new cart for the user | User |
+| Get Specific Cart # | GET | `/carts/{cart_id}/` | Get details of a specific cart by ID | User |
+| Update Existing Cart # | PUT | `/carts/{cart_id}/` | Update details of a specific cart by ID | User |
+| Delete Existing Cart # | DELETE | `/carts/{cart_id}/` | Delete a specific cart by ID | User |
+| Get All Users ## | GET | `/users/` | Get a list of all users | Admin |
+| Create New User ## | POST | `/users/` | Create a new user | Admin |
+| Get Specific User ## | GET | `/users/{user_id}/` | Get details of a specific user by ID | Admin |
+| Update Existing User ## | PUT | `/users/{user_id}/` | Update details of a specific user by ID | Admin |
+| Delete Existing User ## | DELETE | `/users/{user_id}/` | Delete a specific user by ID | Admin |
 
 
 ## Installation

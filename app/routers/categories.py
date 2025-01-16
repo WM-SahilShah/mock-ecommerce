@@ -63,7 +63,7 @@ def get_category(
     status_code=status.HTTP_200_OK,
     response_model=CategoryOut,
     dependencies=[Depends(check_admin_role)],
-    summary="Update Existing category ##",
+    summary="Update Existing Category ##",
     description="This endpoint allows an admin to update an existing category by its ID.")
 def update_category(
         category_id: int,

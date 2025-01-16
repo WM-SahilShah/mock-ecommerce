@@ -43,7 +43,7 @@ async def user_login(
     "/refresh",
     status_code=status.HTTP_200_OK,
     response_model=TokenResponse,
-    summary="Refresh Access Token",
+    summary="Refresh Access Token #",
     description="This endpoint allows the user to refresh their access token using a valid refresh token.")
 async def refresh_access_token(
         refresh_token: str = Header(),
