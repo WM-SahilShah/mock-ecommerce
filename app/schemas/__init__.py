@@ -6,7 +6,7 @@ Schemas include definitions for accounts, authentication, carts, categories, pro
 """
 
 from .accounts import AccountUpdate, AccountOut
-from .auth import TokenResponse
+from .auth import TokenResponse, CustomOAuth2PasswordRequestForm
 from .carts import CartCreate, CartUpdate, CartOutDelete, CartOut, CartsOut
 from .categories import CategoryCreate, CategoryUpdate, CategoryOutDelete, CategoryOut, CategoriesOut
 from .products import ProductCreate, ProductUpdate, ProductOutDelete, ProductOut, ProductsOut
@@ -14,7 +14,7 @@ from .users import UserCreate, UserUpdate, UserOutDelete, UserOut, UsersOut
 
 __all__ = [
     "AccountUpdate", "AccountOut",
-    "TokenResponse",
+    "TokenResponse", "CustomOAuth2PasswordRequestForm",
     "CartCreate", "CartUpdate", "CartOutDelete", "CartOut", "CartsOut",
     "CategoryCreate", "CategoryUpdate", "CategoryOutDelete", "CategoryOut", "CategoriesOut",
     "ProductCreate", "ProductUpdate", "ProductOutDelete", "ProductOut", "ProductsOut",

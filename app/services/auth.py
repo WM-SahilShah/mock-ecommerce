@@ -5,9 +5,8 @@ such as user login, signup, and token refresh functionality.
 
 from app.config import logger, ResponseHandler, get_password_hash, get_token_payload, get_user_token, verify_password
 from app.database import get_db, User
-from app.schemas import TokenResponse, UserCreate
+from app.schemas import TokenResponse, UserCreate, CustomOAuth2PasswordRequestForm
 from fastapi import Depends
-from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 class AuthService:
@@ -21,7 +20,7 @@ class AuthService:
     """
 
     @staticmethod
-    async def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)) -> TokenResponse:
+    async def login(user_credentials: CustomOAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)) -> TokenResponse:
         "Log a user in."
         logger.info(f"Attempting login for username: {user_credentials.username}")
         user = (db.query(User)

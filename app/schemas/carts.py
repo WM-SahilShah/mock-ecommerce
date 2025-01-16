@@ -19,10 +19,10 @@ class CartItemBase(BaseModel):
     - `subtotal` (float): Subtotal amount for the cart item.
     - `product` (ProductBase): Details of the product.
     """
-    id: int = Field(..., description="Unique identifier for the cart item.")
-    product_id: int = Field(..., description="Unique identifier for the product.")
-    quantity: int = Field(..., description="Quantity of the product in the cart.")
-    subtotal: float = Field(..., description="Subtotal amount for the cart item.")
+    id: int = Field("<integer>", description="Unique identifier for the cart item.")
+    product_id: int = Field("<integer>", description="Unique identifier for the product.")
+    quantity: int = Field("<integer>", description="Quantity of the product in the cart.")
+    subtotal: float = Field("<float>", description="Subtotal amount for the cart item.")
     product: ProductBase = Field(..., description="Details of the product.")
 
 class CartBase(BaseModel):
@@ -35,13 +35,16 @@ class CartBase(BaseModel):
     - `created_at` (datetime): Timestamp when the cart was created.
     - `total_amount` (float): Total amount for the cart.
     - `cart_items` (List[CartItemBase]): List of items in the cart.
+        - `id` (int): Unique identifier for the cart item.
         - `product_id` (int): Unique identifier for the product.
-        - `quantity` (int): Quantity of the product to add to the cart.
+        - `quantity` (int): Quantity of the product in the cart.
+        - `subtotal` (float): Subtotal amount for the cart item.
+        - `product` (ProductBase): Details of the product.
     """
-    id: int = Field(..., description="Unique identifier for the cart.")
-    user_id: int = Field(..., description="Unique identifier for the user.")
-    created_at: datetime = Field(..., description="Timestamp when the cart was created.")
-    total_amount: float = Field(..., description="Total amount for the cart.")
+    id: int = Field("<integer>", ge=300, le=399, description="Unique identifier for the cart.")
+    user_id: int = Field("<integer>", ge=500, le=599, description="Unique identifier for the user.")
+    created_at: datetime = Field("<datetime obj/ISO 8601 string>", description="Timestamp when the cart was created.")
+    total_amount: float = Field("<float>", description="Total amount for the cart.")
     cart_items: List[CartItemBase] = Field(..., description="List of items in the cart.")
 
     class Config(BaseConfig):
@@ -105,8 +108,8 @@ class CartItemCreate(BaseModel):
     - `product_id` (int): Unique identifier for the product.
     - `quantity` (int): Quantity of the product to add to the cart.
     """
-    product_id: int = Field(..., description="Unique identifier for the product.")
-    quantity: int = Field(..., description="Quantity of the product to add to the cart.")
+    product_id: int = Field("<integer>", ge=200, le=299, description="Unique identifier for the product.")
+    quantity: int = Field("<integer>", gt=0, description="Quantity of the product to add to the cart.")
 
 class CartCreate(BaseModel):
     """

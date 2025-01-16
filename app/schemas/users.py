@@ -16,7 +16,7 @@ class UserUpdate(UpdateAttributes):
     - `full_name` (str): Full name of the user.
     - `password` (str): Password of the user.
     """
-    password: str = Field(..., min_length=1, description="Password of the user.")
+    password: str = Field("<string>", min_length=1, description="Password of the user.")
 
     class Config(BaseConfig):
         pass
@@ -31,7 +31,7 @@ class UserCreate(UserUpdate):
     - `password` (str): Password of the user.
     - `email` (str): Email address of the user (validated).
     """
-    email: EmailStr = Field(..., description="Email address of the user (validated).")
+    email: EmailStr = Field("email@example.com", description="Email address of the user (validated).")
 
 class UserBase(UserCreate, BaseAttributes):
     """

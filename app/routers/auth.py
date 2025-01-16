@@ -3,10 +3,9 @@ This module contains routes related to user authentication, including signing up
 """
 
 from app.database import get_db
-from app.schemas import TokenResponse, UserCreate, UserOut
+from app.schemas import TokenResponse, UserCreate, UserOut, CustomOAuth2PasswordRequestForm
 from app.services import AuthService
 from fastapi import APIRouter, Depends, status, Header
-from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["Auth"], prefix="/auth")
@@ -32,7 +31,7 @@ async def user_signup(
     summary="User Login",
     description="This endpoint allows an existing user to log in using their credentials and receive an access token.")
 async def user_login(
-        user_credentials: OAuth2PasswordRequestForm = Depends(),
+        user_credentials: CustomOAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)
     ) -> TokenResponse:
     "Login an existing user."
@@ -46,7 +45,7 @@ async def user_login(
     summary="Refresh Access Token #",
     description="This endpoint allows the user to refresh their access token using a valid refresh token.")
 async def refresh_access_token(
-        refresh_token: str = Header(),
+        refresh_token: str = Header("{{refreshToken}}"),
         db: Session = Depends(get_db)
     ) -> TokenResponse:
     "Refresh the user's access token."

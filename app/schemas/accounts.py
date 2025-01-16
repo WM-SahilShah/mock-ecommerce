@@ -19,10 +19,10 @@ class BaseAttributes(BaseModel):
     - `created_at` (datetime): Timestamp of account creation  in ISO 8601 format.
     - `carts` (List[CartBase]): List of carts associated with the account.
     """
-    id: int = Field(..., description="Unique identifier for the user or account.")
-    role: Literal["user", "admin"] = Field(..., description="Role of the user (user or admin).")
-    is_active: bool = Field(..., description="Indicates whether the account is active.")
-    created_at: datetime = Field(..., description="Timestamp when the account was created.")
+    id: int = Field("<integer>", description="Unique identifier for the user or account.")
+    role: Literal["user", "admin"] = Field("<string = user/admin", description="Role of the user (user or admin).")
+    is_active: bool = Field("<boolean>", description="Indicates whether the account is active.")
+    created_at: datetime = Field("<datetime obj/ISO 8601 string>", description="Timestamp when the account was created.")
     carts: List[CartBase] = Field(..., description="List of carts associated with the account.")
 
 class UpdateAttributes(BaseModel):
@@ -33,8 +33,8 @@ class UpdateAttributes(BaseModel):
     - `username` (str): Username of the account holder.
     - `full_name` (str): Full name of the account holder.
     """
-    username: str = Field(..., min_length=1, description="Username of the account holder.")
-    full_name: str = Field(..., min_length=1, description="Full name of the account holder.")
+    username: str = Field("<string>", min_length=1, description="Username of the account holder.")
+    full_name: str = Field("<string>", min_length=1, description="Full name of the account holder.")
 
 class AccountUpdate(UpdateAttributes):
     """
@@ -45,7 +45,7 @@ class AccountUpdate(UpdateAttributes):
     - `full_name` (str): Full name of the account holder.
     - `email` (str): Email address of the account holder (validated).
     """
-    email: EmailStr = Field(..., description="Email address of the account holder (validated).")
+    email: EmailStr = Field("email@example.com*", description="Email address of the account holder (validated).")
 
     class Config(BaseConfig):
         pass

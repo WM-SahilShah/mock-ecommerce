@@ -3,7 +3,7 @@ This module handles database connectivity and session management using SQLAlchem
 """
 
 from app.config.logging import logger
-from app.config.settings import DB_URL
+from app.config.settings import DB_URL # Do not import from init, circular dependency
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker

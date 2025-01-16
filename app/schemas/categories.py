@@ -12,7 +12,7 @@ class CategoryCreate(BaseModel):
     Attributes:
     - `name` (str): Name of the category.
     """
-    name: str = Field(..., min_length=1, description="Name of the category. Must have at least 1 character.")
+    name: str = Field("<string>", min_length=1, description="Name of the category. Must have at least 1 character.")
 
 class CategoryBase(CategoryCreate):
     """
@@ -22,7 +22,7 @@ class CategoryBase(CategoryCreate):
     - `id` (int): Unique identifier for the category.
     - `name` (str): Name of the category.
     """
-    id: int = Field(..., description="Unique identifier for the category.")
+    id: int = Field("<integer>", ge=100, le=199, description="Unique identifier for the category.")
 
 class CategoryUpdate(CategoryCreate):
     """
