@@ -1,0 +1,30 @@
+{
+    "name": "E-Commerce Environment",
+    "values": [
+        {
+            "key": "password",
+            "value": "-",
+            "enabled": "true"
+        },
+        {
+            "key": "username",
+            "value": "-",
+            "enabled": "true"
+        },
+        {
+            "key": "baseUrl",
+            "value": "https://mock-ecommerce-zeb2.onrender.com",
+            "enabled": "true"
+        },
+        {
+            "key": "refreshToken",
+            "value": "-",
+            "enabled": "true"
+        },
+        {
+            "key": "searchQuery",
+            "value": "",
+            "enabled": "true"
+        }
+    ]
+}

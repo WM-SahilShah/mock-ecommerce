@@ -9,7 +9,7 @@ from fastapi.responses import HTMLResponse, FileResponse
 from markdown_it import MarkdownIt
 
 router = APIRouter(tags=["Home"])
-DOCS_FILENAME = "E-Commerce API Collection.json"
+DOCS_FILENAME = "E-Commerce Files.zip"
 
 def html_page(content: str) -> str:
     return f"""

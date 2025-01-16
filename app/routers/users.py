@@ -25,7 +25,7 @@ def get_all_users(
         db: Session = Depends(get_db),
         page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
         limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
-        search: str = Query("<string>", description="Search by username (Optional)"),
+        search: str = Query("{{searchQuery}}", description="Search by username (Optional)"),
         role: str = Query("<string = `user`/`admin`/``", enum=["user", "admin", ""], description="Filter by user role (Optional)")
     ) -> UsersOut:
     "Retrieve all users with pagination, search, and role filtering."

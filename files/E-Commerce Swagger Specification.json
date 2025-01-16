@@ -1,0 +1,2519 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "E-Commerce API",
+    "description": "\nWelcome to the Mock E-Commerce API! 🚀\n\nThis API provides a comprehensive set of functionalities for managing your e-commerce platform.\nKey features include:\n\n- **CRUD**\n\t- Create, Read, Update, and Delete endpoints.\n- **Search**\n\t- Find specific information with parameters and pagination.\n- **Auth**\n\t- Verify user/admin identity.\n\t- Secure with Access and Refresh tokens.\n- **Permission**\n\t- Assign roles with specific permissions.\n\t- Different access levels for User/Admin.\n- **Validation**\n\t- Ensure accurate and secure input data.\n\nFor any inquiries, please contact sshah@watermelon.us\n",
+    "contact": {
+      "name": "Sahil Shah",
+      "url": "https://github.com/WM-SahilShah"
+    },
+    "version": "2.0.4"
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Signup",
+        "description": "This endpoint allows a user to create a new account by providing the necessary details.",
+        "operationId": "user_signup_auth_signup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User Login",
+        "description": "This endpoint allows an existing user to log in using their credentials and receive an access token.",
+        "operationId": "user_login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Body_user_login_auth_login_post"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh Access Token #",
+        "description": "This endpoint allows the user to refresh their access token using a valid refresh token.",
+        "operationId": "refresh_access_token_auth_refresh_post",
+        "parameters": [
+          {
+            "name": "refresh-token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "{{refreshToken}}",
+              "title": "Refresh-Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me/": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Get My Info #",
+        "description": "Retrieve detailed information about the authenticated user. Requires valid authorization credentials.",
+        "operationId": "get_my_info_me__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Edit My Info #",
+        "description": "Update user information, such as email, password, or other personal details. Requires valid authorization credentials.",
+        "operationId": "edit_my_info_me__put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Delete My Info #",
+        "description": "Delete the current authenticated user's account permanently. Requires valid authorization credentials.",
+        "operationId": "remove_my_account_me__delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get All Categories",
+        "description": "This endpoint retrieves a paginated list of all categories with an optional search parameter to filter by category name.",
+        "operationId": "get_all_categories_categories__get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (Required)",
+              "default": "<integer>*",
+              "title": "Page"
+            },
+            "description": "Page number (Required)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Items per page (Required)",
+              "default": "<integer>*",
+              "title": "Limit"
+            },
+            "description": "Items per page (Required)"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search based name of categories",
+              "default": "<string>",
+              "title": "Search"
+            },
+            "description": "Search based name of categories"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create New Category ##",
+        "description": "This endpoint allows an admin to create a new category.",
+        "operationId": "create_category_categories__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get Specific Category",
+        "description": "This endpoint retrieves a specific category by its ID.",
+        "operationId": "get_category_categories__category_id__get",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Category Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update Existing Category ##",
+        "description": "This endpoint allows an admin to update an existing category by its ID.",
+        "operationId": "update_category_categories__category_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Category Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete Existing Category ##",
+        "description": "This endpoint allows an admin to delete a category by its ID.",
+        "operationId": "delete_category_categories__category_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Category Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryOutDelete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get All Products",
+        "description": "This endpoint retrieves all products with pagination (required) and search by title (optional).",
+        "operationId": "get_all_products_products__get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (Required)",
+              "default": "<integer>*",
+              "title": "Page"
+            },
+            "description": "Page number (Required)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Items per page (Required)",
+              "default": "<integer>*",
+              "title": "Limit"
+            },
+            "description": "Items per page (Required)"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search based title of products",
+              "default": "<string>",
+              "title": "Search"
+            },
+            "description": "Search based title of products"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create New Product ##",
+        "description": "This endpoint allows an admin to create a new product.",
+        "operationId": "create_product_products__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get Specific Product",
+        "description": "This endpoint retrieves a specific product by its ID.",
+        "operationId": "get_product_products__product_id__get",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Product Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update Existing Product ##",
+        "description": "This endpoint allows an admin to update an existing product by its ID.",
+        "operationId": "update_product_products__product_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Product Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete Existing Category ##",
+        "description": "Delete a product by its ID.",
+        "operationId": "delete_product_products__product_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Product Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOutDelete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Get All Carts #",
+        "description": "This endpoint retrieves a paginated list of all carts for the particular user.",
+        "operationId": "get_all_carts_carts__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (Required)",
+              "default": "<integer>*",
+              "title": "Page"
+            },
+            "description": "Page number (Required)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Items per page (Required)",
+              "default": "<integer>*",
+              "title": "Limit"
+            },
+            "description": "Items per page (Required)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Create New Cart #",
+        "description": "This endpoint creates a new cart for the user.",
+        "operationId": "create_cart_carts__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/{cart_id}": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Get Specific Cart #",
+        "description": "This endpoint retrieves a specific cart by its ID.",
+        "operationId": "get_cart_carts__cart_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cart_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Cart Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Update Existing Cart #",
+        "description": "This endpoint updates an existing cart by its ID.",
+        "operationId": "update_cart_carts__cart_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cart_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Cart Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Delete Existing Cart #",
+        "description": "This endpoint deletes a cart by its ID.",
+        "operationId": "delete_cart_carts__cart_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cart_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Cart Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartOutDelete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get All Users ##",
+        "description": "This endpoint retrieves all users with pagination (required), search by username (optional), and role filtering (optional).",
+        "operationId": "get_all_users_users__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (Required)",
+              "default": "<integer>*",
+              "title": "Page"
+            },
+            "description": "Page number (Required)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Items per page (Required)",
+              "default": "<integer>*",
+              "title": "Limit"
+            },
+            "description": "Items per page (Required)"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Search by username (Optional)",
+              "default": "<string>",
+              "title": "Search"
+            },
+            "description": "Search by username (Optional)"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter by user role (Optional)",
+              "enum": [
+                "user",
+                "admin",
+                ""
+              ],
+              "default": "<string = `user`/`admin`/``",
+              "title": "Role"
+            },
+            "description": "Filter by user role (Optional)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create New User ##",
+        "description": "This endpoint allows an admin to create a new user.",
+        "operationId": "create_user_users__post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get Specific User ##",
+        "description": "This endpoint retrieves a specific user by their ID.",
+        "operationId": "get_user_users__user_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User by ID",
+        "description": "This endpoint allows an admin to update an existing user by their ID.",
+        "operationId": "update_user_users__user_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete User by ID",
+        "description": "This endpoint allows an admin to delete a user by their ID.",
+        "operationId": "delete_user_users__user_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "User Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOutDelete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountBase": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "Unique identifier for the user or account.",
+            "default": "<integer>"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ],
+            "title": "Role",
+            "description": "Role of the user (user or admin).",
+            "default": "<string = `user`/`admin`"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "description": "Indicates whether the account is active.",
+            "default": "<boolean>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the account was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "carts": {
+            "items": {
+              "$ref": "#/components/schemas/CartBase"
+            },
+            "type": "array",
+            "title": "Carts",
+            "description": "List of carts associated with the account."
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Username",
+            "description": "Username of the account holder.",
+            "default": "<string>"
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Full name of the account holder.",
+            "default": "<string>"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address of the account holder (validated).",
+            "default": "email@example.com*"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "is_active",
+          "created_at",
+          "carts",
+          "username",
+          "full_name",
+          "email"
+        ],
+        "title": "AccountBase",
+        "description": "Represents details of an account.\n\nAttributes:\n- `id` (int): Unique identifier for the user or account.\n- `role` (str): Role of the user, either 'user' or 'admin'.\n- `is_active` (bool): Indicates whether the account is active.\n- `created_at` (datetime): Timestamp of account creation  in ISO 8601 format.\n- `carts` (List[CartBase]): List of carts associated with the account.\n- `username` (str): Username of the account holder.\n- `full_name` (str): Full name of the account holder.\n- `email` (str): Email address of the account holder (validated)."
+      },
+      "AccountOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountBase"
+              }
+            ],
+            "description": "Account details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "AccountOut",
+        "description": "Represents the output schema for account responses.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (AccountBase): Account details, including:\n    - `id` (int): Unique identifier for the user or account.\n    - `role` (str): Role of the user, either 'user' or 'admin'.\n    - `is_active` (bool): Indicates whether the account is active.\n    - `created_at` (datetime): Timestamp of account creation in ISO 8601 format.\n    - `carts` (List[CartBase]): List of carts associated with the account.\n    - `username` (str): Username of the account holder.\n    - `full_name` (str): Full name of the account holder.\n    - `email` (str): Email address of the account holder (validated)."
+      },
+      "AccountUpdate": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Username",
+            "description": "Username of the account holder.",
+            "default": "<string>"
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Full name of the account holder.",
+            "default": "<string>"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address of the account holder (validated).",
+            "default": "email@example.com*"
+          }
+        },
+        "type": "object",
+        "title": "AccountUpdate",
+        "description": "Represents schema for updating an account.\n\nAttributes:\n- `username` (str): Username of the account holder.\n- `full_name` (str): Full name of the account holder.\n- `email` (str): Email address of the account holder (validated)."
+      },
+      "Body_user_login_auth_login_post": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username",
+            "description": "The username of the user",
+            "default": "{{username}}"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password",
+            "description": "The (unhashed) password of the user",
+            "default": "{{password}}"
+          }
+        },
+        "type": "object",
+        "title": "Body_user_login_auth_login_post"
+      },
+      "CartBase": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "maximum": 399,
+            "minimum": 300,
+            "title": "Id",
+            "description": "Unique identifier for the cart.",
+            "default": "<integer>"
+          },
+          "user_id": {
+            "type": "integer",
+            "maximum": 599,
+            "minimum": 500,
+            "title": "User Id",
+            "description": "Unique identifier for the user.",
+            "default": "<integer>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the cart was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "total_amount": {
+            "type": "number",
+            "title": "Total Amount",
+            "description": "Total amount for the cart.",
+            "default": "<float>"
+          },
+          "cart_items": {
+            "items": {
+              "$ref": "#/components/schemas/CartItemBase"
+            },
+            "type": "array",
+            "title": "Cart Items",
+            "description": "List of items in the cart."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "created_at",
+          "total_amount",
+          "cart_items"
+        ],
+        "title": "CartBase",
+        "description": "Represents basic cart details.\n\nAttributes:\n- `id` (int): Unique identifier for the cart.\n- `user_id` (int): Unique identifier for the user.\n- `created_at` (datetime): Timestamp when the cart was created.\n- `total_amount` (float): Total amount for the cart.\n- `cart_items` (List[CartItemBase]): List of items in the cart.\n    - `id` (int): Unique identifier for the cart item.\n    - `product_id` (int): Unique identifier for the product.\n    - `quantity` (int): Quantity of the product in the cart.\n    - `subtotal` (float): Subtotal amount for the cart item.\n    - `product` (ProductBase): Details of the product."
+      },
+      "CartCreate": {
+        "properties": {
+          "cart_items": {
+            "items": {
+              "$ref": "#/components/schemas/CartItemCreate"
+            },
+            "type": "array",
+            "title": "Cart Items",
+            "description": "List of items to add to the cart."
+          }
+        },
+        "type": "object",
+        "required": [
+          "cart_items"
+        ],
+        "title": "CartCreate",
+        "description": "Represents schema for creating a cart.\n\nAttributes:\n- `cart_items` (List[CartItemCreate]): List of items to add to the cart.\n    - `product_id` (int): Unique identifier for the product.\n    - `quantity` (int): Quantity of the product to add to the cart."
+      },
+      "CartItemBase": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "Unique identifier for the cart item.",
+            "default": "<integer>"
+          },
+          "product_id": {
+            "type": "integer",
+            "title": "Product Id",
+            "description": "Unique identifier for the product.",
+            "default": "<integer>"
+          },
+          "quantity": {
+            "type": "integer",
+            "title": "Quantity",
+            "description": "Quantity of the product in the cart.",
+            "default": "<integer>"
+          },
+          "subtotal": {
+            "type": "number",
+            "title": "Subtotal",
+            "description": "Subtotal amount for the cart item.",
+            "default": "<float>"
+          },
+          "product": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductBase"
+              }
+            ],
+            "description": "Details of the product."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "product_id",
+          "quantity",
+          "subtotal",
+          "product"
+        ],
+        "title": "CartItemBase",
+        "description": "Represents a cart item.\n\nAttributes:\n- `id` (int): Unique identifier for the cart item.\n- `product_id` (int): Unique identifier for the product.\n- `quantity` (int): Quantity of the product in the cart.\n- `subtotal` (float): Subtotal amount for the cart item.\n- `product` (ProductBase): Details of the product."
+      },
+      "CartItemCreate": {
+        "properties": {
+          "product_id": {
+            "type": "integer",
+            "maximum": 299,
+            "minimum": 200,
+            "title": "Product Id",
+            "description": "Unique identifier for the product.",
+            "default": "<integer>"
+          },
+          "quantity": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "title": "Quantity",
+            "description": "Quantity of the product to add to the cart.",
+            "default": "<integer>"
+          }
+        },
+        "type": "object",
+        "title": "CartItemCreate",
+        "description": "Represents schema for creating a cart item.\n\nAttributes:\n- `product_id` (int): Unique identifier for the product.\n- `quantity` (int): Quantity of the product to add to the cart."
+      },
+      "CartOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CartBase"
+              }
+            ],
+            "description": "Cart details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CartOut",
+        "description": "Represents a single cart response.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (CartBase): Cart details, including:\n    - `id` (int): Unique identifier for the cart.\n    - `user_id` (int): Unique identifier for the user.\n    - `created_at` (datetime): Timestamp when the cart was created.\n    - `total_amount` (float): Total amount for the cart.\n    - `cart_items` (List[CartItemBase]): List of items in the cart."
+      },
+      "CartOutDelete": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CartBase"
+              }
+            ],
+            "description": "Cart details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CartOutDelete",
+        "description": "Represents the response schema for cart deletion.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (CartBase): Deleted cart details, including:\n    - `id` (int): Unique identifier for the cart.\n    - `user_id` (int): Unique identifier for the user.\n    - `created_at` (datetime): Timestamp when the cart was created.\n    - `total_amount` (float): Total amount for the cart.\n    - `cart_items` (List[CartItemBase]): List of items in the cart."
+      },
+      "CartUpdate": {
+        "properties": {
+          "cart_items": {
+            "items": {
+              "$ref": "#/components/schemas/CartItemCreate"
+            },
+            "type": "array",
+            "title": "Cart Items",
+            "description": "List of items to add to the cart."
+          }
+        },
+        "type": "object",
+        "required": [
+          "cart_items"
+        ],
+        "title": "CartUpdate",
+        "description": "Represents schema for updating a cart.\n\nAttributes:\n- `cart_items` (List[CartItemCreate]): List of items to update in the cart.\n    - `product_id` (int): Unique identifier for the product.\n    - `quantity` (int): Quantity of the product to add to the cart."
+      },
+      "CartsOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/CartBase"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "List of cart details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CartsOut",
+        "description": "Represents a list of carts response.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (List[CartBase]): List of cart details, each including:\n    - `id` (int): Unique identifier for the cart.\n    - `user_id` (int): Unique identifier for the user.\n    - `created_at` (datetime): Timestamp when the cart was created.\n    - `total_amount` (float): Total amount for the cart.\n    - `cart_items` (List[CartItemBase]): List of items in the cart."
+      },
+      "CategoriesOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryBase"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "List of category details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CategoriesOut",
+        "description": "Represents the output schema for multiple categories.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (List[CategoryBase]): List of category details.\n    - `id` (int): Unique identifier for the category.\n    - `name` (str): Name of the category."
+      },
+      "CategoryBase": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the category. Must have at least 1 character.",
+            "default": "<string>"
+          },
+          "id": {
+            "type": "integer",
+            "maximum": 199,
+            "minimum": 100,
+            "title": "Id",
+            "description": "Unique identifier for the category.",
+            "default": "<integer>"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "id"
+        ],
+        "title": "CategoryBase",
+        "description": "Represents the details of a category.\n\nAttributes:\n- `id` (int): Unique identifier for the category.\n- `name` (str): Name of the category."
+      },
+      "CategoryCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the category. Must have at least 1 character.",
+            "default": "<string>"
+          }
+        },
+        "type": "object",
+        "title": "CategoryCreate",
+        "description": "Represents the basic details for creating a category.\n\nAttributes:\n- `name` (str): Name of the category."
+      },
+      "CategoryOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryBase"
+              }
+            ],
+            "description": "Details of the category."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CategoryOut",
+        "description": "Represents the output schema for a single category.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (CategoryBase): Details of the category.\n    - `id` (int): Unique identifier for the category.\n    - `name` (str): Name of the category."
+      },
+      "CategoryOutDelete": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryBase"
+              }
+            ],
+            "description": "Details of the category."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "CategoryOutDelete",
+        "description": "Represents the output schema for category deletion.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (CategoryBase): Details of the deleted category.\n    - `id` (int): Unique identifier for the category.\n    - `name` (str): Name of the category."
+      },
+      "CategoryUpdate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the category. Must have at least 1 character.",
+            "default": "<string>"
+          }
+        },
+        "type": "object",
+        "title": "CategoryUpdate",
+        "description": "Represents the schema for updating a category.\n\nAttributes:\n- `name` (str): Name of the category."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ProductBase": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "maximum": 299,
+            "minimum": 200,
+            "title": "Id",
+            "description": "Unique identifier for the product.",
+            "default": "<integer>"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title",
+            "description": "Title of the product.",
+            "default": "<string>"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Description",
+            "description": "Description of the product.",
+            "default": "<string>"
+          },
+          "price": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Price",
+            "description": "Price of the product (>=0).",
+            "default": "<integer>"
+          },
+          "discount_percentage": {
+            "type": "number",
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Discount Percentage",
+            "description": "Discount percentage (0-100).",
+            "default": "<float>"
+          },
+          "rating": {
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0,
+            "title": "Rating",
+            "description": "Rating of the product (0-5).",
+            "default": "<float>"
+          },
+          "stock": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Stock",
+            "description": "Stock count (>=0).",
+            "default": "<integer>"
+          },
+          "brand": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Brand",
+            "description": "Brand of the product.",
+            "default": "<string>"
+          },
+          "thumbnail": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Thumbnail",
+            "description": "URL of the product thumbnail.",
+            "default": "<url>"
+          },
+          "images": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Images",
+            "description": "List of image URLs for the product.",
+            "default": "<url>"
+          },
+          "is_published": {
+            "type": "boolean",
+            "title": "Is Published",
+            "description": "Whether the product is published or not.",
+            "default": "<boolean>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the product was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "category_id": {
+            "type": "integer",
+            "title": "Category Id",
+            "description": "Unique identifier for the product's category.",
+            "default": "<integer>"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "price",
+          "discount_percentage",
+          "rating",
+          "stock",
+          "brand",
+          "thumbnail",
+          "images",
+          "is_published",
+          "created_at",
+          "category_id"
+        ],
+        "title": "ProductBase",
+        "description": "Represents basic details of a product.\n\nAttributes:\n- `id` (int): Unique identifier for the product.\n- `title` (str): Title of the product.\n- `description` (str): Description of the product.\n- `price` (int): Price of the product (>= 0).\n- `discount_percentage` (float): Discount percentage (0-100).\n- `rating` (float): Rating of the product (0-5).\n- `stock` (int): Stock count (>= 0).\n- `brand` (str): Brand of the product.\n- `thumbnail` (str): URL of the product thumbnail.\n- `images` (List[str]): List of image URLs for the product.\n- `is_published` (bool): Whether the product is published or not.\n- `created_at` (datetime): Timestamp when the product was created.\n- `category_id` (int): Unique identifier for the product's category."
+      },
+      "ProductCreate": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "maximum": 299,
+            "minimum": 200,
+            "title": "Id",
+            "description": "Unique identifier for the product.",
+            "default": "<integer>"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title",
+            "description": "Title of the product.",
+            "default": "<string>"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Description",
+            "description": "Description of the product.",
+            "default": "<string>"
+          },
+          "price": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Price",
+            "description": "Price of the product (>=0).",
+            "default": "<integer>"
+          },
+          "discount_percentage": {
+            "type": "number",
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Discount Percentage",
+            "description": "Discount percentage (0-100).",
+            "default": "<float>"
+          },
+          "rating": {
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0,
+            "title": "Rating",
+            "description": "Rating of the product (0-5).",
+            "default": "<float>"
+          },
+          "stock": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Stock",
+            "description": "Stock count (>=0).",
+            "default": "<integer>"
+          },
+          "brand": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Brand",
+            "description": "Brand of the product.",
+            "default": "<string>"
+          },
+          "thumbnail": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Thumbnail",
+            "description": "URL of the product thumbnail.",
+            "default": "<url>"
+          },
+          "images": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Images",
+            "description": "List of image URLs for the product.",
+            "default": "<url>"
+          },
+          "is_published": {
+            "type": "boolean",
+            "title": "Is Published",
+            "description": "Whether the product is published or not.",
+            "default": "<boolean>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the product was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "category_id": {
+            "type": "integer",
+            "title": "Category Id",
+            "description": "Unique identifier for the product's category.",
+            "default": "<integer>"
+          }
+        },
+        "type": "object",
+        "title": "ProductCreate",
+        "description": "Represents the schema for creating a product.\n\nAttributes:\n- `id` (int): Unique identifier for the product.\n- `title` (str): Title of the product.\n- `description` (str): Description of the product.\n- `price` (int): Price of the product (>= 0).\n- `discount_percentage` (float): Discount percentage (0-100).\n- `rating` (float): Rating of the product (0-5).\n- `stock` (int): Stock count (>= 0).\n- `brand` (str): Brand of the product.\n- `thumbnail` (str): URL of the product thumbnail.\n- `images` (List[str]): List of image URLs for the product.\n- `is_published` (bool): Whether the product is published or not.\n- `created_at` (datetime): Timestamp when the product was created.\n- `category_id` (int): Unique identifier for the product's category."
+      },
+      "ProductOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductBase"
+              }
+            ],
+            "description": "Product details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "ProductOut",
+        "description": "Represents the output schema for a single product.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (ProductBase): Details of the product.\n    - `id` (int): Unique identifier for the product.\n    - `title` (str): Title of the product.\n    - `description` (str): Description of the product.\n    - `price` (int): Price of the product (>= 0).\n    - `discount_percentage` (float): Discount percentage (0-100).\n    - `rating` (float): Rating of the product (0-5).\n    - `stock` (int): Stock count (>= 0).\n    - `brand` (str): Brand of the product.\n    - `thumbnail` (str): URL of the product thumbnail.\n    - `images` (List[str]): List of image URLs for the product.\n    - `is_published` (bool): Whether the product is published or not.\n    - `created_at` (datetime): Timestamp when the product was created.\n    - `category_id` (int): Unique identifier for the product's category."
+      },
+      "ProductOutDelete": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProductBase"
+              }
+            ],
+            "description": "Product details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "ProductOutDelete",
+        "description": "Represents the output schema for product deletion.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (ProductBase): Details of the deleted product.\n    - `id` (int): Unique identifier for the product.\n    - `title` (str): Title of the product.\n    - `description` (str): Description of the product.\n    - `price` (int): Price of the product (>= 0).\n    - `discount_percentage` (float): Discount percentage (0-100).\n    - `rating` (float): Rating of the product (0-5).\n    - `stock` (int): Stock count (>= 0).\n    - `brand` (str): Brand of the product.\n    - `thumbnail` (str): URL of the product thumbnail.\n    - `images` (List[str]): List of image URLs for the product.\n    - `is_published` (bool): Whether the product is published or not.\n    - `created_at` (datetime): Timestamp when the product was created.\n    - `category_id` (int): Unique identifier for the product's category."
+      },
+      "ProductUpdate": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "maximum": 299,
+            "minimum": 200,
+            "title": "Id",
+            "description": "Unique identifier for the product.",
+            "default": "<integer>"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title",
+            "description": "Title of the product.",
+            "default": "<string>"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Description",
+            "description": "Description of the product.",
+            "default": "<string>"
+          },
+          "price": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Price",
+            "description": "Price of the product (>=0).",
+            "default": "<integer>"
+          },
+          "discount_percentage": {
+            "type": "number",
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Discount Percentage",
+            "description": "Discount percentage (0-100).",
+            "default": "<float>"
+          },
+          "rating": {
+            "type": "number",
+            "maximum": 5,
+            "minimum": 0,
+            "title": "Rating",
+            "description": "Rating of the product (0-5).",
+            "default": "<float>"
+          },
+          "stock": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Stock",
+            "description": "Stock count (>=0).",
+            "default": "<integer>"
+          },
+          "brand": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Brand",
+            "description": "Brand of the product.",
+            "default": "<string>"
+          },
+          "thumbnail": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Thumbnail",
+            "description": "URL of the product thumbnail.",
+            "default": "<url>"
+          },
+          "images": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Images",
+            "description": "List of image URLs for the product.",
+            "default": "<url>"
+          },
+          "is_published": {
+            "type": "boolean",
+            "title": "Is Published",
+            "description": "Whether the product is published or not.",
+            "default": "<boolean>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the product was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "category_id": {
+            "type": "integer",
+            "title": "Category Id",
+            "description": "Unique identifier for the product's category.",
+            "default": "<integer>"
+          }
+        },
+        "type": "object",
+        "title": "ProductUpdate",
+        "description": "Represents the schema for updating a product.\n\nAttributes:\n- `id` (int): Unique identifier for the product.\n- `title` (str): Title of the product.\n- `description` (str): Description of the product.\n- `price` (int): Price of the product (>= 0).\n- `discount_percentage` (float): Discount percentage (0-100).\n- `rating` (float): Rating of the product (0-5).\n- `stock` (int): Stock count (>= 0).\n- `brand` (str): Brand of the product.\n- `thumbnail` (str): URL of the product thumbnail.\n- `images` (List[str]): List of image URLs for the product.\n- `is_published` (bool): Whether the product is published or not.\n- `created_at` (datetime): Timestamp when the product was created.\n- `category_id` (int): Unique identifier for the product's category."
+      },
+      "ProductsOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ProductBase"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "List of product details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "ProductsOut",
+        "description": "Represents the output schema for multiple products.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (List[ProductBase]): List of product details.\n    - `id` (int): Unique identifier for the product.\n    - `title` (str): Title of the product.\n    - `description` (str): Description of the product.\n    - `price` (int): Price of the product (>= 0).\n    - `discount_percentage` (float): Discount percentage (0-100).\n    - `rating` (float): Rating of the product (0-5).\n    - `stock` (int): Stock count (>= 0).\n    - `brand` (str): Brand of the product.\n    - `thumbnail` (str): URL of the product thumbnail.\n    - `images` (List[str]): List of image URLs for the product.\n    - `is_published` (bool): Whether the product is published or not.\n    - `created_at` (datetime): Timestamp when the product was created.\n    - `category_id` (int): Unique identifier for the product's category."
+      },
+      "TokenResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token",
+            "description": "JWT access token for authentication."
+          },
+          "refresh_token": {
+            "type": "string",
+            "title": "Refresh Token",
+            "description": "JWT refresh token to obtain new access tokens."
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "description": "Type of the token (default: Bearer).",
+            "default": "Bearer"
+          },
+          "expire_in": {
+            "type": "integer",
+            "title": "Expire In",
+            "description": "Time in seconds before the access token expires."
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "refresh_token",
+          "token_type",
+          "expire_in"
+        ],
+        "title": "TokenResponse",
+        "description": "Represents the schema for a token response.\n\nAttributes:\n- `access_token` (str): JWT access token for authentication.\n- `refresh_token` (str): JWT refresh token to obtain new access tokens.\n- `token_type` (str): Type of the token (`Bearer`).\n- `expire_in` (int): Time in seconds before the access token expires."
+      },
+      "UserBase": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id",
+            "description": "Unique identifier for the user or account.",
+            "default": "<integer>"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ],
+            "title": "Role",
+            "description": "Role of the user (user or admin).",
+            "default": "<string = `user`/`admin`"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "description": "Indicates whether the account is active.",
+            "default": "<boolean>"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Timestamp when the account was created.",
+            "default": "<datetime obj/ISO 8601 string>"
+          },
+          "carts": {
+            "items": {
+              "$ref": "#/components/schemas/CartBase"
+            },
+            "type": "array",
+            "title": "Carts",
+            "description": "List of carts associated with the account."
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Username",
+            "description": "Username of the account holder.",
+            "default": "<string>"
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Full name of the account holder.",
+            "default": "<string>"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Password",
+            "description": "Password of the user.",
+            "default": "<string>"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address of the user (validated).",
+            "default": "email@example.com"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "is_active",
+          "created_at",
+          "carts",
+          "username",
+          "full_name",
+          "password",
+          "email"
+        ],
+        "title": "UserBase",
+        "description": "Represents detailed schema for a user.\n\nAttributes:\n- `id` (int): Unique identifier for the user.\n- `role` (str): Role of the user, either 'user' or 'admin'.\n- `is_active` (bool): Indicates whether the user account is active.\n- `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.\n- `carts` (List[CartBase]): List of carts associated with the user.\n- `username` (str): Username of the user.\n- `full_name` (str): Full name of the user.\n- `password` (str): Password of the user.\n- `email` (str): Email address of the user (validated)."
+      },
+      "UserCreate": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Username",
+            "description": "Username of the account holder.",
+            "default": "<string>"
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Full name of the account holder.",
+            "default": "<string>"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Password",
+            "description": "Password of the user.",
+            "default": "<string>"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address of the user (validated).",
+            "default": "email@example.com"
+          }
+        },
+        "type": "object",
+        "title": "UserCreate",
+        "description": "Represents schema for creating a user.\n\nAttributes:\n- `username` (str): Username of the user.\n- `full_name` (str): Full name of the user.\n- `password` (str): Password of the user.\n- `email` (str): Email address of the user (validated)."
+      },
+      "UserOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserBase"
+              }
+            ],
+            "description": "User details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "UserOut",
+        "description": "Represents the output schema for a single user's details.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (UserBase): User details, including:\n    - `id` (int): Unique identifier for the user.\n    - `role` (str): Role of the user, either 'user' or 'admin'.\n    - `is_active` (bool): Indicates whether the user account is active.\n    - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.\n    - `carts` (List[CartBase]): List of carts associated with the user.\n    - `username` (str): Username of the user.\n    - `full_name` (str): Full name of the user.\n    - `password` (str): Password of the user.\n    - `email` (EmailStr): Email address of the user (validated)."
+      },
+      "UserOutDelete": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserBase"
+              }
+            ],
+            "description": "User details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "UserOutDelete",
+        "description": "Represents the output schema for a user deletion.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (UserBase): User details, including:\n    - `id` (int): Unique identifier for the user.\n    - `role` (str): Role of the user, either 'user' or 'admin'.\n    - `is_active` (bool): Indicates whether the user account is active.\n    - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.\n    - `carts` (List[CartBase]): List of carts associated with the user.\n    - `username` (str): Username of the user.\n    - `full_name` (str): Full name of the user.\n    - `password` (str): Password of the user.\n    - `email` (EmailStr): Email address of the user (validated)."
+      },
+      "UserUpdate": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Username",
+            "description": "Username of the account holder.",
+            "default": "<string>"
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Full name of the account holder.",
+            "default": "<string>"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Password",
+            "description": "Password of the user.",
+            "default": "<string>"
+          }
+        },
+        "type": "object",
+        "title": "UserUpdate",
+        "description": "Represents schema for updating a user.\n\nAttributes:\n- `username` (str): Username of the user.\n- `full_name` (str): Full name of the user.\n- `password` (str): Password of the user."
+      },
+      "UsersOut": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Response message."
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/UserBase"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "List of user details."
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "data"
+        ],
+        "title": "UsersOut",
+        "description": "Represents the output schema for multiple users' details.\n\nAttributes:\n- `message` (str): Response message.\n- `data` (List[UserBase]): List of user details, each including:\n    - `id` (int): Unique identifier for the user.\n    - `role` (str): Role of the user, either 'user' or 'admin'.\n    - `is_active` (bool): Indicates whether the user account is active.\n    - `created_at` (datetime): Timestamp of user account creation in ISO 8601 format.\n    - `carts` (List[CartBase]): List of carts associated with the user.\n    - `username` (str): Username of the user.\n    - `full_name` (str): Full name of the user.\n    - `password` (str): Password of the user.\n    - `email` (EmailStr): Email address of the user (validated)."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
