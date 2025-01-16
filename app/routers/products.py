@@ -22,9 +22,9 @@ router = APIRouter(tags=["Products"], prefix="/products")
     description="This endpoint retrieves all products with pagination (required) and search by title (optional).")
 def get_all_products(
         db: Session = Depends(get_db),
-        page: int = Query(1, ge=1, description="Page number (Required)"),
-        limit: int = Query(10, ge=1, le=100, description="Items per page (Required)"),
-        search: str = Query("", description="Search based title of products"),
+        page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
+        limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
+        search: str = Query("<string>", description="Search based title of products"),
     ) -> ProductsOut:
     "Retrieve all products with pagination and optional search by title."
     return ProductService.get_all_products(db, page, limit, search)

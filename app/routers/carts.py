@@ -22,8 +22,8 @@ router = APIRouter(tags=["Carts"], prefix="/carts")
     description="This endpoint retrieves a paginated list of all carts for the particular user.")
 def get_all_carts(
         db: Session = Depends(get_db),
-        page: int = Query(1, ge=1, description="Page number (Required)"),
-        limit: int = Query(10, ge=1, le=100, description="Items per page (Required)"),
+        page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
+        limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)
     ) -> CartsOut:
     "Retrieve all carts with pagination."

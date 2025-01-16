@@ -21,9 +21,9 @@ router = APIRouter(tags=["Categories"], prefix="/categories")
     description="This endpoint retrieves a paginated list of all categories with an optional search parameter to filter by category name.")
 def get_all_categories(
         db: Session = Depends(get_db),
-        page: int = Query(1, ge=1, description="Page number (Required)"),
-        limit: int = Query(10, ge=1, le=100, description="Items per page (Required)"),
-        search: str = Query("", description="Search based name of categories"),
+        page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
+        limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
+        search: str = Query("<string>", description="Search based name of categories"),
     ) -> CategoriesOut:
     "Retrieve all categories with pagination and optional search by name."
     return CategoryService.get_all_categories(db, page, limit, search)

@@ -23,10 +23,10 @@ router = APIRouter(tags=["Users"], prefix="/users")
     description="This endpoint retrieves all users with pagination (required), search by username (optional), and role filtering (optional).")
 def get_all_users(
         db: Session = Depends(get_db),
-        page: int = Query(1, ge=1, description="Page number (Required)"),
-        limit: int = Query(10, ge=1, le=100, description="Items per page (Required)"),
-        search: str = Query("", description="Search by username"),
-        role: str = Query("", enum=["user", "admin", ""], description="Filter by user role (Optional)")
+        page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
+        limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
+        search: str = Query("<string>", description="Search by username (Optional)"),
+        role: str = Query("<string = `user`/`admin`/``", enum=["user", "admin", ""], description="Filter by user role (Optional)")
     ) -> UsersOut:
     "Retrieve all users with pagination, search, and role filtering."
     return UserService.get_all_users(db, page, limit, search, role)

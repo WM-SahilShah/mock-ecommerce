@@ -20,7 +20,7 @@ class BaseAttributes(BaseModel):
     - `carts` (List[CartBase]): List of carts associated with the account.
     """
     id: int = Field("<integer>", description="Unique identifier for the user or account.")
-    role: Literal["user", "admin"] = Field("<string = user/admin", description="Role of the user (user or admin).")
+    role: Literal["user", "admin"] = Field("<string = `user`/`admin`", description="Role of the user (user or admin).")
     is_active: bool = Field("<boolean>", description="Indicates whether the account is active.")
     created_at: datetime = Field("<datetime obj/ISO 8601 string>", description="Timestamp when the account was created.")
     carts: List[CartBase] = Field(..., description="List of carts associated with the account.")
