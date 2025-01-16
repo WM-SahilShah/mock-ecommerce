@@ -2,10 +2,11 @@
 This module defines schemas for token-related responses used in authentication workflows.
 """
 
+from app.config import CustomBaseModel
 from fastapi import Form
-from pydantic import BaseModel, Field
+from pydantic import Field
 
-class TokenResponse(BaseModel):
+class TokenResponse(CustomBaseModel):
     """
     Represents the schema for a token response.
 

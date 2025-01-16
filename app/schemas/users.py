@@ -3,8 +3,8 @@ This module defines schemas for user attributes, updates, creation, and outputs.
 """
 
 from .accounts import BaseAttributes, UpdateAttributes
-from app.config import BaseConfig
-from pydantic import BaseModel, EmailStr, Field
+from app.config import CustomBaseModel
+from pydantic import EmailStr, Field
 from typing import List
 
 class UserUpdate(UpdateAttributes):
@@ -17,9 +17,6 @@ class UserUpdate(UpdateAttributes):
     - `password` (str): Password of the user.
     """
     password: str = Field("<string>", min_length=1, description="Password of the user.")
-
-    class Config(BaseConfig):
-        pass
 
 class UserCreate(UserUpdate):
     """
@@ -50,7 +47,7 @@ class UserBase(UserCreate, BaseAttributes):
     """
     pass
 
-class UserOut(BaseModel):
+class UserOut(CustomBaseModel):
     """
     Represents the output schema for a single user's details.
 
@@ -70,10 +67,7 @@ class UserOut(BaseModel):
     message: str = Field(..., description="Response message.")
     data: UserBase = Field(..., description="User details.")
 
-    class Config(BaseConfig):
-        pass
-
-class UsersOut(BaseModel):
+class UsersOut(CustomBaseModel):
     """
     Represents the output schema for multiple users' details.
 
@@ -92,9 +86,6 @@ class UsersOut(BaseModel):
     """
     message: str = Field(..., description="Response message.")
     data: List[UserBase] = Field(..., description="List of user details.")
-
-    class Config(BaseConfig):
-        pass
 
 class UserOutDelete(UserOut):
     """

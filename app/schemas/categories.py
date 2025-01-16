@@ -2,10 +2,11 @@
 This module defines schemas for creating, updating, and outputting category details, as well as handling category deletion.
 """
 
-from pydantic import BaseModel, Field
+from app.config import CustomBaseModel
+from pydantic import Field
 from typing import List
 
-class CategoryCreate(BaseModel):
+class CategoryCreate(CustomBaseModel):
     """
     Represents the basic details for creating a category.
 
@@ -33,7 +34,7 @@ class CategoryUpdate(CategoryCreate):
     """
     pass
 
-class CategoryOut(BaseModel):
+class CategoryOut(CustomBaseModel):
     """
     Represents the output schema for a single category.
 
@@ -46,7 +47,7 @@ class CategoryOut(BaseModel):
     message: str = Field(..., description="Response message.")
     data: CategoryBase = Field(..., description="Details of the category.")
 
-class CategoriesOut(BaseModel):
+class CategoriesOut(CustomBaseModel):
     """
     Represents the output schema for multiple categories.
 

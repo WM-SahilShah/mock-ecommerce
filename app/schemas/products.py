@@ -2,12 +2,12 @@
 This module defines schemas for creating, updating, and outputting product details, as well as handling product deletion.
 """
 
-from app.config import BaseConfig
+from app.config import CustomBaseModel
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import List
 
-class ProductBase(BaseModel):
+class ProductBase(CustomBaseModel):
     """
     Represents basic details of a product.
 
@@ -40,9 +40,6 @@ class ProductBase(BaseModel):
     created_at: datetime = Field("<datetime obj/ISO 8601 string>", description="Timestamp when the product was created.")
     category_id: int = Field("<integer>", description="Unique identifier for the product's category.")
 
-    class Config(BaseConfig):
-        pass
-
 class ProductCreate(ProductBase):
     """
     Represents the schema for creating a product.
@@ -63,9 +60,6 @@ class ProductCreate(ProductBase):
     - `category_id` (int): Unique identifier for the product's category.
     """
     pass
-
-    class Config(BaseConfig):
-        pass
 
 class ProductUpdate(ProductCreate):
     """
@@ -88,7 +82,7 @@ class ProductUpdate(ProductCreate):
     """
     pass
 
-class ProductOut(BaseModel):
+class ProductOut(CustomBaseModel):
     """
     Represents the output schema for a single product.
 
@@ -112,7 +106,7 @@ class ProductOut(BaseModel):
     message: str = Field(..., description="Response message.")
     data: ProductBase = Field(..., description="Product details.")
 
-class ProductsOut(BaseModel):
+class ProductsOut(CustomBaseModel):
     """
     Represents the output schema for multiple products.
 
@@ -135,9 +129,6 @@ class ProductsOut(BaseModel):
     """
     message: str = Field(..., description="Response message.")
     data: List[ProductBase] = Field(..., description="List of product details.")
-
-    class Config(BaseConfig):
-        pass
 
 class ProductOutDelete(ProductOut):
     """

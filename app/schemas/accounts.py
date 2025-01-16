@@ -3,12 +3,12 @@ This module defines schemas for user and account attributes, updates, and output
 """
 
 from .carts import CartBase
-from app.config import BaseConfig
+from app.config import CustomBaseModel
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import EmailStr, Field
 from typing import List, Literal
 
-class BaseAttributes(BaseModel):
+class BaseAttributes(CustomBaseModel):
     """
     Represents base attributes for a user or account.
 
@@ -25,7 +25,7 @@ class BaseAttributes(BaseModel):
     created_at: datetime = Field("<datetime obj/ISO 8601 string>", description="Timestamp when the account was created.")
     carts: List[CartBase] = Field(..., description="List of carts associated with the account.")
 
-class UpdateAttributes(BaseModel):
+class UpdateAttributes(CustomBaseModel):
     """
     Represents updatable attributes for a user or account.
 
@@ -47,9 +47,6 @@ class AccountUpdate(UpdateAttributes):
     """
     email: EmailStr = Field("email@example.com*", description="Email address of the account holder (validated).")
 
-    class Config(BaseConfig):
-        pass
-
 class AccountBase(AccountUpdate, BaseAttributes):
     """
     Represents details of an account.
@@ -66,7 +63,7 @@ class AccountBase(AccountUpdate, BaseAttributes):
     """
     pass
 
-class AccountOut(BaseModel):
+class AccountOut(CustomBaseModel):
     """
     Represents the output schema for account responses.
 
@@ -84,6 +81,3 @@ class AccountOut(BaseModel):
     """
     message: str = Field(..., description="Response message.")
     data: AccountBase = Field(..., description="Account details.")
-
-    class Config(BaseConfig):
-        pass

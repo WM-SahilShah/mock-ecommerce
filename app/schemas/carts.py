@@ -3,12 +3,12 @@ This module defines schemas for carts, cart items, and related operations.
 """
 
 from .products import ProductBase
-from app.config import BaseConfig
+from app.config import CustomBaseModel
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import Field
 from typing import List
 
-class CartItemBase(BaseModel):
+class CartItemBase(CustomBaseModel):
     """
     Represents a cart item.
 
@@ -25,7 +25,7 @@ class CartItemBase(BaseModel):
     subtotal: float = Field("<float>", description="Subtotal amount for the cart item.")
     product: ProductBase = Field(..., description="Details of the product.")
 
-class CartBase(BaseModel):
+class CartBase(CustomBaseModel):
     """
     Represents basic cart details.
 
@@ -47,10 +47,7 @@ class CartBase(BaseModel):
     total_amount: float = Field("<float>", description="Total amount for the cart.")
     cart_items: List[CartItemBase] = Field(..., description="List of items in the cart.")
 
-    class Config(BaseConfig):
-        pass
-
-class CartOut(BaseModel):
+class CartOut(CustomBaseModel):
     """
     Represents a single cart response.
 
@@ -66,10 +63,7 @@ class CartOut(BaseModel):
     message: str = Field(..., description="Response message.")
     data: CartBase = Field(..., description="Cart details.")
 
-    class Config(BaseConfig):
-        pass
-
-class CartsOut(BaseModel):
+class CartsOut(CustomBaseModel):
     """
     Represents a list of carts response.
 
@@ -100,7 +94,7 @@ class CartOutDelete(CartOut):
     """
     pass
 
-class CartItemCreate(BaseModel):
+class CartItemCreate(CustomBaseModel):
     """
     Represents schema for creating a cart item.
 
@@ -111,7 +105,7 @@ class CartItemCreate(BaseModel):
     product_id: int = Field("<integer>", ge=200, le=299, description="Unique identifier for the product.")
     quantity: int = Field("<integer>", gt=0, description="Quantity of the product to add to the cart.")
 
-class CartCreate(BaseModel):
+class CartCreate(CustomBaseModel):
     """
     Represents schema for creating a cart.
 
@@ -121,9 +115,6 @@ class CartCreate(BaseModel):
         - `quantity` (int): Quantity of the product to add to the cart.
     """
     cart_items: List[CartItemCreate] = Field(..., description="List of items to add to the cart.")
-
-    class Config(BaseConfig):
-        pass
 
 class CartUpdate(CartCreate):
     """

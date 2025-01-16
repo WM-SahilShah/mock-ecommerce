@@ -4,12 +4,20 @@ It includes helper functions for success responses and predefined exceptions for
 """
 
 from fastapi import HTTPException, status
+from pydantic import BaseModel, ConfigDict
 from typing import Any
 
 
-class BaseConfig:
-    "For pydantic models: enables conversion from attributes to model fields."
-    from_attributes = True
+class CustomBaseModel(BaseModel):
+    """
+    This custom class
+    - enables conversion from dict-like attributes to model fields.
+    - enable fields to have default values as well as be required fields.
+    """
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_serialization_defaults_required=True
+    )
 
 
 class ResponseHandler:
