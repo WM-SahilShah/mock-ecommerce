@@ -53,7 +53,7 @@ class CategoryService:
         if not category or not category.name:
             logger.error("Category creation failed: Name is required.")
             raise ResponseHandler.malformed_request("Category name is required.")
-        # Find the next unique ID in the 100s        
+        # Find the next unique ID in the 100s
         max_id = (db.query(Category.id)
                   .filter(Category.id >= 100)
                   .order_by(Category.id.desc())

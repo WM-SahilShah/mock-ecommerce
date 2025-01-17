@@ -18,7 +18,7 @@ router = APIRouter(tags=["Account"], prefix="/me")
     status_code=status.HTTP_200_OK,
     response_model=AccountOut,
     summary="Get My Info #",
-    description="Retrieve detailed information about the authenticated user. Requires valid authorization credentials.")
+    description="This endpoint uses the authorization credentials to retrieve detailed information about the user.")
 def get_my_info(
         db: Session = Depends(get_db),
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)
@@ -32,7 +32,7 @@ def get_my_info(
     status_code=status.HTTP_200_OK,
     response_model=AccountOut,
     summary="Edit My Info #",
-    description="Update user information, such as email, password, or other personal details. Requires valid authorization credentials.")
+    description="This endpoint allows the user to update their stored information.")
 def edit_my_info(
         updated_user: AccountUpdate,
         db: Session = Depends(get_db),
@@ -47,7 +47,7 @@ def edit_my_info(
     status_code=status.HTTP_200_OK,
     response_model=AccountOut,
     summary="Delete My Info #",
-    description="Delete the current authenticated user's account permanently. Requires valid authorization credentials.")
+    description="This endpoint allows the user to delete their account permanently.")
 def remove_my_account(
         db: Session = Depends(get_db),
         token: HTTPAuthorizationCredentials = Depends(auth_scheme)

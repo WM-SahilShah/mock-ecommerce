@@ -23,7 +23,7 @@ def get_all_categories(
         db: Session = Depends(get_db),
         page: int = Query("<integer>*", ge=1, description="Page number (Required)"),
         limit: int = Query("<integer>*", ge=1, le=100, description="Items per page (Required)"),
-        search: str = Query("{{searchQuery}}", description="Search based name of categories"),
+        search: str = Query("{{searchQuery}}", description="Search based name of categories (Optional)"),
     ) -> CategoriesOut:
     "Retrieve all categories with pagination and optional search by name."
     return CategoryService.get_all_categories(db, page, limit, search)

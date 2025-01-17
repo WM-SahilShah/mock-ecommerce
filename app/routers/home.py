@@ -1,6 +1,6 @@
 """
 This module serves the home page with the README.md content and provides a download link 
-for the API collection (`E-Commerce API Collection.json`).
+for the API in PM Collection/Swagger Specification format as well as a WM Environment (`E-Commerce Files.zip`).
 """
 
 import os

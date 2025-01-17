@@ -78,7 +78,7 @@ class CartService:
             if not product:
                 logger.error(f"Product with ID {product_id} not found.")
                 return ResponseHandler.not_found_error("Product", product_id)
-            subtotal = quantity * product.price * (product.discount_percentage / 100)
+            subtotal = quantity * product.price * ((100-product.discount_percentage) / 100)
             cart_item = CartItem(product_id=product_id, quantity=quantity, subtotal=subtotal)
             total_amount += subtotal
             cart_items.append(cart_item)
@@ -116,7 +116,7 @@ class CartService:
             if not product:
                 logger.error(f"Product with ID {product_id} not found.")
                 return ResponseHandler.not_found_error("Product", product_id)
-            subtotal = quantity * product.price * (product.discount_percentage / 100)
+            subtotal = quantity * product.price * ((100 - product.discount_percentage) / 100)
             cart_item = CartItem(cart_id=cart_id, product_id=product_id, quantity=quantity, subtotal=subtotal)
             db.add(cart_item)
         # Add each cart to db

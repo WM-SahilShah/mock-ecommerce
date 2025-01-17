@@ -61,6 +61,7 @@ class ProductService:
         if not category_exists:
             logger.error(f"Category with ID {product.category_id} not found.")
             ResponseHandler.not_found_error("Category", product.category_id)
+        # Find the next unique ID in the 200s
         max_id = (db.query(Product.id)
                   .filter(Product.id >= 200)
                   .order_by(Product.id.desc())

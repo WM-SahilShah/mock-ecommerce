@@ -58,6 +58,7 @@ class UserService:
             raise ResponseHandler.malformed_request("User already exists.")
         hashed_password = get_password_hash(user.password)
         user.password = hashed_password
+        # Find the next unique ID in the 500s
         max_id = (db.query(User.id)
                   .filter(User.id >= 500)
                   .order_by(User.id.desc())

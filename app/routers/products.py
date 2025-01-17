@@ -81,7 +81,7 @@ def update_product(
     response_model=ProductOutDelete,
     dependencies=[Depends(check_admin_role)],
     summary="Delete Existing Category ##",
-    description="Delete a product by its ID.")
+    description="This endpoint allows an admin to delete an existing product by its ID.")
 def delete_product(
         product_id: int,
         db: Session = Depends(get_db)
