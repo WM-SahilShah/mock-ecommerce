@@ -70,7 +70,7 @@ A simple Ecommerce API built with Fast API Framework
 | Swagger UI | - | `/docs/` | Swagger UI for API documentation | - |
 | Swagger JSON (no UI) | - | `/openapi.json` | OpenAPI JSON for API documentation without UI | - |
 | User Signup | POST | `/auth/signup/` | Register a new user | - |
-| User Login | POST | `/auth/login/` | Authenticate and generate access tokens for a user | User/Admin |
+| User Login | POST | `/auth/login/` | Authenticate and generate access tokens for a user | - |
 | Refresh Access Token # | POST | `/auth/refresh/` | Refresh an access token using a refresh token | User/Admin |
 | Get My Info # | GET | `/me/` | Get information about the authenticated user | User |
 | Edit My Info # | PUT | `/me/` | Edit the information of the authenticated user | User |
@@ -95,7 +95,7 @@ A simple Ecommerce API built with Fast API Framework
 | Get Specific User ## | GET | `/users/{user_id}/` | Get details of a specific user by ID | Admin |
 | Update Existing User ## | PUT | `/users/{user_id}/` | Update details of a specific user by ID | Admin |
 | Delete Existing User ## | DELETE | `/users/{user_id}/` | Delete a specific user by ID | Admin |
-
+> Note:  \# marks indicate the level of protection: - for calls that don't need any authentication, # for user calls, ## for admin only calls
 
 ## Installation
 
@@ -106,7 +106,7 @@ A simple Ecommerce API built with Fast API Framework
 
 2. **Navigate to the project directory:**
    ```bash
-   cd mock-ecommerce/
+   cd mock-ecommerce
    ```
 
 3. **Build the runtime environment:**
@@ -122,7 +122,7 @@ A simple Ecommerce API built with Fast API Framework
 The API will be accessible at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 
-## Usage
+## General Usage
 
 - **Signup**
    - To access the resources, you must have a registered username
@@ -135,3 +135,61 @@ The API will be accessible at [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 - **Play around!**
   - Have fun with the repo and discover API testing!
   - If your authentication runs out, simply hit the `/auth/refresh/` endpoint with the refresh token obtained in your initial login. If you cannot find it, simply log in again.
+
+## Watermelon Training
+
+- **Step 1: Download the resources**
+   - Download the `E-Commerce Files.zip` file using the button given below.
+   - Unzip it to see 3 JSON files.
+
+- **Step 2: Upload the API**
+   - Open your Watermelon environment.
+   - Go to the Lightning API module.
+   - Press the `X` (Close) button on the bottom left till it takes you to the home page if you're not already there.
+   - Press the `▶` (Begin) button. You should see the API Workbench Modal.
+   - Click on `Import API Spec` > `Import From File` and then select/drag the file called `E-Commerce PM Collection.json`.
+   
+- **Step 3: Upload the Environment Variables**
+   - Click on the `Environment` tab on the bottom left vertical panel.
+   - Click on `My Environment`. Click on the `+` icon under `Create New`.
+   - Fill in the Name and Description fields with values of your choice. eg. "Name: Demo Environment", "Description: Variables common for all the API calls."
+   - Click the "Save" icon (floppy disk) under the `Description` field. You should be able to see your new environment as a card in the list of your environments.
+   - Click on the "Options" icon (3 vertical dots) on the top right corner of your environment card. Click on `Edit`.
+   - Select the "Import" icon (down arrow) under the `Description` field. You should get a modal that will accept files. Select/drag the file `E-Commerce Environment.json`.
+   - You should see the values populated in your environment under the `Variables` tab. Click the "Save" icon.
+   - Click the "Edit" (pencil) button under the `Actions` column to edit the values of any variable. Change the `Current Value` of the following variables to the values given below:
+      - `username`: < your name >
+      - `password`: < a password of your choice, ideally the same as your username >
+   - Click on the "Save" icon again and you're good to start!
+
+- **Step 4: Make your first API call**
+   - On the RHS vertical panel, click on the `API` tab.
+   - Select the `>` button in the LHS panel on the right of "26" (the number of API calls in the collection). It should open a summary of your collection.
+   - In the `Environment` dropdown, select your environment ("Demo Environment") and click "Save" icon on the right of it.
+   - Directly under this, unfold the `Auth` folder to click on `USER SIGNUP`.
+   - Directly under the URL (top left of the API Screen), you should be able to see a navbar with a value `REQUEST BODY`. Click on it.
+   - Make sure you have the `raw` radio button selected and the `Raw Type` dropdown selected to `JSON`.
+   - Click the "Edit" (pencil) icon on the right of `REQUEST BODY` to edit your request.
+   - Enter valid text credentials to make your account. [!IMPORTANT] the username and password you enter here should exactly match those you entered in your environment.
+   - Click on the "Save" icon on the top RHS corner of the API Screen. Click `Execute` once the changes are saved.
+
+- **Step 5: Set-up your Authentication**
+   - Click on the `Auth` tab on your RHS vertical panel.
+   - Click on  `+` under `Create New`.
+   - Give your auth profile a name, like "Demo Auth"
+   - In the `AUTH Type` dropdown, scroll down to the bottom and select `From API`. You should be able to see more configurations.
+   - In the `Select API` dropdown, select the entry for `User Login`. Watermelon should have populated the following values for you, verify these/edit to match values:
+      - `Token Key`: `Authorization`
+      - `Token Value`: `access_token`
+      - `Token Prefix`: `Bearer`
+      - `Add To`: `HEADER`
+      - `Time to Live Path`: `expire_in`
+   - Click `Save` on the bottom right. You should be able to see your auth profile card in the list of profiles.
+   - Click on the "Options" icon on the top right corner of your card. and then select `Set Auth`. Confirm if you can see it selected above `Create New`.
+
+- **Step 6: Verify Set-up**
+   - Click on the `API` tab on the RHS vertical panel.
+   - On the LHS Panel, you should be able to see a "fingerprint" icon with a red dot and `Not Authenticated` next to it. Click on it to update your access token.
+   - Your first attempt may fail if the server was not recently pinged. Simply try once more after 30s. You should see the red dot turn green.
+   - In the API List, unfold the `Me` folder and select the `Get My Info` Call.
+   - Click `Execute`. If you get your account details back, your set-up was successful. Enjoy!
