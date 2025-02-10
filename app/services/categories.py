@@ -23,6 +23,7 @@ class CategoryService:
     @staticmethod
     def get_all_categories(db: Session, page: int, limit: int, search: str) -> dict:
         "Get all categories."
+        if search == "{{searchQuery}}": search = ""
         logger.info(f"Fetching categories for page {page} with limit {limit} and search term '{search}'.")
         categories = (db.query(Category)
                       .order_by(Category.id.asc())

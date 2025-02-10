@@ -23,6 +23,7 @@ class ProductService:
     @staticmethod
     def get_all_products(db: Session, page: int, limit: int, search: str) -> dict:
         "Get all products."
+        if search == "{{searchQuery}}": search = ""
         logger.info(f"Fetching all products with search term '{search}', page {page}, and limit {limit}.")
         products = (db.query(Product)
                     .order_by(Product.id.asc())

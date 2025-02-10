@@ -19,6 +19,7 @@ class UserService:
     @staticmethod
     def get_all_users(db: Session, page: int, limit: int, search: str = "", role: str = "") -> dict:
         "Get all users."
+        if search == "{{searchQuery}}": search = ""
         logger.info(f"Fetching all users with search term '{search}', role '{role}', page {page}, and limit {limit}.")
         users = (db.query(User)
                  .order_by(User.id.asc())
